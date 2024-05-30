@@ -148,19 +148,10 @@ Cabin.IsWindowChildLockEngaged:
 
 Cabin.Seat:
   type: branch
+  instances0: x #Seat
+  instances1: x #Seat
   description: All seats.
-
-Cabin.Seat.Row1:
-  type: branch
-  instances: ["DriverSide", "PassengerSide"]
-  description: Cabin.Seat.Row1
-#include SingleSeat.vspec Cabin.Seat.Row1
-
-Cabin.Seat.Row2:
-  type: branch
-  instances: ["DriverSide", "Middle", "PassengerSide"]
-  description: Cabin.Seat.Row2
-#include SingleSeat.vspec Cabin.Seat.Row2
+#include SingleSeat.vspec Cabin.Seat
 
 #
 # Seat attributes.
@@ -201,5 +192,4 @@ Cabin.Convertible.Status:
   description: Roof status on convertible vehicles.
 
 #include ../include/PowerOptimize.yaml Cabin
-
 
