@@ -1,6 +1,5 @@
 ![Status - Incubating](https://img.shields.io/static/v1?label=Status&message=Incubating&color=FEFF3A&style=for-the-badge)
 # commercial-vehicle-information-specifications  
-!!!The HIM configurator does not work currently due to some python package dependency in the vss-tools submodule!!!
 
 ### Maintainers
 Ulf Björkengren - Ford Motor Company
@@ -50,3 +49,9 @@ As the repo contains the VSS-tools as a submodule you might need to issue the co
 git submodule update --init --recursive
 
 to get it installed too.
+
+After this installment the make file needs to be called to make sure that all packages used by the VSS-tools gets installed
+
+sudo make install
+
+This command involves access to files that requires super user priviledges, hence the sudo prefix.
