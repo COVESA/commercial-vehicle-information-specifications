@@ -13,11 +13,11 @@ Engine:
   type: branch
   description: Engine-specific data.
 
-#include CombustionEngine.yaml Engine
-#include ElectricEngine.vspec Engine
+VariationPoint: #EngineType
+  - ICE #include CombustionEngine.yaml Engine
+  - EV  #include ElectricEngine.vspec Engine
 
 #include EngineCoolant.yaml Engine
 
 #include FuelSystem.yaml Engine
-
 

@@ -2,7 +2,7 @@
 # Makefile to generate specifications
 #
 
-.PHONY: clean all mandatory_targets json franca yaml csv ddsidl tests binary protobuf ttl graphql ocf c overlays id jsonschema
+.PHONY: clean all mandatory_targets json franca yaml csv ddsidl tests binary protobuf ttl graphql ocf c overlays id jsonschema install
 
 all: clean mandatory_targets
 # all: clean mandatory_targets optional_targets
@@ -75,3 +75,10 @@ id:
 clean:
 	cd ${TOOLSDIR}/binary && $(MAKE) clean
 	rm -f vss_rel_*
+
+install:
+	git submodule init
+	git submodule update
+	(cd ${TOOLSDIR}/; python3 setup.py install --install-scripts=${DESTDIR}/bin)
+	install -d ${DESTDIR}/share/vss
+	(cd spec; cp -r * ${DESTDIR}/share/vss)
