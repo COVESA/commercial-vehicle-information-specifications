@@ -1,0 +1,26 @@
+# Copyright (c) 2016 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# Parking Brake signals
+#
+
+ParkingBrake:
+  type: branch
+  description: Parking brake signals
+
+ParkingBrake.IsEngaged:
+  datatype: boolean
+  type: actuator
+  description: Parking brake status. True = Parking Brake is Engaged. False = Parking Brake is not Engaged.
+
+ParkingBrake.IsAutoApplyEnabled:
+  datatype: boolean
+  type: actuator
+  description: Indicates if parking brake will be automatically engaged when the vehicle engine is turned off.
+

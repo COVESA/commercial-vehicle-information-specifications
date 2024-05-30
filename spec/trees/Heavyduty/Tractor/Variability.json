@@ -1,0 +1,22 @@
+{
+    "EngineType": [
+        {
+            "ICE": "ICE"
+        },
+        {
+            "EV": "EV"
+        },
+        {
+            "PHEV": [
+                "ICE",
+                "EV"
+            ]
+        },
+        {
+            "HEV": [
+                "ICE",
+                "EV"
+            ]
+        }
+    ]
+}

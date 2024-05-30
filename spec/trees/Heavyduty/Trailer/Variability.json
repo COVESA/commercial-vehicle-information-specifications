@@ -1,0 +1,10 @@
+{
+    "BodyType": [
+        {
+            "CARGO": "GEN_CARGO"
+        },
+        {
+            "FREEZER": "FREEZER"
+        }
+    ]
+}

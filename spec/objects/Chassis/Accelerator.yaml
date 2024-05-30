@@ -1,0 +1,26 @@
+# Copyright (c) 2016 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# Chassis signals and attributes.
+# Includes steering, suspension, wheels, brakes, etc
+#
+#
+# Accelerator signals
+#
+Accelerator:
+  type: branch
+  description: Accelerator signals
+
+Accelerator.PedalPosition:
+  datatype: uint8
+  type: sensor
+  min: 0
+  max: 100
+  unit: percent
+  description: Accelerator pedal position as percent. 0 = Not depressed. 100 = Fully depressed.

@@ -1,0 +1,108 @@
+# Copyright (c) 2024 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# Location
+#
+
+Timestamp:
+  datatype: string
+  type: sensor
+  unit: iso8601
+  description: Timestamp from GNSS system for current location, formatted according to ISO 8601 with UTC time zone.
+
+Latitude:
+  datatype: double
+  type: sensor
+  min: -90
+  max: 90
+  unit: degrees
+  description: Current latitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
+
+Longitude:
+  datatype: double
+  type: sensor
+  min: -180
+  max: 180
+  unit: degrees
+  description: Current longitude of vehicle in WGS 84 geodetic coordinates, as measured at the position of GNSS receiver antenna.
+
+Heading:
+  datatype: double
+  type: sensor
+  min: 0
+  max: 360
+  unit: degrees
+  description: Current heading relative to geographic north.
+               0 = North, 90 = East, 180 = South, 270 = West.
+
+HorizontalAccuracy:
+  datatype: double
+  type: sensor
+  unit: m
+  description: Accuracy of the latitude and longitude coordinates.
+
+Altitude:
+  datatype: double
+  type: sensor
+  unit: m
+  description: Current altitude relative to WGS 84 reference ellipsoid, as measured at the position of GNSS receiver antenna.
+
+VerticalAccuracy:
+  datatype: double
+  type: sensor
+  unit: m
+  description: Accuracy of altitude.
+
+GNSSReceiver:
+  type: branch
+  description: Information on the GNSS receiver used for determining current location.
+
+GNSSReceiver.FixType:
+  datatype: string
+  type: sensor
+  allowed: ['NONE',
+            'TWO_D',
+            'TWO_D_SATELLITE_BASED_AUGMENTATION',
+            'TWO_D_GROUND_BASED_AUGMENTATION',
+            'TWO_D_SATELLITE_AND_GROUND_BASED_AUGMENTATION',
+            'THREE_D',
+            'THREE_D_SATELLITE_BASED_AUGMENTATION',
+            'THREE_D_GROUND_BASED_AUGMENTATION',
+            'THREE_D_SATELLITE_AND_GROUND_BASED_AUGMENTATION']
+  description: Fix status of GNSS receiver.
+
+GNSSReceiver.MountingPosition:
+  type: branch
+  description: Mounting position of GNSS receiver antenna relative to vehicle coordinate system.
+               Axis definitions according to ISO 8855. Origin at center of (first) rear axle.
+
+GNSSReceiver.MountingPosition.X:
+  datatype: int16
+  type: attribute
+  unit: mm
+  description: Mounting position of GNSS receiver antenna relative to vehicle coordinate system.
+               Axis definitions according to ISO 8855. Origin at center of (first) rear axle.
+               Positive values = forward of rear axle. Negative values = backward of rear axle.
+
+GNSSReceiver.MountingPosition.Y:
+  datatype: int16
+  type: attribute
+  unit: mm
+  description: Mounting position of GNSS receiver antenna relative to vehicle coordinate system.
+               Axis definitions according to ISO 8855. Origin at center of (first) rear axle.
+               Positive values = left of origin. Negative values = right of origin.
+               Left/Right is as seen from driver perspective, i.e. by a person looking forward.
+
+GNSSReceiver.MountingPosition.Z:
+  datatype: int16
+  type: attribute
+  unit: mm
+  description: Mounting position of GNSS receiver on Z-axis.
+               Axis definitions according to ISO 8855. Origin at center of (first) rear axle.
+               Positive values = above center of rear axle. Negative values = below center of rear axle.

@@ -1,0 +1,22 @@
+{
+    "variants": {
+        "BodyType": "CARGO"
+    },
+    "instances": {
+        "Wheel": [
+            "Row[1,2]",
+            [
+                [
+                    "Left",
+                    "Right"
+                ],
+                [
+                    "Left1",
+                    "Left2",
+                    "Right1",
+                    "Right2"
+                ]
+            ]
+        ]
+    }
+}
