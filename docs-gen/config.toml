@@ -1,0 +1,22 @@
+baseURL = "https://covesa.github.io/commercial-vehicle-information-specifications/"
+languageCode = "en-us"
+title = "Commercial Vehicle Information Specifications (CVIS)"
+theme = "learn"
+publishDir = "../docs"
+[params]
+  # Change default color scheme with a variant one. Can be "red", "blue", "green".
+  themeVariant = "blue"
+  disableInlineCopyToClipBoard = true
+  editURL = "https://github.com/covesa/commercial-vehicle-information-specifications/edit/master/docs/docs-gen/content/"
+  disableLandingPageButton = true
+
+
+[[menu.shortcuts]]
+name = "<i class='fab fa-github'></i> Github repo"
+identifier = "ds"
+url = "https://github.com/covesa/commercial-vehicle-information-specifications"
+weight = 10
+
+# Generation of JSON index to allow search
+[outputs]
+home = [ "HTML", "RSS", "JSON"]

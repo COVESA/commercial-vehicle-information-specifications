@@ -26,6 +26,8 @@ The use of symbolic links allow the private tree to access the common parts as i
 This design is compatible with the [VSS-tools](https://github.com/COVESA/vss-tools) exporter tool,
 so it can be used to transform data in the vspec file structure to the different other formats supported by that tool.
 
+The documentation is [here](https://covesa.github.io/commercial-vehicle-information-specifications/) (under construction).
+
 ## HIM configurator tool
 
 To build the HIM configurator you need to have the Golang build system installed on your computer.
@@ -37,7 +39,7 @@ To see the command line options it can be started with, issue the command:
 
 ./himConfigurator -h
 
-More about this tool to come...
+Please see the [documentation](https://covesa.github.io/commercial-vehicle-information-specifications/) for more details.
 
 ## Installing the repo
 The reo can be cloned by issung the command
