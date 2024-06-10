@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.103.1" />
+    <meta name="description" content="">
+
+
+    <link rel="shortcut icon" href="/hierarchical_information_model/images/fav.png" type="image/x-icon" />
+
+    <title>Commercial Vehicle Information Specifications :: Commercial Vehicle Information Specifications (CVIS)</title>
+
+    
+    <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1718022977" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/fontawesome-all.min.css?1718022977" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/hybrid.css?1718022977" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/featherlight.min.css?1718022977" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/perfect-scrollbar.min.css?1718022977" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/auto-complete.css?1718022977" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/atom-one-dark-reasonable.css?1718022977" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/theme.css?1718022977" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/hugo-theme.css?1718022977" rel="stylesheet">
+    
+    <link href="/commercial-vehicle-information-specifications/css/theme-blue.css?1718022977" rel="stylesheet">
+    
+    
+
+    <script src="/commercial-vehicle-information-specifications/js/jquery-3.3.1.min.js?1718022977"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+        :not(pre) > code + span.copy-to-clipboard {
+            display: none;
+        }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="/commercial-vehicle-information-specifications/">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="https://covesa.github.io/commercial-vehicle-information-specifications/">
+  <img src="/commercial-vehicle-information-specifications/images/cvis.png">
+</a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/lunr.min.js?1718022977"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/auto-complete.js?1718022977"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/covesa.github.io\/commercial-vehicle-information-specifications\/";
+    
+</script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/search.js?1718022977"></script>
+
+    
+  </div>
+  
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/commercial-vehicle-information-specifications/him_configurator/" title="HIM configurator" class="dd-item
+        
+        
+        
+        ">
+      <a href="/commercial-vehicle-information-specifications/him_configurator/">
+          HIM configurator
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/commercial-vehicle-information-specifications/tractor_tree/" title="Tractor tree" class="dd-item
+        
+        
+        
+        ">
+      <a href="/commercial-vehicle-information-specifications/tractor_tree/">
+          Tractor tree
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/commercial-vehicle-information-specifications/trailer_tree/" title="Trailer tree" class="dd-item
+        
+        
+        
+        ">
+      <a href="/commercial-vehicle-information-specifications/trailer_tree/">
+          Trailer tree
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3>More</h3>
+        <ul>
+          
+              <li>
+                  <a class="padding" href="https://github.com/covesa/commercial-vehicle-information-specifications"><i class='fab fa-github'></i> Github repo</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="footer">
+      <p>Built with <a href="https://github.com/matcornic/hugo-theme-learn"><i class="fas fa-heart"></i></a> from <a href="https://getgrav.org">Grav</a> and <a href="https://gohugo.io/">Hugo</a></p>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+
+        
+
+<span id="sidebar-toggle-span">
+<a href="#" id="sidebar-toggle" data-sidebar-toggle=""><i class="fas fa-bars"></i> navigation</a>
+</span>
+
+ 
+<h1 id="commercial-vehicle-information-specifications">Commercial Vehicle Information Specifications</h1>
+<h2 id="overview">Overview</h2>
+<p>The HIM rule set for signals is used in this project, and since it is identical to the VSS rule set this framework inherits &ldquo;patterns&rdquo; from VSS</p>
+<ul>
+<li>The vspec file format.</li>
+<li>The usage of VSS-tools to transform from the vspec format to other exporter formats.</li>
+<li>The CVIS signal trees are defined in two directory structures -</li>
+</ul>
+<p>objects directory structure: This is where the common &ldquo;tree objects&rdquo; are stored that may be shared between multiple trees.
+trees directory structure: Thisis where the unique trees for different domains are stored.</p>
+<p>The directory structure for a single tree follows the VSS pattern with &ldquo;#include&rdquo; links in the vspec files that logically links to other files of the tree. However, to link to a file in the common objects structure the corresponding file in the trees structure is realized as a symbolic link file. This means that when the content of the file is accessed the underlying file system follows the symbolic link to the file in the objects structure for the actual content of the file. This is transparent to the entity accessing the file, so e. g. the exporter tools from VSS-tools will when used for a transformation of a specific tree access file content from the common objects files tranparently.</p>
+<h2 id="tree-development">Tree development</h2>
+<p>The <a href="https://covesa.github.io/hierarchical_information_model/resource_data_rule_set/">HIM rule set for resource data</a> is used to define signals in a tree.
+This syntax can be directly used as input to any of the exporter tools provided by <a href="https://github.com/COVESA/vss-tools">VSS-tools</a>.</p>
+<h3 id="him-extensions">HIM extensions</h3>
+<p>The HIM syntax is in this project extended with two features.
+These can be preprocessed by the HIM configurator which transforms them into a HIM compliant format, thus making it possible to use the SS-tools for exporting to other formats.
+If these extensions are found to be useful it is likely that they will become included in the HIM standard rule set for resurce data.</p>
+<h3 id="variability-configuration">Variability configuration</h3>
+<p>The tree in vspec format may contain multiple variations of objects that in a deployment typically are not included.
+An example are the <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/objects/Powertrain/CombustionEngine.yaml">Combustion engine</a>
+and the <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Powertrain/ElectricEngine.vspec">Electric engine</a>.
+in an ICE vehicle the former should be included, but not the latter. For an EV vehicle it is vice versa.
+To enable one or the other of these objects to be included the following syntax is used,
+example taken from the <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Powertrain/Engine.vspec">Engine.vspec</a>.</p>
+<pre tabindex="0"><code>VariationPoint: #EngineType
+  - ICE #include CombustionEngine.yaml Engine
+  - EV  #include ElectricEngine.vspec Engine
+</code></pre><p>The keyword is VariationPoint, which on the same line must be followed by a hash sign (#) directly followe by a unique variation point tag (in this case EngineType.
+The value part of this key-value expression is an array of &lsquo;variability object expressions&rsquo;,
+where such an expression contains a &lsquo;variability name&rsquo; followed by an &lsquo;#include expression&rsquo;.
+This expression must be compliant with the syntax rules for HIM #include expressions.
+The array size is not restricted.</p>
+<p>The input to the HIM configurator for it to resolve which variations to select is found in two files.</p>
+<ul>
+<li>The <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Variability.json">Variability.json</a> file,</li>
+<li>and the <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/himConfiguration.json">himConfiguration.json</a> file.</li>
+</ul>
+<p>The Variability.json file defines the available variations, and which include statements that should be selected for the variation.
+As can be seen in th PHEV variation example below it is possible to select multiple include statements.</p>
+<pre tabindex="0"><code>    &#34;EngineType&#34;: [
+        {
+            &#34;PHEV&#34;: [
+                &#34;ICE&#34;,
+                &#34;EV&#34;
+            ]
+        }
+</code></pre><p>The himConfiguration.json file contains the variation that that should be included in the tree that is generated by the himConfigurator (using a VSS-tools exporter),
+expressed by the rows below in this example:</p>
+<pre tabindex="0"><code>    &#34;variants&#34;: {
+        &#34;EngineType&#34;: &#34;PHEV&#34;
+</code></pre><h3 id="instantiation-configuration">Instantiation configuration</h3>
+<p>The HIM rule set supports the instantiation syntax inherited from <a href="https://covesa.github.io/vehicle_signal_specification/rule_set/instances/">VSS instantiation</a>
+that can be used to request the VSS-tools to generate multiple instances of a branch/set of signals.
+This syntax has two options exemplified below</p>
+<ul>
+<li>instances: [&ldquo;DriverSide&rdquo;, &ldquo;PassengerSide&rdquo;]</li>
+<li>instances: Row[1,2]
+The examples above can be extended to two dimensions by using the array syntax, e.g.</li>
+</ul>
+<pre tabindex="0"><code>instances: 
+    - Row[1,2]
+    - [&#34;DriverSide&#34;, &#34;PassengerSide&#34;]
+</code></pre><p>which will generate a structure with four branches - Row1:DriverSide, Row1:PassengerSide, Row2:DriverSide, Row2:PassengerSide.
+It is however not possible to use this syntax to express a configuration where for Row1 there are two child nodes,
+e.g. [&ldquo;DriverSide&rdquo;, &ldquo;PassengerSide&rdquo;], and for Row2 there are three child nodes, e. g. [&ldquo;DriverSide&rdquo;, &ldquo;Middle&rdquo;, &ldquo;PassengerSide&rdquo;].</p>
+<p>This missing flexibility is however provided in the extended syntax supported by the HIM configurator.
+A two-dimensional instantiation is then expressed in the vspec file as:</p>
+<pre tabindex="0"><code>instances0: x #instanceTag
+instances1: x #instanceTag
+</code></pre><p>where &lsquo;instances0&rsquo; is used for the &lsquo;first-order&rsquo; instantiation (Row[1,2] in the example above),
+and &lsquo;instances1&rsquo; is used for the &lsquo;second-order&rsquo; instantiation ([&ldquo;DriverSide&rdquo;, &ldquo;PassengerSide&rdquo;] in the example above).</p>
+<p>&lsquo;x&rsquo; is a placeholder for the instance expression in the file himConfiguration.json that is the input to the HM configurator,
+and &lsquo;instanceTag&rsquo; is a unique name logically linking the two expressions, which must be preceded by a hash character (#).
+The two instance expressions can, but must not be on two subsequent rows.
+If not, then the second expression must be defined in any of the nodes that is part of the subtree under the node containing the first expression.
+The instance configuration input to the HIM configurator has a syntax as exemplified below.</p>
+<pre tabindex="0"><code>    &#34;instances&#34;: {
+        &#34;Seat&#34;: [
+            &#34;Row[1,2]&#34;,
+            [
+                [
+                    &#34;DriverSide&#34;,
+                    &#34;PassengerSide&#34;
+                ],
+                [
+                    &#34;DriverSide&#34;,
+                    &#34;Middle&#34;,
+                    &#34;PassengerSide&#34;
+                ]
+            ]
+        ]
+        }
+</code></pre><p>The &lsquo;Seat&rsquo; shown above is the instanceTag name that the HIM configurator will try to match in the vspec file.</p>
+<p>The &lsquo;first-order&rsquo; instantiation, in this case &ldquo;Row[1,2]&rdquo;, is followed by two &lsquo;second-order&rsquo; instantiation expressions.</p>
+<p>The number of &lsquo;second-order&rsquo; expressions must match the number of instantiaions that the &lsquo;first-order&rsquo; expression will expand to.</p>
+<p>The expressions can use any of the two syntax options mentioned above.</p>
+<p>Currently this syntax can only be used for two-dimensional instantiations.</p>
+<h3 id="trees-under-development">Trees under development</h3>
+<p>Currently two trees are being developed:</p>
+<ul>
+<li><a href="https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Heavyduty/Tractor">Tractor tree</a></li>
+<li><a href="https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Heavyduty/Trailer">Trailer tree</a></li>
+</ul>
+<h2 id="him-configurator">HIM configurator</h2>
+<p>The framework also contains a new tool, the HIM configurator. In its current version it provides support for two types of tree configuration:</p>
+<ul>
+<li>Variation point configuration: If the tree defined by the vspec files contains data structures that are not typically used together in a specific deployment of the tree, then these can be tagged as a variability point, and the HIM configurator can be used to pick the desired structure(s).</li>
+<li>Instance configuration: This is an extension of the existing VSS-tools instance support that provides the possibility for a two dimensional instantiation to have unique &ldquo;column instantiation&rdquo; for each &ldquo;row instantiation&rdquo;.</li>
+</ul>
+<p>Check out the <a href="/commercial-vehicle-information-specifications/him_configurator">HIM configurator</a> chapter for more details.</p>
+<p>If this new tool is found to be useful it is planned to add support for &ldquo;default configuration&rdquo; later.</p>
+	
+  
+        
+        </div>
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+
+        
+
+
+	 
+	 
+		
+		
+			<a class="nav nav-next" href="/commercial-vehicle-information-specifications/him_configurator/" title="HIM configurator" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/commercial-vehicle-information-specifications/js/clipboard.min.js?1718022977"></script>
+    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.min.js?1718022977"></script>
+    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.jquery.min.js?1718022977"></script>
+    <script src="/commercial-vehicle-information-specifications/js/jquery.sticky.js?1718022977"></script>
+    <script src="/commercial-vehicle-information-specifications/js/featherlight.min.js?1718022977"></script>
+    <script src="/commercial-vehicle-information-specifications/js/highlight.pack.js?1718022977"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/commercial-vehicle-information-specifications/js/modernizr.custom-3.6.0.js?1718022977"></script>
+    <script src="/commercial-vehicle-information-specifications/js/learn.js?1718022977"></script>
+    <script src="/commercial-vehicle-information-specifications/js/hugo-learn.js?1718022977"></script>
+    
+        
+            <script src="/commercial-vehicle-information-specifications/mermaid/mermaid.js?1718022977"></script>
+        
+        <script>
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+    
+    
+
+  </body>
+</html>
+
