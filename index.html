@@ -12,21 +12,21 @@
     <title>Commercial Vehicle Information Specifications :: Commercial Vehicle Information Specifications (CVIS)</title>
 
     
-    <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1718092595" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/fontawesome-all.min.css?1718092595" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/hybrid.css?1718092595" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/featherlight.min.css?1718092595" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/perfect-scrollbar.min.css?1718092595" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/auto-complete.css?1718092595" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/atom-one-dark-reasonable.css?1718092595" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/theme.css?1718092595" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/hugo-theme.css?1718092595" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1718096487" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/fontawesome-all.min.css?1718096487" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/hybrid.css?1718096487" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/featherlight.min.css?1718096487" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/perfect-scrollbar.min.css?1718096487" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/auto-complete.css?1718096487" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/atom-one-dark-reasonable.css?1718096487" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/theme.css?1718096487" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/hugo-theme.css?1718096487" rel="stylesheet">
     
-    <link href="/commercial-vehicle-information-specifications/css/theme-blue.css?1718092595" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/theme-blue.css?1718096487" rel="stylesheet">
     
     
 
-    <script src="/commercial-vehicle-information-specifications/js/jquery-3.3.1.min.js?1718092595"></script>
+    <script src="/commercial-vehicle-information-specifications/js/jquery-3.3.1.min.js?1718096487"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/lunr.min.js?1718092595"></script>
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/auto-complete.js?1718092595"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/lunr.min.js?1718096487"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/auto-complete.js?1718096487"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/covesa.github.io\/commercial-vehicle-information-specifications\/";
     
 </script>
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/search.js?1718092595"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/search.js?1718096487"></script>
 
     
   </div>
@@ -312,8 +312,21 @@ The instance configuration input to the HIM configurator has a syntax as exempli
 The cases that has been identified are described below.</p>
 <h3 id="axle-and-tire-locations">Axle and tire locations</h3>
 <p>The <a href="https://www.iso.org/obp/ui/#iso:std:iso:3911:ed-4:v1:en">ISO xxxx(number and link missing)</a> specification includes a centerline based approach for commercial vehicles, see diagram below.
-<img src="/commercial-vehicle-information-specifications/images/iso_axle_tire_locations.jpg?width=50pc" alt="ISO naming of axle-tire locations">
-Further references, e.g. TMC VMRS, Fleet location codes, etc&hellip;</p>
+<img src="/commercial-vehicle-information-specifications/images/iso_axle_tire_locations.jpg?width=50pc" alt="ISO naming of axle-tire locations"></p>
+<p>The ISO naming conventions shown in the figure above can be realized by providing the configuration shown below as input to the HIM configurator,
+and inserting the &ldquo;instances0/1&rdquo; directives in the related vspec files.</p>
+<pre tabindex="0"><code>    &#34;instances&#34;: {
+        &#34;Axle&#34;: [
+            &#34;Row[1,4]&#34;,
+            [
+                [&#34;Pos7&#34;,&#34;Pos9&#34;],
+                [&#34;Pos7&#34;,&#34;Pos9&#34;],
+                [&#34;Pos6&#34;,&#34;Pos7&#34;, &#34;Pos9&#34;,&#34;Pos10&#34;],
+                [&#34;Pos8&#34;]
+            ]
+        ]
+    }
+</code></pre><p>Further references, e.g. TMC VMRS, Fleet location codes, etc&hellip;</p>
 	
   
         
@@ -413,19 +426,19 @@ Further references, e.g. TMC VMRS, Fleet location codes, etc&hellip;</p>
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/commercial-vehicle-information-specifications/js/clipboard.min.js?1718092595"></script>
-    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.min.js?1718092595"></script>
-    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.jquery.min.js?1718092595"></script>
-    <script src="/commercial-vehicle-information-specifications/js/jquery.sticky.js?1718092595"></script>
-    <script src="/commercial-vehicle-information-specifications/js/featherlight.min.js?1718092595"></script>
-    <script src="/commercial-vehicle-information-specifications/js/highlight.pack.js?1718092595"></script>
+    <script src="/commercial-vehicle-information-specifications/js/clipboard.min.js?1718096487"></script>
+    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.min.js?1718096487"></script>
+    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.jquery.min.js?1718096487"></script>
+    <script src="/commercial-vehicle-information-specifications/js/jquery.sticky.js?1718096487"></script>
+    <script src="/commercial-vehicle-information-specifications/js/featherlight.min.js?1718096487"></script>
+    <script src="/commercial-vehicle-information-specifications/js/highlight.pack.js?1718096487"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/commercial-vehicle-information-specifications/js/modernizr.custom-3.6.0.js?1718092595"></script>
-    <script src="/commercial-vehicle-information-specifications/js/learn.js?1718092595"></script>
-    <script src="/commercial-vehicle-information-specifications/js/hugo-learn.js?1718092595"></script>
+    <script src="/commercial-vehicle-information-specifications/js/modernizr.custom-3.6.0.js?1718096487"></script>
+    <script src="/commercial-vehicle-information-specifications/js/learn.js?1718096487"></script>
+    <script src="/commercial-vehicle-information-specifications/js/hugo-learn.js?1718096487"></script>
     
         
-            <script src="/commercial-vehicle-information-specifications/mermaid/mermaid.js?1718092595"></script>
+            <script src="/commercial-vehicle-information-specifications/mermaid/mermaid.js?1718096487"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
