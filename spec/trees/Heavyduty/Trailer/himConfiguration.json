@@ -3,18 +3,18 @@
         "BodyType": "CARGO"
     },
     "instances": {
-        "Wheel": [
+        "Axle": [
             "Row[1,2]",
             [
                 [
-                    "Left",
-                    "Right"
+                    "Pos7",
+                    "Pos9"
                 ],
                 [
-                    "Left1",
-                    "Left2",
-                    "Right1",
-                    "Right2"
+                    "Pos6",
+                    "Pos7",
+                    "Pos9",
+                    "Pos10"
                 ]
             ]
         ]
