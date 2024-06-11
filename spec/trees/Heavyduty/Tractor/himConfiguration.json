@@ -18,11 +18,12 @@
             ]
         ],
         "Axle": [
-            "Row[1,3]",
+            "Row[1,4]",
             [
-                ["Left","Right"],
-                "Wheel[1,2]",
-                ["Left1","Left2", "Right1","Right2"]
+                ["Pos7","Pos9"],
+                ["Pos7","Pos9"],
+                ["Pos6","Pos7", "Pos9","Pos10"],
+                ["Pos8"]
             ]
         ],
         "test2": [

@@ -138,3 +138,12 @@ The framework also contains a new tool, the HIM configurator. In its current ver
 Check out the [HIM configurator](/commercial-vehicle-information-specifications/him_configurator) chapter for more details.
 
 If this new tool is found to be useful it is planned to add support for "default configuration" later.
+
+## Alignment with other standards
+The terminology used in these HIM based specifications should try to align with terminology and principles from other standards.
+The cases that has been identified are described below.
+
+### Axle and tire locations
+The [ISO xxxx(number and link missing)](https://www.iso.org/obp/ui/#iso:std:iso:3911:ed-4:v1:en) specification includes a centerline based approach for commercial vehicles, see diagram below.
+![ISO naming of axle-tire locations](/commercial-vehicle-information-specifications/images/iso_axle_tire_locations.jpg?width=50pc)
+Further references, e.g. TMC VMRS, Fleet location codes, etc...
