@@ -146,4 +146,20 @@ The cases that has been identified are described below.
 ### Axle and tire locations
 The [ISO xxxx(number and link missing)](https://www.iso.org/obp/ui/#iso:std:iso:3911:ed-4:v1:en) specification includes a centerline based approach for commercial vehicles, see diagram below.
 ![ISO naming of axle-tire locations](/commercial-vehicle-information-specifications/images/iso_axle_tire_locations.jpg?width=50pc)
+
+The ISO naming conventions shown in the figure above can be realized by providing the configuration shown below as input to the HIM configurator,
+and inserting the "instances0/1" directives in the related vspec files.
+```
+    "instances": {
+        "Axle": [
+            "Row[1,4]",
+            [
+                ["Pos7","Pos9"],
+                ["Pos7","Pos9"],
+                ["Pos6","Pos7", "Pos9","Pos10"],
+                ["Pos8"]
+            ]
+        ]
+    }
+```
 Further references, e.g. TMC VMRS, Fleet location codes, etc...
