@@ -1,0 +1,33 @@
+# Copyright (c) 2024 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# Commercial Vehicle Information Specifications Datatype file
+#
+
+#
+# The root branch for CVIS datatype definitions.
+#
+Datatype:
+  type: branch
+  description: Datatype definitions.
+
+#include Vehicle/VehicleDatatype.vspec Datatype
+
+#include Powertrain/PowertrainDatatype.vspec Datatype
+
+#include Body/BodyDatatype.vspec Datatype
+
+##include Chassis/ChassisDatatype.vspec Datatype
+
+#include Cabin/CabinDatatype.vspec Datatype
+
+#include ADAS/ADASDatatype.vspec Datatype
+
+##include Exterior/ExteriorDatatype.vspec Datatype
+
