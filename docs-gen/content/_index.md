@@ -136,6 +136,11 @@ An external datatype reference to an enum (allowed) shall have a syntax as shown
 where x, y, z may be names providing an understanding of the defined enum (allowed) that conform to the node HIM node name syntax.
 The name z must be postfixed with the tag Values.
 
+If the HIM configurator is used to substitute external enum (Allowed) references it will create a Datatype.yaml file in the root directory of
+the signal tree that it is working on. The node type in a type definition tree shall be 'property' but due to that the VSS-tools will reject
+separate trees with that node type, the node type 'sensor' is used instead. This must therefore be manually edited to rename to 'property'
+until a moodified version of VSS-tools is created, or that the HIM configurator is updated to handle the node type renaming.
+
 ## Trees under development
 Currently two trees are being developed:
 * [Tractor tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Heavyduty/Tractor)
