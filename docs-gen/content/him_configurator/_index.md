@@ -26,18 +26,21 @@ will show the command line options that is possible to apply at startup.
 ```
 $ ./himConfigurator -h
 usage: print [-h|--help] [-m|--makecommand (all|yaml|json|csv|binary)]
-             [-v|--vspecdir "<value>"] [-c|--saveconf]
+             [-v|--vspecdir "<value>"] [-c|--saveconf] [-e|--enumSubstitute]
 
-             HIM configurator
+             HIM preprocessor
 
 Arguments:
 
-  -h  --help         Print help information
-  -m  --makecommand  Make command parameter must be either: all, yaml, csv, or
-                     binary. Default: all
-  -v  --vspecdir     path to vspec root directory. Default: Heavyduty/Tractor/
-  -c  --saveconf     Saves the configured vspec file with extension .conf.
-                     Default: false
+  -h  --help            Print help information
+  -m  --makecommand     Make command parameter must be either: all, yaml, csv,
+                        or binary. Default: all
+  -v  --vspecdir        path to vspec root directory. Default:
+                        Heavyduty/Tractor/
+  -c  --saveconf        Saves the configured vspec file with extension .conf.
+                        Default: false
+  -e  --enumSubstitute  Substitute enum links to Datatype tree with actual
+                        datatypes. Default: false
 ```
 The -m command line option is used to set which VSS-tools exporter the configured tree should have.
 The value 'all' leads to that all the exporters that are compatible with the HIM configurator are executed.
@@ -51,4 +54,7 @@ The -c command line option is used to save a copy of the vspec files that are ch
 These files are saved with their original name post-fixed by '.conf'.
 If not set these files are deleted after being used as input to the call of the VSS-tools exporter(s).
 If not used the default is false, i. e. not to save the files.
+
+The -e command line option is used to substitute the external datatype references with the actual enum definitions
+from the common Datatypes tree in the tree(s) that the VSS-tools generate.
 

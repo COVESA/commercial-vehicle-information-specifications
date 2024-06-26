@@ -23,6 +23,7 @@ import (
 
 var  saveConf bool
 var makeCmd string
+var enumSubstitute bool
 
 type VariationPoint struct {
 	VariantName string
@@ -62,6 +63,25 @@ type Instance struct {
 }
 
 var instanceList []Instance
+
+type PropertyData struct {
+	Name string
+	NodeType string
+	Datatype string
+	Allowed []string
+	Min string
+	Max string
+	Unit string
+}
+
+var enumData []PropertyData
+
+type StructData struct {
+	Name string
+	Property []PropertyData
+}
+
+var structData []StructData
 
 func variantProcess(fileName string) error {
 	file, err := os.Open(fileName)
@@ -497,6 +517,113 @@ func walkInstancePass(s string, d fs.DirEntry, err error) error {
 	return err
 }
 
+func walkEnumSubstitute(s string, d fs.DirEntry, err error) error {
+	if err != nil {
+		return err
+	}
+	if d.IsDir() {
+//		fmt.Printf("Enter dir=%s\n", s)
+	} else {
+		if filepath.Ext(s) == ".vspec" {  // it is assumed that variantProcess() and instanceProcess() re run and created .orig file copies.
+//			fmt.Printf("enumProcess:Vspec path=%s\n", s)
+			err = enumProcess(s)
+		}
+	}
+	return err
+}
+
+func enumProcess(fileName string) error {
+	file, err := os.Open(fileName)
+	if err != nil {
+		fmt.Printf("Error reading %s: %s\n", fileName, err)
+		return err
+	}
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
+	var text string
+	continueScan := true
+	var savedLines []string
+	isConfigDone := false
+	for continueScan {
+		continueScan = scanner.Scan()
+		text = scanner.Text()
+		if isDataTypedEnum(text) {
+			enumLines := getExpandedEnumData(text)
+			for i := 0; i<len(enumLines); i++ {
+				savedLines = append(savedLines,enumLines[i])
+			}
+			isConfigDone = true
+		} else {
+			savedLines = append(savedLines,text)
+		}
+	}
+	file.Close()
+	if isConfigDone {   // if fileName.orig does not exist: rename fileName to fileName + ".orig" and rewrite fileName with savedLines
+//fmt.Printf("isConfigDone=true\n")
+		if !fileExists(fileName + ".orig") {
+			err = os.Rename(fileName, fileName + ".orig")
+			if err != nil {
+				fmt.Printf("Renaming %s failed. Err=%s\n", fileName, err)
+			}
+		} else {
+			err = os.Remove(fileName)
+			if err != nil {
+				fmt.Printf("Deleting %s failed. Err=%s\n", fileName, err)
+			}
+		}
+		if err == nil {
+			var instanceFp *os.File
+			instanceFp, err = os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0755)
+			if err != nil {
+				fmt.Printf("Could not create %s\n", fileName)
+			} else {
+				for i := 0; i < len(savedLines); i++ {
+//fmt.Printf("SavedLine: %s\n", savedLines[i])
+					instanceFp.Write([]byte(savedLines[i] + "\n"))
+				}
+				instanceFp.Close()
+			}
+		}
+	}
+	return err
+}
+
+func isDataTypedEnum(text string) bool {
+	if getExtEnumRef(text) != "" {
+			return true
+	}
+	return false
+}
+
+func getExtEnumRef(text string) string {
+	dtIndex := strings.Index(text, "datatype:")
+	if dtIndex != -1 && text[0] != '#' {
+		if strings.Contains(text[dtIndex+8+1:], ".") {
+			return strings.TrimSpace(text[dtIndex+8+1:])
+		}
+	}
+	return ""
+}
+
+func getExpandedEnumData(text string) []string {
+	var expandedData []string
+	enumRef := getExtEnumRef(text)
+	for i := 0; i < len(enumData); i++ {
+		if enumData[i].Name == enumRef {
+fmt.Printf("%s expanded\n", enumData[i].Name)
+			expandedData = append(expandedData, "  datatype: string")
+			expandedData = append(expandedData, "  allowed:")
+			for j := 0; j < len(enumData[i].Allowed); j++ {
+				expandedData = append(expandedData, enumData[i].Allowed[j])
+			}
+		}
+	}
+	if len(expandedData) == 0 {
+		expandedData = append(expandedData, text)
+	}
+	return expandedData
+}
+
 func walkPostmake(s string, d fs.DirEntry, err error) error {
 	if err != nil {
 		return err
@@ -829,6 +956,151 @@ func getRootVspecFileName(vspecRootDir string) string {
 	return ""
 }
 
+func readEnumDefinitions(fileName string) []PropertyData {
+	file, err := os.Open(fileName)
+	if err != nil {
+		fmt.Printf("readEnumDefinitions: Could not read %s\n", fileName)
+		return nil
+	}
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
+	continueScan := true
+	var enumDefs []PropertyData
+	enumIndex := 0
+	var structDefs []StructData
+	structIndex := -1
+	fieldIndex := 0
+	var thisNode PropertyData
+	nextNodeName := ""
+	populateStruct := false
+	for continueScan {
+		nextNodeName, thisNode, continueScan = getNode(scanner, nextNodeName)
+		switch thisNode.NodeType {
+			case "branch":
+				if populateStruct {
+					populateStruct = false
+				}
+			case "struct":
+				populateStruct = true
+				structIndex++
+				structDefs = append(structDefs, StructData{})
+				structDefs[structIndex].Name = thisNode.Name
+			case "property":
+				if populateStruct {
+					structDefs[structIndex].Property = append(structDefs[structIndex].Property, PropertyData{})
+					structDefs[structIndex].Property[fieldIndex] = thisNode
+					fieldIndex++					
+				} else {
+					enumDefs = append(enumDefs, PropertyData{})
+					enumDefs[enumIndex] = thisNode
+					enumIndex++					
+				}
+			default:
+				fmt.Printf("readEnumDefinitions: Invalid nodetype=%s\n", thisNode.NodeType)
+		}
+	}
+	return enumDefs
+}
+
+func getNode(scanner *bufio.Scanner, nextNodeName string) (string, PropertyData, bool) {
+	var line string
+	continueScan := true
+	thisNode := clearPropertyNode(nextNodeName)
+	nextLine := ""
+	nodeComplete := false
+	for continueScan && !nodeComplete {
+		if len(nextLine) == 0 {
+			continueScan = scanner.Scan()
+			line = scanner.Text()
+		} else {
+			line = nextLine
+			nextLine = ""
+		}
+		key, value := analyzeLine(line)
+		switch key {
+			case "name":
+				if len(thisNode.Name) == 0 {
+					thisNode.Name = value
+				} else{
+					nextNodeName = value
+					nodeComplete = true
+				}
+			case "type":
+				thisNode.NodeType = value
+			case "datatype":
+				thisNode.Datatype = value
+			case "allowed":
+				thisNode.Allowed, nextLine, continueScan = getAllowedValues(scanner)
+			case "min":
+				thisNode.Min = value
+			case "max":
+				thisNode.Max = value
+			case "unit":
+				thisNode.Unit = value
+			case "skipline": continue
+		}
+	}
+	return nextNodeName, thisNode, continueScan
+}
+
+func analyzeLine(line string) (string, string) {
+	if len(line) > 0 && line[len(line)-1] == ':' && line[0] != ' ' {
+		return "name", line[:len(line)-1]
+	}
+	if strings.Contains(line, "datatype:") {
+		return "datatype", extractValue(line)
+	}
+	if strings.Contains(line, "type:") {
+		return "type", extractValue(line)
+	}
+	if strings.Contains(line, "allowed:") {
+		return "allowed", ""
+	}
+	if strings.Contains(line, "min:") {
+		return "min", extractValue(line)
+	}
+	if strings.Contains(line, "max:") {
+		return "max", extractValue(line)
+	}
+	if strings.Contains(line, "unit:") {
+		return "unit", extractValue(line)
+	}
+	return "skipline", ""
+}
+
+func getAllowedValues(scanner *bufio.Scanner) ([]string, string, bool) {
+	var line string
+	continueScan := true
+	var allowedValues []string
+	for continueScan {
+		continueScan = scanner.Scan()
+		line = scanner.Text()
+		if strings.Contains(line, "- ") {
+			allowedValues = append(allowedValues, line)
+		} else {
+			return allowedValues, line, continueScan
+		}
+	}
+	return allowedValues, "", continueScan
+}
+
+func extractValue(line string) string {
+	colonIndex := strings.Index(line, ":")
+	return strings.TrimSpace(line[colonIndex+1:])
+}
+
+func clearPropertyNode(nextNodeName string) PropertyData {
+	var propertyNode PropertyData
+	propertyNode.Name = nextNodeName
+	propertyNode.NodeType = ""
+	propertyNode.Datatype = ""
+	propertyNode.Allowed = nil
+	propertyNode.Min = ""
+	propertyNode.Max = ""
+	propertyNode.Unit = ""
+	return propertyNode
+}
+
 func main() {
 	parser := argparse.NewParser("print", "HIM preprocessor")
 	makeCommand := parser.Selector("m", "makecommand", []string{"all", "yaml", "json", "csv", "binary"}, &argparse.Options{Required: false,
@@ -836,12 +1108,28 @@ func main() {
 //	configFileName := parser.String("p", "pathconfigfile", &argparse.Options{Required: false, Help: "path to configuration file", Default: "himConfiguration.json"})
 	vspecDir := parser.String("v", "vspecdir", &argparse.Options{Required: false, Help: "path to vspec root directory", Default: "Heavyduty/Tractor/"})
 	sConf := parser.Flag("c", "saveconf", &argparse.Options{Required: false, Help: "Saves the configured vspec file with extension .conf", Default: false})
+	enumSubst := parser.Flag("e", "enumSubstitute", &argparse.Options{Required: false, Help: "Substitute enum links to Datatype tree with actual datatypes", Default: false})
 	err := parser.Parse(os.Args)
 	if err != nil {
 		fmt.Print(parser.Usage(err))
 	}
 	saveConf = *sConf
 	makeCmd = *makeCommand
+	if *enumSubst {
+		if !fileExists(*vspecDir + "Datatypes.yaml") {
+			cmd := exec.Command("/usr/bin/bash", "make.sh", "yaml", "./spec/objects/Datatype/Datatype.vspec")
+			err = cmd.Run()
+			if err != nil {
+				fmt.Printf("Executing make failed with error=%s\n", err)
+			} else {
+				err = os.Rename("../../vss_rel_0.1-dev.yaml", *vspecDir+"Datatypes.yaml")  //TODO: VERSION=0.1-dev no will not be persistent
+				if err != nil {
+					fmt.Printf("Failed to rename and move %s error=%s\n", *vspecDir+"Datatypes.yaml", err)
+				}
+			}
+		}
+	}
+	enumSubstitute = *enumSubst && fileExists(*vspecDir + "Datatypes.yaml")
 
 	variantConfigs, instanceConfigs := readConfigFile(*vspecDir)
 	variantList = decodeVariantConfigs(variantConfigs)
@@ -860,11 +1148,27 @@ func main() {
 		os.Exit(1)
 	}
 
+	if enumSubstitute {
+		enumData = readEnumDefinitions(*vspecDir + "Datatypes.yaml")
+/*fmt.Printf("len(enumData)=%d\n", len(enumData))
+for i := 0; i < len(enumData); i++ {
+	fmt.Printf("enumData[%d].Name=%s\n", i, enumData[i].Name)
+	fmt.Printf("enumData[%d].Datatype=%s\n", i, enumData[i].Datatype)
+	fmt.Printf("len(enumData[%d].Allowed)=%d\n", i, len(enumData[i].Allowed))
+}*/
+		err = filepath.WalkDir(*vspecDir, walkEnumSubstitute)
+		if err != nil {
+			fmt.Printf("Enum substitute preprocessing failed. Terminating.\n")
+			os.Exit(1)
+		}
+	}
+
 	rootVspecFileName := getRootVspecFileName(*vspecDir)
 	if makeCmd == "all" {
 		makeCmd = ""
 	}
-	cmd := exec.Command("/usr/bin/bash", "make.sh", makeCmd, *vspecDir+rootVspecFileName)
+	cmd := exec.Command("/usr/bin/bash", "make.sh", makeCmd, "./spec/trees/" + *vspecDir+rootVspecFileName)
+//	cmd := exec.Command("/usr/bin/bash", "make.sh", makeCmd, *vspecDir+rootVspecFileName)
 	err = cmd.Run()
 	if err != nil {
 		fmt.Printf("Executing make failed with error=%s. Terminating.\n", err)

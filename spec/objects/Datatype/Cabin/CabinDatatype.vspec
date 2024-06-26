@@ -1,0 +1,187 @@
+# Copyright (c) 2024 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# Commercial Vehicle Information Specifications Cabin Datatype file
+#
+
+#
+# The root branch for CVIS Cabin datatype definitions.
+#
+
+Cabin:
+  type: branch
+  description: Cabin datatype definitions.
+
+Cabin.DriverPositionValues:
+  type: sensor
+  datatype: string
+  allowed: ['LEFT', 'MIDDLE', 'RIGHT']
+  description: DriverPosition allowed values.
+
+Cabin.HVACStation:
+  type: branch
+  description: Cabin.HVACStation datatype definitions.
+
+Cabin.HVACStation.AirDistributionValues:
+  type: sensor
+  datatype: string
+  allowed: ['UP', 'MIDDLE', 'DOWN']
+  description: HVACStation.AirDistribution allowed values.
+
+Cabin.Sunroof:
+  type: branch
+  description: Cabin.Sunroof datatype definitions.
+
+Cabin.Sunroof.SwitchValues:
+  type: sensor
+  datatype: string
+  allowed: ['INACTIVE', 'CLOSE', 'OPEN', 'ONE_SHOT_CLOSE', 'ONE_SHOT_OPEN', 'TILT_UP', 'TILT_DOWN']
+  description: Sunroof.Switch allowed values.
+
+Cabin.Convertible:
+  type: branch
+  description: Cabin.Convertible datatype definitions.
+
+Cabin.Convertible.StatusValues:
+  type: sensor
+  datatype: string
+  allowed: ['FRONT_LEFT', 'FRONT_RIGHT', 'MIDDLE_LEFT', 'MIDDLE_RIGHT', 'REAR_LEFT', 'REAR_RIGHT']
+  description: Convertible.Status allowed values.
+
+Cabin.Media:
+  type: branch
+  description: Cabin.Media datatype definitions.
+
+Cabin.Media.ActionValues:
+  type: sensor
+  datatype: string
+  allowed: ['UNKNOWN', 'STOP', 'PLAY', 'FAST_FORWARD', 'FAST_BACKWARD', 'SKIP_FORWARD', 'SKIP_BACKWARD']
+  description: Media.Action allowed values.
+
+Cabin.Media.Played:
+  type: branch
+  description: Cabin.Media.Played datatype definitions.
+
+Cabin.Media.Played.SourceValues:
+  type: sensor
+  datatype: string
+  allowed: ['UNKNOWN', 'SIRIUS_XM', 'AM', 'FM', 'DAB', 'TV', 'CD', 'DVD', 'AUX', 'USB', 'DISK', 'BLUETOOTH', 'INTERNET', 'VOICE', 'BEEP']
+  description: Media.Played.Source allowed values.
+
+Cabin.Navigation:
+  type: branch
+  description: Cabin.Navigation datatype definitions.
+
+Cabin.Navigation.MuteValues:
+  type: sensor
+  datatype: string
+  allowed: ['MUTED', 'ALERT_ONLY', 'UNMUTED']
+  description: Navigation.Mute allowed values.
+
+Cabin.Navigation.GuidanceVoiceValues:
+  type: sensor
+  datatype: string
+  allowed: ['STANDARD_MALE', 'STANDARD_FEMALE', 'ETC']
+  description: Navigation.GuidanceVoice allowed values.
+
+Cabin.HMI:
+  type: branch
+  description: Cabin.HMI datatype definitions.
+
+Cabin.HMI.FontSizeValues:
+  type: sensor
+  datatype: string
+  allowed: ['STANDARD', 'LARGE', 'EXTRA_LARGE']
+  description: HMI.FontSize allowed values.
+
+Cabin.HMI.DateFormatValues:
+  type: sensor
+  datatype: string
+  allowed: ['YYYY_MM_DD', 'DD_MM_YYYY', 'MM_DD_YYYY', 'YY_MM_DD', 'DD_MM_YY', 'MM_DD_YY']
+  description: HMI.DateFormat allowed values.
+
+Cabin.HMI.TimeFormatValues:
+  type: sensor
+  datatype: string
+  allowed: ['HR_12', 'HR_24']
+  description: HMI.TimeFormat allowed values.
+
+Cabin.HMI.DistanceUnitValues:
+  type: sensor
+  datatype: string
+  allowed: ['MILES', 'KILOMETERS']
+  description: HMI.DistanceUnit allowed values.
+
+Cabin.HMI.FuelVolumeUnitValues:
+  type: sensor
+  datatype: string
+  allowed: ['LITER', 'GALLON_US', 'GALLON_UK']
+  description: HMI.FuelVolumeUnit allowed values.
+
+Cabin.HMI.FuelEconomyUnitsValues:
+  type: sensor
+  datatype: string
+  allowed: ['MPG_UK', 'MPG_US', 'MILES_PER_LITER', 'KILOMETERS_PER_LITER', 'LITERS_PER_100_KILOMETERS']
+  description: HMI.FuelEconomyUnits allowed values.
+
+Cabin.HMI.EVEconomyUnitsValues:
+  type: sensor
+  datatype: string
+  allowed: ['MILES_PER_KILOWATT_HOUR', 'KILOMETERS_PER_KILOWATT_HOUR', 'KILOWATT_HOURS_PER_100_MILES', 'KILOWATT_HOURS_PER_100_KILOMETERS', 'WATT_HOURS_PER_MILE', 'WATT_HOURS_PER_KILOMETER']
+  description: HMI.EVEconomyUnits allowed values.
+
+Cabin.HMI.TemperatureUnitValues:
+  type: sensor
+  datatype: string
+  allowed: ['C', 'F']
+  description: HMI.TemperatureUnit allowed values.
+
+Cabin.HMI.TirePressureUnitValues:
+  type: sensor
+  datatype: string
+  allowed: ['PSI', 'KPA', 'BAR']
+  description: HMI.TirePressureUnit allowed values.
+
+Cabin.HMI.DayNightModeValues:
+  type: sensor
+  datatype: string
+  allowed: ['DAY', 'NIGHT']
+  description: HMI.DayNightMode allowed values.
+
+Cabin.SmartphoneProjection:
+  type: branch
+  description: Cabin.SmartphoneProjection datatype definitions.
+
+Cabin.SmartphoneProjection.ActiveValues:
+  type: sensor
+  datatype: string
+  allowed: [ 'NONE', 'ACTIVE',  'INACTIVE' ]
+  description: SmartphoneProjection.Active allowed values.
+
+Cabin.SmartphoneProjection.SourceValues:
+  type: sensor
+  datatype: string
+  allowed: ['USB', 'BLUETOOTH', 'WIFI']
+  description: SmartphoneProjection.Source allowed values.
+  
+  Cabin.SmartphoneProjection.SupportedModeValues:
+  type: sensor
+  datatype: string
+  allowed: [ 'ANDROID_AUTO', 'APPLE_CARPLAY', 'MIRROR_LINK', 'OTHER' ]
+  description: SmartphoneProjection.SupportedMode allowed values.
+
+Cabin.SliderSwitch:
+  type: branch
+  description: Cabin.SliderSwitch datatype definitions.
+
+Cabin.SliderSwitch.SwitchValues:
+  type: sensor
+  datatype: string
+  allowed: ['INACTIVE', 'CLOSE', 'OPEN', 'ONE_SHOT_CLOSE', 'ONE_SHOT_OPEN']
+  description: SliderSwitch.Switch allowed values.

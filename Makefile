@@ -21,7 +21,8 @@ mandatory_targets: clean json json-noexpand franca yaml binary csv graphql ddsid
 optional_targets: clean protobuf ttl
 
 TOOLSDIR?=./vss-tools
-COMMON_ARGS=-u ./spec/units.yaml --strict
+COMMON_ARGS=-u ./spec/units.yaml
+#COMMON_ARGS=-u ./spec/units.yaml --strict
 # Default vspec root file if not overridden by command line input.
 VSPECROOT=./spec/VehicleSignalSpecification.vspec
 

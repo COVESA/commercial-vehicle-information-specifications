@@ -122,7 +122,21 @@ The expressions can use any of the two syntax options mentioned above.
 
 Currently this syntax can only be used for two-dimensional instantiations.
 
-### Trees under development
+### Datatypes tree
+One of the information rule sets that HIM supports is the type definition rule set.
+A type definition tree is able to define strutcs and enums (allowed) that can be referenced from trees of other information types.
+Such a tree is defined in the spec/objects/Datatypes directory, currently containing the enums (allowed) that is used in the VSS tree.
+This tree has a structure that mirrors the structure from the VSS tree where the enums were originally used.
+This structure might later be changed to a more generic structuring to yield reference path names more decoupled from the VSS structure.
+
+An external datatype reference to an enum (allowed) shall have a syntax as shown below.
+```
+  datatype: Datatype.x.y.zValues
+```
+where x, y, z may be names providing an understanding of the defined enum (allowed) that conform to the node HIM node name syntax.
+The name z must be postfixed with the tag Values.
+
+## Trees under development
 Currently two trees are being developed:
 * [Tractor tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Heavyduty/Tractor)
 * [Trailer tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Heavyduty/Trailer)

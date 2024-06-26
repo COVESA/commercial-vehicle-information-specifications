@@ -22,9 +22,8 @@ Body.BodyType:
 Body.RefuelPosition:
   deprecation: v4.1 replaced with Vehicle.Powertrain.TractionBattery.Charging.ChargePortPosition
                and Vehicle.Powertrain.FuelSystem.RefuelPortPosition
-  datatype: string
+  datatype: Datatype.Body.RefuelPositionValues
   type: attribute
-  allowed: ['FRONT_LEFT', 'FRONT_RIGHT', 'MIDDLE_LEFT', 'MIDDLE_RIGHT', 'REAR_LEFT', 'REAR_RIGHT']
   description: Location of the fuel cap or charge port.
 
 #

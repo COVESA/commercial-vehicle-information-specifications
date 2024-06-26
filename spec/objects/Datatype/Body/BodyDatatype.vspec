@@ -1,0 +1,69 @@
+# Copyright (c) 2024 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# Commercial Vehicle Information Specifications Body Datatype file
+#
+
+#
+# The root branch for CVIS Body datatype definitions.
+#
+
+Body:
+  type: branch
+  description: Body datatype definitions.
+
+Body.RefuelPositionValues:
+  type: sensor
+  datatype: stringx
+  allowed: ['FRONT_LEFT', 'FRONT_RIGHT', 'MIDDLE_LEFT', 'MIDDLE_RIGHT', 'REAR_LEFT', 'REAR_RIGHT']
+  description: RefuelPosition allowed values.
+
+Body.Windshield:
+  type: branch
+  description: Body.Windshield datatype definitions.
+
+Body.Windshield.Wiping:
+  type: branch
+  description: Body.Windshield.Wiping datatype definitions.
+
+Body.Windshield.Wiping.ModeValues:
+  type: sensor
+  datatype: string
+  allowed: ['OFF', 'SLOW', 'MEDIUM', 'FAST', 'INTERVAL', 'RAIN_SENSOR']
+  description: Windshield.Wiping.Mode allowed values.
+
+Body.WiperSystem:
+  type: branch
+  description: Body.WiperSystem datatype definitions.
+
+Body.WiperSystem.ModeValues:
+  type: sensor
+  datatype: string
+  allowed: ['STOP_HOLD', 'WIPE', 'PLANT_MODE', 'EMERGENCY_STOP']
+  description: WiperSystem.Mode allowed values.
+
+Body.Lights:
+  type: branch
+  description: Body.Lights datatype definitions.
+
+Body.Lights.LightSwitchValues:
+  type: sensor
+  datatype: string
+  allowed: ['OFF', 'POSITION', 'DAYTIME_RUNNING_LIGHTS', 'AUTO', 'BEAM']
+  description: Lights.LightSwitch allowed values.
+
+Body.BrakeLights:
+  type: branch
+  description: Body.BrakeLights datatype definitions.
+
+Body.BrakeLights.IsActiveValues:
+  type: sensor
+  datatype: string
+  allowed: ['INACTIVE', 'ACTIVE', 'ADAPTIVE']
+  description: BrakeLights.IsActive allowed values.
