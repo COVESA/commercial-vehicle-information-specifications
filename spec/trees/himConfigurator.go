@@ -917,6 +917,8 @@ func unpackInstMapLevel3(index1 int, index2 int, columnDefMap interface{}, insta
 }
 
 func readConfigFile(vspecDir string) (string, string) {
+	variantReadError := false
+	instanceReadError := false
 	configFileName := vspecDir + "himConfiguration.json"
 	data, err := os.ReadFile(configFileName)
 	if err != nil {
@@ -925,21 +927,27 @@ func readConfigFile(vspecDir string) (string, string) {
 	}
 	variantsIndex := strings.Index(string(data), `"variants":`)
 	if variantsIndex == -1 {
-		fmt.Printf("readConfigFile: Could not find 'variants' key in %s", configFileName)
-		return "", ""
+		fmt.Printf("readConfigFile: Could not find 'variants' key in %s\n", configFileName)
+		variantReadError = true
 	}
 	instancesIndex := strings.Index(string(data), `"instances":`)
 	if instancesIndex == -1 {
-		fmt.Printf("readConfigFile: Could not find 'instances' key in %s", configFileName)
-		return "", ""
+		fmt.Printf("readConfigFile: Could not find 'instances' key in %s\n", configFileName)
+		instanceReadError = true
 	}
-	variantsStr := string(data[variantsIndex+11:instancesIndex])
-	variantsStr = strings.TrimSpace(variantsStr)
-	instancesStr := string(data[instancesIndex+12:])
-	instancesStr = strings.TrimSpace(instancesStr)
-//fmt.Printf("variantsStr=%s\n", variantsStr[:len(variantsStr)-1])
-//fmt.Printf("instancesStr=%s\n", strings.TrimSpace(instancesStr[:len(instancesStr)-1]))
-	return variantsStr[:len(variantsStr)-1], strings.TrimSpace(instancesStr[:len(instancesStr)-1])
+	variantReturn := ""
+	if !variantReadError {
+		variantsStr := string(data[variantsIndex+11:instancesIndex])
+		variantsStr = strings.TrimSpace(variantsStr)
+		variantReturn = variantsStr[:len(variantsStr)-1]
+	}
+	instancesReturn := ""
+	if !instanceReadError {
+		instancesStr := string(data[instancesIndex+12:])
+		instancesStr = strings.TrimSpace(instancesStr)
+		instancesReturn = strings.TrimSpace(instancesStr[:len(instancesStr)-1])
+	}
+	return variantReturn, instancesReturn
 }
 
 func getRootVspecFileName(vspecRootDir string) string {
@@ -1102,11 +1110,11 @@ func clearPropertyNode(nextNodeName string) PropertyData {
 }
 
 func main() {
-	parser := argparse.NewParser("print", "HIM preprocessor")
+	parser := argparse.NewParser("print", "HIM configurator")
 	makeCommand := parser.Selector("m", "makecommand", []string{"all", "yaml", "json", "csv", "binary"}, &argparse.Options{Required: false,
 		Help: "Make command parameter must be either: all, yaml, csv, or binary", Default: "all"})
 //	configFileName := parser.String("p", "pathconfigfile", &argparse.Options{Required: false, Help: "path to configuration file", Default: "himConfiguration.json"})
-	vspecDir := parser.String("v", "vspecdir", &argparse.Options{Required: false, Help: "path to vspec root directory", Default: "Heavyduty/Tractor/"})
+	vspecDir := parser.String("v", "vspecdir", &argparse.Options{Required: false, Help: "path to vspec root directory", Default: "CV/Truck/"})
 	sConf := parser.Flag("c", "saveconf", &argparse.Options{Required: false, Help: "Saves the configured vspec file with extension .conf", Default: false})
 	enumSubst := parser.Flag("e", "enumSubstitute", &argparse.Options{Required: false, Help: "Substitute enum links to Datatype tree with actual datatypes", Default: false})
 	err := parser.Parse(os.Args)
@@ -1132,8 +1140,12 @@ func main() {
 	enumSubstitute = *enumSubst && fileExists(*vspecDir + "Datatypes.yaml")
 
 	variantConfigs, instanceConfigs := readConfigFile(*vspecDir)
-	variantList = decodeVariantConfigs(variantConfigs)
-	instanceList = decodeInstanceConfigs(instanceConfigs)
+	if variantConfigs != "" {
+		variantList = decodeVariantConfigs(variantConfigs)
+	}
+	if instanceConfigs != "" {
+		instanceList = decodeInstanceConfigs(instanceConfigs)
+	}
 	variabilityList = readVariabilityFile(*vspecDir + "Variability.json")
 
 	err = filepath.WalkDir(*vspecDir, walkVariantPass)

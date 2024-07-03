@@ -1,0 +1,52 @@
+{
+    "instances": {
+        "Seat": [
+            "Row[1,4]",
+            [
+                [
+                    "Driver"
+                ],
+                [
+                    "Left1",
+                    "Left2",
+                    "Right3",
+                    "Right4"
+                ],
+                [
+                    "Left1",
+                    "Left2",
+                    "Right3",
+                    "Right4"
+                ],
+                [
+                    "Rear1",
+                    "Rear2",
+                    "Rear3",
+                    "Rear4",
+                    "Rear5"
+                ]
+            ]
+        ],
+        "Axle": [
+            "Row[1,3]",
+            [
+                [
+                    "Pos7",
+                    "Pos9"
+                ],
+                [
+                    "Pos6",
+                    "Pos7",
+                    "Pos9",
+                    "Pos10"
+                ],
+                [
+                    "Pos6",
+                    "Pos7",
+                    "Pos9",
+                    "Pos10"
+                ]
+            ]
+        ]
+    }
+}

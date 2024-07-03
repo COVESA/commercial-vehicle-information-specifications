@@ -1,0 +1,27 @@
+# Copyright (c) 2024 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# Root Driver Signal Specification file
+#
+# This top level signal specification file includes all other vspec
+# and yaml files into a complete specification that can be processed
+# by the pre-processor tool, which in turn uses
+# the tools available in https://github.com/COVESA/vss-tools.
+#
+
+#
+# The root branch for highlevel Driver signals and attributes.
+#
+Driver:
+  type: branch
+  description: High-level driver data.
+
+VariationPoint: #DriverLegislation
+  - EU #include EU/EUDriver.vspec Driver
+  - US #include US/USDriver.vspec Driver
