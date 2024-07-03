@@ -1,0 +1,36 @@
+# Copyright (c) 2024 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# Root Trailer Signal Specification file
+#
+# This top level signal specification file includes all other vspec
+# and yaml files into a complete specification that can be processed
+# by the pre-processor tool, which in turn uses
+# the tools available in https://github.com/COVESA/vss-tools.
+#
+
+#
+# The root branch for highlevel trailer signals and attributes.
+#
+Trailer:
+  type: branch
+  description: High-level trailer data.
+
+#include Vehicle/Vehicle.vspec Trailer
+
+#include Chassis/Chassis.vspec Trailer
+
+VariationPoint: #TrailerCargoType
+  - FLATBED #include Body/Flatbed/FlatbedCargo.vspec Trailer
+  - TANKER #include Body/Tanker/TankerCargo.vspec Trailer
+  - FREEZER #include Body/Freezer/FreezerCargo.vspec Trailer
+  - SPECIALIZED #include Body/Specialized/SpecializedCargo.vspec Trailer
+
+##include Exterior/Exterior.vspec Trailer
+

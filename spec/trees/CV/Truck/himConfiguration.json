@@ -1,0 +1,30 @@
+{
+    "variants": {
+        "EngineType": "ICE",
+        "CargoType": "TRAILER"
+    },
+    "instances": {
+        "Seat": [
+            "Row[1,2]",
+            [
+                [
+                    "DriverSide",
+                    "Middle",
+                    "PassengerSide"
+                ],
+                [
+                    "SleeperCab"
+                ]
+            ]
+        ],
+        "Axle": [
+            "Row[1,4]",
+            [
+                ["Pos7","Pos9"],
+                ["Pos7","Pos9"],
+                ["Pos6","Pos7", "Pos9","Pos10"],
+                ["Pos8"]
+            ]
+        ]
+    }
+}

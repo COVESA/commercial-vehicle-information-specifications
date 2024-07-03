@@ -1,0 +1,22 @@
+{
+    "variants": {
+        "TrailerCargoType": "TANKER"
+    },
+    "instances": {
+        "Axle": [
+            "Row[1,2]",
+            [
+                [
+                    "Pos7",
+                    "Pos9"
+                ],
+                [
+                    "Pos6",
+                    "Pos7",
+                    "Pos9",
+                    "Pos10"
+                ]
+            ]
+        ]
+    }
+}

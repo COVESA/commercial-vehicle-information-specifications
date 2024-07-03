@@ -1,0 +1,217 @@
+# Copyright (c) 2016 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# All in-cabin originated signals and attributes
+#
+
+Cabin:
+  type: branch
+  description: All in-cabin components, including doors.
+
+##
+# Rear window shade signals
+##
+Cabin.RearShade:
+  type: branch
+  description: Rear window shade. Open = Retracted, Closed = Deployed.
+               Start position for RearShade is Open/Retracted.
+
+# Include the same shade spec used for sunroof and side windows.
+#include ../include/MovableItem.yaml Cabin.RearShade
+
+##
+# HVAC signals
+##
+Cabin.HVAC:
+  type: branch
+  description: Climate control
+
+#include HVAC.vspec Cabin.HVAC
+
+##
+# Infotainment
+##
+Cabin.Infotainment:
+  type: branch
+  description: Infotainment system.
+
+#include Infotainment.vspec Cabin.Infotainment
+
+##
+# Sunroof status
+##
+Cabin.Sunroof:
+  type: branch
+  description: Sun roof status.
+
+Cabin.Sunroof.Position:
+  datatype: int8
+  type: sensor
+  unit: percent
+  min: -100
+  max: 100
+  description: Sunroof position. 0 = Fully closed 100 = Fully opened. -100 = Fully tilted.
+
+#
+# Sunroof controlling switch.
+# We cannot use SingleSliderSwitch.vspec since we have TiltUp and TiltDown also
+Cabin.Sunroof.Switch:
+  datatype: string
+  type: actuator
+  allowed: ['INACTIVE', 'CLOSE', 'OPEN', 'ONE_SHOT_CLOSE', 'ONE_SHOT_OPEN', 'TILT_UP', 'TILT_DOWN']
+  description: Switch controlling sliding action such as window, sunroof, or shade.
+
+Cabin.Sunroof.Shade:
+  type: branch
+  description: Sun roof shade status. Open = Retracted, Closed = Deployed.
+               Start position for Sunroof.Shade is Open/Retracted.
+
+# Include shade specification also used by side and rear window.
+#include ../include/MovableItem.yaml Cabin.Sunroof.Shade
+
+#
+# Rear-view mirror signals
+#
+Cabin.RearviewMirror:
+  type: branch
+  description: Rear-view mirror.
+
+Cabin.RearviewMirror.DimmingLevel:
+  datatype: uint8
+  type: actuator
+  unit: percent
+  max: 100
+  description: Dimming level of rear-view mirror. 0 = Undimmed. 100 = Fully dimmed.
+
+
+##
+# Interior lights signals and sensors
+##
+Cabin.Light:
+  type: branch
+  description: Light that is part of the Cabin.
+  comment: V4.0 branch renamed from "Lights" to "Light" to comply with singular naming of entities. Use SingleConfigurableLight.vspec to describe interior lights that can be configured.
+#include InteriorLights.vspec Cabin.Light
+
+
+##
+# Door signals and attributes
+# The default VSS (i.e. this file) assumes a vehicle with two rows of doors
+# with two doors in front row and two doors in second row.
+# For real deployments this needs to be overridden with actual values
+# Row1 is the frontmost row.
+# Row2-RowX are subsequent rows of doors.
+#
+# Note that rear door (for hatchback and station wagons) shall typically not be represented
+# as a door, but rather be represented as a trunk (Vehicle.Body.Trunk) and
+# rear shade (Vehicle.Cabin.RearShade)
+##
+Cabin.Door:
+  type: branch
+  instances:
+    - Row[1,2]
+    - ["DriverSide","PassengerSide"]
+  description: All doors, including windows and switches.
+#include SingleDoor.vspec Cabin.Door
+
+# Default value based on instance declaration above with 2 rows and 2 doors in each row.
+Cabin.DoorCount:
+  datatype: uint8
+  type: attribute
+  default: 4
+  description: Number of doors in vehicle.
+
+
+Cabin.IsWindowChildLockEngaged:
+  datatype: boolean
+  type: actuator
+  description: Is window child lock engaged. True = Engaged. False = Disengaged.
+  comment: Window child lock refers to the functionality to disable the move window button next to most windows,
+           so that they only can be operated by the driver.
+
+##
+# Seat signals and attributes
+# The default VSS (i.e. this file) assumes a vehicle with two rows of seats
+# with two seats in front row and three seats in second row.
+# For real deployments this needs to be overridden with actual values
+# Row1 is the frontmost row.
+# Row2-RowX are subsequent rows of seats.
+#
+# Which seats that actually exist can be defined by SeatPosCount
+##
+
+Cabin.Seat:
+  type: branch
+  description: All seats.
+
+Cabin.Seat.Row1:
+  type: branch
+  instances: ["Driver"]
+  description: Cabin.Seat.Row1
+#include SingleSeat.vspec Cabin.Seat.Row1
+
+Cabin.Seat.Row2:
+  type: branch
+  instances: ["Left1", "Left2", "Right3", "Right4"]
+  description: Cabin.Seat.Row2
+#include SingleSeat.vspec Cabin.Seat.Row2
+
+Cabin.Seat.Row3:
+  type: branch
+  instances: ["Left1", "Left2", "Right3", "Right4"]
+  description: Cabin.Seat.Row3
+#include SingleSeat.vspec Cabin.Seat.Row3
+
+Cabin.Seat.Row4:
+  type: branch
+  instances: ["Rear1", "Rear2", "Rear3", "Rear4", "Rear5"]
+  description: Cabin.Seat.Row4
+#include SingleSeat.vspec Cabin.Seat.Row4
+
+#
+# Seat attributes.
+#
+Cabin.DriverPosition:
+  datatype: string
+  type: attribute
+  allowed: ['LEFT', 'MIDDLE', 'RIGHT']
+  description: The position of the driver seat in row 1.
+  comment: Some signals use DriverSide and PassengerSide as instances. If this signal specifies that DriverPosition is LEFT or MIDDLE, then DriverSide refers to left side and PassengerSide to right side. If this signal specifies that DriverPosition is RIGHT, then DriverSide refers to right side and PassengerSide to left side.
+
+Cabin.SeatRowCount:
+  datatype: uint8
+  type: attribute
+  default: 2
+  description: Number of seat rows in vehicle.
+  comment: Default value corresponds to two rows of seats.
+
+
+Cabin.SeatPosCount:
+  datatype: uint8[]
+  type: attribute
+  default: [2, 3]
+  description: Number of seats across each row from the front to the rear.
+  comment: Default value corresponds to two seats in front row and 3 seats in second row.
+
+##
+# Convertible roof status
+##
+Cabin.Convertible:
+  type: branch
+  description: Convertible roof.
+
+Cabin.Convertible.Status:
+  datatype: string
+  type: sensor
+  allowed: ['UNDEFINED', 'CLOSED', 'OPEN', 'CLOSING', 'OPENING', 'STALLED']
+  description: Roof status on convertible vehicles.
+
+#include ../include/PowerOptimize.yaml Cabin
+
+

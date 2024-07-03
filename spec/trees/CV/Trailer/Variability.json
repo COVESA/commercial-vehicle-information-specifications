@@ -1,0 +1,16 @@
+{
+    "TrailerCargoType": [
+        {
+            "FLATBED": "FLATBED"
+        },
+        {
+            "TANKER": "TANKER"
+        },
+        {
+            "FREEZER": "FREEZER"
+        },
+        {
+            "SPECIALIZED": "SPECIALIZED"
+        }
+    ]
+}

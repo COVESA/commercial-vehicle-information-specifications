@@ -1,0 +1,34 @@
+{
+    "EngineType": [
+        {
+            "ICE": "ICE"
+        },
+        {
+            "EV": "EV"
+        },
+        {
+            "PHEV": [
+                "ICE",
+                "EV"
+            ]
+        },
+        {
+            "HEV": [
+                "ICE",
+                "EV"
+            ]
+        }
+    ],
+    "CargoType": [
+        {
+            "TRACTOR": "TRACTOR"
+        },
+        {
+            "BOXTRUCK": "BOXTRUCK"
+        },
+        {
+            "TRAILER": "TRAILER"
+        }
+    ]
+
+}
