@@ -28,7 +28,7 @@ $ ./himConfigurator -h
 usage: print [-h|--help] [-m|--makecommand (all|yaml|json|csv|binary)]
              [-v|--vspecdir "<value>"] [-c|--saveconf] [-e|--enumSubstitute]
 
-             HIM preprocessor
+             HIM configurator
 
 Arguments:
 
@@ -36,7 +36,7 @@ Arguments:
   -m  --makecommand     Make command parameter must be either: all, yaml, csv,
                         or binary. Default: all
   -v  --vspecdir        path to vspec root directory. Default:
-                        Heavyduty/Tractor/
+                        Vehicle/CargoVehicle/
   -c  --saveconf        Saves the configured vspec file with extension .conf.
                         Default: false
   -e  --enumSubstitute  Substitute enum links to Datatype tree with actual

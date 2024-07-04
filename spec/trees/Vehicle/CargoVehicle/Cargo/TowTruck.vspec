@@ -7,9 +7,10 @@
 # SPDX-License-Identifier: MPL-2.0
 
 #
-# Boxtruck cargo signals and attributes
+# Signals and attributes related to truck-to-trailer hook-up configuration.
+# The trailer signals are represented in the trailer tree.
 #
 
-BoxtruckCargo:
+TowTruck:
   type: branch
-  description: Boxtruck cargo signals.
+  description: Truck-to-trailer hook-up signals.

@@ -7,10 +7,8 @@
 # SPDX-License-Identifier: MPL-2.0
 
 #
-# Signals and attributes related to truck-to-trailer hook-up.
-# The trailer signals are represented in the trailer tree.
+# Van cargo signals and attributes
 #
-
-TrailerHookup:
+Van:
   type: branch
-  description: Trailer hook-up signals.
+  description: Van cargo signals.

@@ -7,9 +7,15 @@
 # SPDX-License-Identifier: MPL-2.0
 
 #
-# Tractor truck cargo signals and attributes
+# Truck cargo signals and attributes
 #
 
-TractorCargo:
+Cargo:
   type: branch
-  description: Tractor truck cargo signals.
+  description: Truck cargo signals.
+
+VariationPoint: #CargoType
+  - BOXTRUCK  #include Boxtruck.vspec Cargo
+  - TOWTRUCK #include TowTruck.vspec Cargo
+  - VAN #include Van.vspec Cargo
+  - PICKUP #include Pickup.vspec Cargo
