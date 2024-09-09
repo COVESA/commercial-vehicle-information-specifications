@@ -18,23 +18,23 @@
 #
 # The root branch for highlevel cargo vehicle signals and attributes.
 #
-CV:
+Truck:
   type: branch
   description: Root for cargo vehicle data.
 
-#include Vehicle/Vehicle.vspec CV
+#include Vehicle/Vehicle.vspec Truck
 
-#include ADAS/ADAS.vspec CV
+#include ADAS/ADAS.vspec Truck
 
-#include Powertrain/Powertrain.vspec CV
+#include Powertrain/Powertrain.vspec Truck
 
-#include Body/Body.vspec CV
+#include Body/Body.vspec Truck
 
-#include Chassis/Chassis.vspec CV
+#include Chassis/Chassis.vspec Truck
 
-#include Cabin/Cabin.vspec CV
+#include Cabin/Cabin.vspec Truck
 
-#include Cargo/Cargo.vspec CV
+#include Cargo/Cargo.vspec Truck
 
-#include Exterior/Exterior.vspec CV
+#include Exterior/Exterior.vspec Truck
 
