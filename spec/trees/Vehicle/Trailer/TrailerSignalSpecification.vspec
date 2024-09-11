@@ -27,10 +27,11 @@ Trailer:
 #include Chassis/Chassis.vspec Trailer
 
 VariationPoint: #TrailerCargoType
-  - FLATBED #include Body/Flatbed/FlatbedCargo.vspec Trailer
-  - TANKER #include Body/Tanker/TankerCargo.vspec Trailer
-  - FREEZER #include Body/Freezer/FreezerCargo.vspec Trailer
-  - SPECIALIZED #include Body/Specialized/SpecializedCargo.vspec Trailer
+  - BOXCARGO #include Cargo/BoxCargo.vspec Trailer
+  - FLATBEDCARGO #include Cargo/FlatbedCargo.vspec Trailer
+  - TANKERCARGO #include Cargo/TankerCargo.vspec Trailer
+  - FREEZERCARGO #include Cargo/FreezerCargo.vspec Trailer
+  - SPECIALIZEDCARGO #include Cargo/SpecializedCargo.vspec Trailer
 
 ##include Exterior/Exterior.vspec Trailer
 

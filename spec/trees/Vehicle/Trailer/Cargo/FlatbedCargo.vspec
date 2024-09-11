@@ -7,9 +7,9 @@
 # SPDX-License-Identifier: MPL-2.0
 
 #
-# Boxtruck cargo signals and attributes
+# Flatbed trailer type cargo signals and attributes
 #
 
-BoxTruck:
+FlatbedCargo:
   type: branch
-  description: Box truck type cargo.
+  description: Flatbed trailer type.

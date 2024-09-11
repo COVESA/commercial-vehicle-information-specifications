@@ -15,7 +15,8 @@ Cargo:
   description: Truck cargo signals.
 
 VariationPoint: #CargoType
-  - BOXTRUCK  #include Boxtruck.vspec Cargo
   - TOWTRUCK #include TowTruck.vspec Cargo
+  - BOXTRUCK  #include Boxtruck.vspec Cargo
+  - FLATBEDTRUCK #include FlatbedTruck.vspec Cargo
   - VAN #include Van.vspec Cargo
   - PICKUP #include Pickup.vspec Cargo

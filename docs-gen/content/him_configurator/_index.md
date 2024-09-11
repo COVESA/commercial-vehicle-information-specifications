@@ -58,3 +58,14 @@ If not used the default is false, i. e. not to save the files.
 The -e command line option is used to substitute the external datatype references with the actual enum definitions
 from the common Datatypes tree in the tree(s) that the VSS-tools generate.
 
+## Creation of a vehicle variant specific signal tree
+The HIM configurator enables a model where a "super tree" covering all variations of a vehicle archetype
+(like Truck, Trailer, Bus, etc) can be defined in the vspec files,
+then the HIM configurator can be used to create a "variant specific" vehicle signal tree via the input data in the himConfiguration.json file.
+
+## Usage of a vehicle variant specific signal tree
+The output from the HIM configurator is the selected parts of the "vspec super tree" in a file with one of the supported formats.
+This file can then e. g. be used in a vehicle of the selected variant by a server that is controlling the access to the signals.
+The server cn then use the tree to "vet" client request - checking that the signal is present, whether it is read-only or read-write, etc.
+An example of a server using it like this is the [VISS reference server](https://github.com/COVESA/vissr).
+

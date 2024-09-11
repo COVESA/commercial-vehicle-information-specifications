@@ -7,9 +7,9 @@
 # SPDX-License-Identifier: MPL-2.0
 
 #
-# Tanker truck cargo signals and attributes
+# Specialized trailr type cargo signals and attributes
 #
 
-TankerCargo:
+SpecializedCargo:
   type: branch
-  description: Tanker truck cargo signals.
+  description: Specialized trailer type.
