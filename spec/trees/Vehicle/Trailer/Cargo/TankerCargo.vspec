@@ -7,9 +7,9 @@
 # SPDX-License-Identifier: MPL-2.0
 
 #
-# Freezer truck cargo signals and attributes
+# Tanker trailer type cargo signals and attributes
 #
 
-FreezerCargo:
+TankerCargo:
   type: branch
-  description: Freezer truck cargo signals.
+  description: Tanker trailer type.

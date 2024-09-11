@@ -7,9 +7,9 @@
 # SPDX-License-Identifier: MPL-2.0
 
 #
-# Specialized truck cargo signals and attributes
+# Box type trailer cargo signals and attributes
 #
 
-SpecializedCargo:
+BoxCargo:
   type: branch
-  description: Specialized truck cargo signals.
+  description: Box type trailer.
