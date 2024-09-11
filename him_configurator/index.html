@@ -12,21 +12,21 @@
     <title>HIM configurator :: Commercial Vehicle Information Specifications (CVIS)</title>
 
     
-    <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1725884379" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/fontawesome-all.min.css?1725884379" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/hybrid.css?1725884379" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/featherlight.min.css?1725884379" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/perfect-scrollbar.min.css?1725884379" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/auto-complete.css?1725884379" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/atom-one-dark-reasonable.css?1725884379" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/theme.css?1725884379" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/hugo-theme.css?1725884379" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1726051391" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/fontawesome-all.min.css?1726051391" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/hybrid.css?1726051391" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/featherlight.min.css?1726051391" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/perfect-scrollbar.min.css?1726051391" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/auto-complete.css?1726051391" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/atom-one-dark-reasonable.css?1726051391" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/theme.css?1726051391" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/hugo-theme.css?1726051391" rel="stylesheet">
     
-    <link href="/commercial-vehicle-information-specifications/css/theme-blue.css?1725884379" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/theme-blue.css?1726051391" rel="stylesheet">
     
     
 
-    <script src="/commercial-vehicle-information-specifications/js/jquery-3.3.1.min.js?1725884379"></script>
+    <script src="/commercial-vehicle-information-specifications/js/jquery-3.3.1.min.js?1726051391"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/lunr.min.js?1725884379"></script>
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/auto-complete.js?1725884379"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/lunr.min.js?1726051391"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/auto-complete.js?1726051391"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/covesa.github.io\/commercial-vehicle-information-specifications\/";
     
 </script>
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/search.js?1725884379"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/search.js?1726051391"></script>
 
     
   </div>
@@ -76,6 +76,30 @@
     <ul class="topics">
 
         
+          
+          
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/commercial-vehicle-information-specifications/bus_tree/" title="Bus tree" class="dd-item
+        
+        
+        
+        ">
+      <a href="/commercial-vehicle-information-specifications/bus_tree/">
+          Bus tree
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
           
           
 
@@ -109,13 +133,13 @@
  
   
     
-    <li data-nav-id="/commercial-vehicle-information-specifications/tractor_tree/" title="Tractor tree" class="dd-item
+    <li data-nav-id="/commercial-vehicle-information-specifications/trailer_tree/" title="Trailer tree" class="dd-item
         
         
         
         ">
-      <a href="/commercial-vehicle-information-specifications/tractor_tree/">
-          Tractor tree
+      <a href="/commercial-vehicle-information-specifications/trailer_tree/">
+          Trailer tree
           
       </a>
       
@@ -133,16 +157,54 @@
  
   
     
-    <li data-nav-id="/commercial-vehicle-information-specifications/trailer_tree/" title="Trailer tree" class="dd-item
+    <li data-nav-id="/commercial-vehicle-information-specifications/truck_tree/" title="Truck tree" class="dd-item
         
         
         
         ">
-      <a href="/commercial-vehicle-information-specifications/trailer_tree/">
-          Trailer tree
+      <a href="/commercial-vehicle-information-specifications/truck_tree/">
+          Truck tree
           
       </a>
       
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+
+
+ 
+  
+    
+    <li data-nav-id="/commercial-vehicle-information-specifications/truck_tree/driver_tree/" title="Driver tree" class="dd-item
+        
+        
+        
+        ">
+      <a href="/commercial-vehicle-information-specifications/truck_tree/driver_tree/">
+          Driver tree
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
       
     </li>
   
@@ -277,6 +339,15 @@ If not set these files are deleted after being used as input to the call of the 
 If not used the default is false, i. e. not to save the files.</p>
 <p>The -e command line option is used to substitute the external datatype references with the actual enum definitions
 from the common Datatypes tree in the tree(s) that the VSS-tools generate.</p>
+<h2 id="creation-of-a-vehicle-variant-specific-signal-tree">Creation of a vehicle variant specific signal tree</h2>
+<p>The HIM configurator enables a model where a &ldquo;super tree&rdquo; covering all variations of a vehicle archetype
+(like Truck, Trailer, Bus, etc) can be defined in the vspec files,
+then the HIM configurator can be used to create a &ldquo;variant specific&rdquo; vehicle signal tree via the input data in the himConfiguration.json file.</p>
+<h2 id="usage-of-a-vehicle-variant-specific-signal-tree">Usage of a vehicle variant specific signal tree</h2>
+<p>The output from the HIM configurator is the selected parts of the &ldquo;vspec super tree&rdquo; in a file with one of the supported formats.
+This file can then e. g. be used in a vehicle of the selected variant by a server that is controlling the access to the signals.
+The server cn then use the tree to &ldquo;vet&rdquo; client request - checking that the signal is present, whether it is read-only or read-write, etc.
+An example of a server using it like this is the <a href="https://github.com/COVESA/vissr">VISS reference server</a>.</p>
 
 
 
@@ -319,6 +390,25 @@ from the common Datatypes tree in the tree(s) that the VSS-tools generate.</p>
             
                 
                     
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
                     
                 
                 
@@ -360,8 +450,26 @@ from the common Datatypes tree in the tree(s) that the VSS-tools generate.</p>
 
                     
                     
+                        
+                    
                     
 
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
                     
             
         
@@ -375,10 +483,10 @@ from the common Datatypes tree in the tree(s) that the VSS-tools generate.</p>
 	 
 	 
 		
-			<a class="nav nav-prev" href="/commercial-vehicle-information-specifications/" title="Commercial Vehicle Information Specifications"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/commercial-vehicle-information-specifications/bus_tree/" title="Bus tree"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/commercial-vehicle-information-specifications/tractor_tree/" title="Tractor tree" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/commercial-vehicle-information-specifications/trailer_tree/" title="Trailer tree" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -388,19 +496,19 @@ from the common Datatypes tree in the tree(s) that the VSS-tools generate.</p>
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/commercial-vehicle-information-specifications/js/clipboard.min.js?1725884379"></script>
-    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.min.js?1725884379"></script>
-    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.jquery.min.js?1725884379"></script>
-    <script src="/commercial-vehicle-information-specifications/js/jquery.sticky.js?1725884379"></script>
-    <script src="/commercial-vehicle-information-specifications/js/featherlight.min.js?1725884379"></script>
-    <script src="/commercial-vehicle-information-specifications/js/highlight.pack.js?1725884379"></script>
+    <script src="/commercial-vehicle-information-specifications/js/clipboard.min.js?1726051391"></script>
+    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.min.js?1726051391"></script>
+    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.jquery.min.js?1726051391"></script>
+    <script src="/commercial-vehicle-information-specifications/js/jquery.sticky.js?1726051391"></script>
+    <script src="/commercial-vehicle-information-specifications/js/featherlight.min.js?1726051391"></script>
+    <script src="/commercial-vehicle-information-specifications/js/highlight.pack.js?1726051391"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/commercial-vehicle-information-specifications/js/modernizr.custom-3.6.0.js?1725884379"></script>
-    <script src="/commercial-vehicle-information-specifications/js/learn.js?1725884379"></script>
-    <script src="/commercial-vehicle-information-specifications/js/hugo-learn.js?1725884379"></script>
+    <script src="/commercial-vehicle-information-specifications/js/modernizr.custom-3.6.0.js?1726051391"></script>
+    <script src="/commercial-vehicle-information-specifications/js/learn.js?1726051391"></script>
+    <script src="/commercial-vehicle-information-specifications/js/hugo-learn.js?1726051391"></script>
     
         
-            <script src="/commercial-vehicle-information-specifications/mermaid/mermaid.js?1725884379"></script>
+            <script src="/commercial-vehicle-information-specifications/mermaid/mermaid.js?1726051391"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });

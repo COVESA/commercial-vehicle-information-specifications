@@ -9,7 +9,7 @@
 
     <link rel="shortcut icon" href="/hierarchical_information_model/images/fav.png" type="image/x-icon" />
 
-    <title>Categories :: Commercial Vehicle Information Specifications (CVIS)</title>
+    <title>Truck tree :: Commercial Vehicle Information Specifications (CVIS)</title>
 
     
     <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1726051391" rel="stylesheet">
@@ -40,7 +40,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/commercial-vehicle-information-specifications/categories/">
+  <body class="" data-url="/commercial-vehicle-information-specifications/truck_tree/">
     <nav id="sidebar" class="">
 
 
@@ -159,7 +159,7 @@
     
     <li data-nav-id="/commercial-vehicle-information-specifications/truck_tree/" title="Truck tree" class="dd-item
         
-        
+        active
         
         ">
       <a href="/commercial-vehicle-information-specifications/truck_tree/">
@@ -246,6 +246,17 @@
               <div>
                 <div id="top-bar">
                 
+                  
+                  
+                  
+                  <div id="top-github-link">
+                    <a class="github-link" title='Edit this page' href="https://github.com/covesa/commercial-vehicle-information-specifications/edit/master/docs/docs-gen/content/truck_tree/_index.md" target="blank">
+                      <i class="fas fa-code-branch"></i>
+                      <span id="top-github-link-text">Edit this page</span>
+                    </a>
+                  </div>
+                  
+                
                 
                 <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
                     <span id="sidebar-toggle-span">
@@ -253,8 +264,6 @@
                           <i class="fas fa-bars"></i>
                         </a>
                     </span>
-                  
-                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
                   
                   <span class="links">
                  
@@ -266,7 +275,7 @@
             
           
           
-            <a href='/commercial-vehicle-information-specifications/'>Commercial Vehicle Information Specifications</a> > Categories
+            <a href='/commercial-vehicle-information-specifications/'>Commercial Vehicle Information Specifications</a> > Truck tree
           
         
           
@@ -275,13 +284,6 @@
                   </span>
                 </div>
                 
-                    <div class="progress">
-    <div class="wrapper">
-
-    </div>
-</div>
-
-                
               </div>
             </div>
             
@@ -289,31 +291,37 @@
         
         </div>
         
+          <div id="chapter">
+        
         <div id="body-inner">
-          
-            <h1>
-              
-                category ::
-              
-              Categories
-            </h1>
           
 
         
 
 
 
-
-
+	<h1 id="the-truck-tree">The truck tree</h1>
+<p>The vspec truck tree is a super tree that contains signal definitions for a large set of different truck models.
+The HIM configurator is then used to create a signal tee for a specific truck variant.</p>
+<p>The different variants that are present in the vspec files are:</p>
 <ul>
-	
+<li>Tow truck: This truck type does not have an integrated cargo unit, but instead it is temporarily connected to a trailer (which defines its own signal tree).</li>
+<li>Flatbed truck: This truck type has an open flat bed cargo unit that is integrated with the rest of the truck.</li>
+<li>Box truck: This truck type has a cargo unit that is covered by walls and a roof that is integrated with the rest of the truck.</li>
+<li>Pickup truck: The model would support pickup trucks to be defined here also&hellip;</li>
+<li>Van: The model would support vans to be defined here also&hellip;</li>
 </ul>
+
+
+
 
 
 <footer class=" footline" >
 	
 </footer>
 
+        
+            </div> 
         
         </div>
         
@@ -396,6 +404,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -410,6 +419,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -434,8 +446,10 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="/commercial-vehicle-information-specifications/trailer_tree/" title="Trailer tree"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="/commercial-vehicle-information-specifications/bus_tree/" title="Bus tree" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="/commercial-vehicle-information-specifications/truck_tree/driver_tree/" title="Driver tree" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
