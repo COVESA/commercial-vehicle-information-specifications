@@ -24,10 +24,11 @@ TOOLSDIR?=./vss-tools
 #COMMON_ARGS=-u ./spec/units.yaml --strict
 COMMON_ARGS= --uuid -u ./spec/units.yaml
 # Default vspec root file if not overridden by command line input.
-VSPECROOT=./spec/VehicleSignalSpecification.vspec
+VSPECROOT=
+VALIDATE=
 
 json:
-	${TOOLSDIR}/vspec2json.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).json
+	${TOOLSDIR}/vspec2json.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) $(VALIDATE) vss_rel_$$(cat VERSION).json
 
 json-noexpand:
 	${TOOLSDIR}/vspec2json.py -I ./spec ${COMMON_ARGS} --no-expand $(VSPECROOT) vss_rel_$$(cat VERSION)_noexpand.json
@@ -39,10 +40,10 @@ franca:
 	${TOOLSDIR}/vspec2franca.py --franca-vss-version $$(cat VERSION) -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).fidl
 
 yaml:
-	${TOOLSDIR}/vspec2yaml.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).yaml
+	${TOOLSDIR}/vspec2yaml.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) $(VALIDATE) vss_rel_$$(cat VERSION).yaml
 
 csv:
-	${TOOLSDIR}/vspec2csv.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).csv
+	${TOOLSDIR}/vspec2csv.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) $(VALIDATE) vss_rel_$$(cat VERSION).csv
 
 ddsidl:
 	${TOOLSDIR}/vspec2ddsidl.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).idl
@@ -59,7 +60,7 @@ tests:
 binary:
 #	cd ${TOOLSDIR}/binary
 	gcc -shared -o ${TOOLSDIR}/binary/binarytool.so -fPIC ${TOOLSDIR}/binary/binarytool.c
-	${TOOLSDIR}/vspec2binary.py ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).binary
+	${TOOLSDIR}/vspec2binary.py ${COMMON_ARGS} $(VSPECROOT) $(VALIDATE) vss_rel_$$(cat VERSION).binary
 
 protobuf:
 	${TOOLSDIR}/vspec2protobuf.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).proto
