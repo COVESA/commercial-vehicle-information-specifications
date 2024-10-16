@@ -16,15 +16,46 @@ To build the HIM configurator, open a trminal and go to the spec/trees directory
 
 $ go build -o himConfigurator
 
+## Initializing the Python virtual environment
+The HIM configurator uses the VSS-tools exporters for the generation of the transformed vspec files.
+According to the instructions for this tool a Python virtual environment should be set up in which it then runs.
+The practical solution to this is to initialize this environment before starting the HIM configurator,
+exercise it while in this environment, and when done terminate the virtual environment.
+
+If this environment has not been set up before on the computer, it could e. g. been used in a VSS context to transform vspec files,
+then the first time the enviroment needs to be configured.
+This is one by cloning the VSS repo and then go to its root directory.
+```
+$ git clone https://github.com/COVESA/vehicle_signal_specification
+cd vehicle_signal_specification
+```
+This is followed by configuring the environment, activating it, installing vss-tools, and deactivate it.
+```
+$ python3 -m venv ~/.venv
+$ source ~/.venv/bin/activate
+(.venv)$ pip install --pre vss-tools
+(.venv)$ deactivate
+```
+The above is only needed to be done once.
+It might be necessary to install pip if that is not already installed on the computer.
+
+To then use the HIM configurator it is sufficient with activating the virtual environment before using the HIM configurator.
+```
+$ source ~/.venv/bin/activate
+```
+and to deactivate it after the use.
+```
+(.venv)$ deactivate
+```
+
 ## Using the HIM configurator
 
 Starting the HIM configurator with the command:
 
-$ ./himConfigurator -h
+(.venv)$ ./himConfigurator -h
 will show the command line options that is possible to apply at startup.
 
 ```
-$ ./himConfigurator -h
 usage: print [-h|--help] [-m|--makecommand (all|yaml|json|csv|binary)]
              [-v|--vspecdir "<value>"] [-c|--saveconf] [-e|--enumSubstitute]
 
