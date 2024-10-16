@@ -21,56 +21,58 @@ mandatory_targets: clean json json-noexpand franca yaml binary csv graphql ddsid
 optional_targets: clean protobuf ttl
 
 TOOLSDIR?=./vss-tools
-COMMON_ARGS=-u ./spec/units.yaml --strict
+#COMMON_ARGS=-u ./spec/units.yaml --strict
+COMMON_ARGS= --uuid -u ./spec/units.yaml
 # Default vspec root file if not overridden by command line input.
 VSPECROOT=./spec/VehicleSignalSpecification.vspec
 
 json:
-	${TOOLSDIR}/vspec2json.py ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).json
+	${TOOLSDIR}/vspec2json.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).json
 
 json-noexpand:
-	${TOOLSDIR}/vspec2json.py ${COMMON_ARGS} --no-expand $(VSPECROOT) vss_rel_$$(cat VERSION)_noexpand.json
+	${TOOLSDIR}/vspec2json.py -I ./spec ${COMMON_ARGS} --no-expand $(VSPECROOT) vss_rel_$$(cat VERSION)_noexpand.json
 
 jsonschema:
-	${TOOLSDIR}/vspec2jsonschema.py ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).jsonschema
+	${TOOLSDIR}/vspec2jsonschema.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).jsonschema
 
 franca:
-	${TOOLSDIR}/vspec2franca.py --franca-vss-version $$(cat VERSION) ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).fidl
+	${TOOLSDIR}/vspec2franca.py --franca-vss-version $$(cat VERSION) -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).fidl
 
 yaml:
-	${TOOLSDIR}/vspec2yaml.py ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).yaml
+	${TOOLSDIR}/vspec2yaml.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).yaml
 
 csv:
-	${TOOLSDIR}/vspec2csv.py ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).csv
+	${TOOLSDIR}/vspec2csv.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).csv
 
 ddsidl:
-	${TOOLSDIR}/vspec2ddsidl.py ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).idl
+	${TOOLSDIR}/vspec2ddsidl.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).idl
 
 # Verifies that supported overlay combinations are syntactically correct.
 overlays:
-	${TOOLSDIR}/vspec2json.py ${COMMON_ARGS} -o overlays/profiles/motorbike.vspec $(VSPECROOT) vss_rel_$$(cat VERSION)_motorbike.json
-	${TOOLSDIR}/vspec2json.py ${COMMON_ARGS} -o overlays/extensions/dual_wiper_systems.vspec $(VSPECROOT) vss_rel_$$(cat VERSION)_dualwiper.json
-	${TOOLSDIR}/vspec2json.py ${COMMON_ARGS} -o overlays/extensions/OBD.vspec $(VSPECROOT) vss_rel_$$(cat VERSION)_obd.json
+	${TOOLSDIR}/vspec2json.py -I ./spec ${COMMON_ARGS} -o overlays/profiles/motorbike.vspec $(VSPECROOT) vss_rel_$$(cat VERSION)_motorbike.json
+	${TOOLSDIR}/vspec2json.py -I ./spec ${COMMON_ARGS} -o overlays/extensions/dual_wiper_systems.vspec $(VSPECROOT) vss_rel_$$(cat VERSION)_dualwiper.json
+	${TOOLSDIR}/vspec2json.py -I ./spec ${COMMON_ARGS} -o overlays/extensions/OBD.vspec $(VSPECROOT) vss_rel_$$(cat VERSION)_obd.json
 
 tests:
 	PYTHONPATH=${TOOLSDIR} pytest
 
 binary:
-	cd ${TOOLSDIR}/binary && $(MAKE)
+#	cd ${TOOLSDIR}/binary
+	gcc -shared -o ${TOOLSDIR}/binary/binarytool.so -fPIC ${TOOLSDIR}/binary/binarytool.c
 	${TOOLSDIR}/vspec2binary.py ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).binary
 
 protobuf:
-	${TOOLSDIR}/vspec2protobuf.py ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).proto
+	${TOOLSDIR}/vspec2protobuf.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).proto
 
 graphql:
-	${TOOLSDIR}/vspec2graphql.py ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).graphql.ts
+	${TOOLSDIR}/vspec2graphql.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).graphql.ts
 
 # vspec2ttl does not use common generator framework
 ttl:
 	${TOOLSDIR}/contrib/vspec2ttl/vspec2ttl.py -u ./spec/units.yaml $(VSPECROOT) vss_rel_$$(cat VERSION).ttl
 
 id:
-	${TOOLSDIR}/vspec2id.py ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).vspec
+	${TOOLSDIR}/vspec2id.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).vspec
 
 clean:
 	cd ${TOOLSDIR}/binary && $(MAKE) clean
