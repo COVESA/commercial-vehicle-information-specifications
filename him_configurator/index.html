@@ -12,21 +12,21 @@
     <title>HIM configurator :: Commercial Vehicle Information Specifications (CVIS)</title>
 
     
-    <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1726051391" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/fontawesome-all.min.css?1726051391" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/hybrid.css?1726051391" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/featherlight.min.css?1726051391" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/perfect-scrollbar.min.css?1726051391" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/auto-complete.css?1726051391" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/atom-one-dark-reasonable.css?1726051391" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/theme.css?1726051391" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/hugo-theme.css?1726051391" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1729069125" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/fontawesome-all.min.css?1729069125" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/hybrid.css?1729069125" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/featherlight.min.css?1729069125" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/perfect-scrollbar.min.css?1729069125" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/auto-complete.css?1729069125" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/atom-one-dark-reasonable.css?1729069125" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/theme.css?1729069125" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/hugo-theme.css?1729069125" rel="stylesheet">
     
-    <link href="/commercial-vehicle-information-specifications/css/theme-blue.css?1726051391" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/theme-blue.css?1729069125" rel="stylesheet">
     
     
 
-    <script src="/commercial-vehicle-information-specifications/js/jquery-3.3.1.min.js?1726051391"></script>
+    <script src="/commercial-vehicle-information-specifications/js/jquery-3.3.1.min.js?1729069125"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/lunr.min.js?1726051391"></script>
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/auto-complete.js?1726051391"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/lunr.min.js?1729069125"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/auto-complete.js?1729069125"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/covesa.github.io\/commercial-vehicle-information-specifications\/";
     
 </script>
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/search.js?1726051391"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/search.js?1729069125"></script>
 
     
   </div>
@@ -306,12 +306,32 @@
 <p><a href="https://go.dev/doc/install">https://go.dev/doc/install</a></p>
 <p>To build the HIM configurator, open a trminal and go to the spec/trees directory where the himConfigurator.go is stored, and issue the command</p>
 <p>$ go build -o himConfigurator</p>
-<h2 id="using-the-him-configurator">Using the HIM configurator</h2>
+<h2 id="initializing-the-python-virtual-environment">Initializing the Python virtual environment</h2>
+<p>The HIM configurator uses the VSS-tools exporters for the generation of the transformed vspec files.
+According to the instructions for this tool a Python virtual environment should be set up in which it then runs.
+The practical solution to this is to initialize this environment before starting the HIM configurator,
+exercise it while in this environment, and when done terminate the virtual environment.</p>
+<p>If this environment has not been set up before on the computer, it could e. g. been used in a VSS context to transform vspec files,
+then the first time the enviroment needs to be configured.
+This is one by cloning the VSS repo and then go to its root directory.</p>
+<pre tabindex="0"><code>$ git clone https://github.com/COVESA/vehicle_signal_specification
+cd vehicle_signal_specification
+</code></pre><p>This is followed by configuring the environment, activating it, installing vss-tools, and deactivate it.</p>
+<pre tabindex="0"><code>$ python3 -m venv ~/.venv
+$ source ~/.venv/bin/activate
+(.venv)$ pip install --pre vss-tools
+(.venv)$ deactivate
+</code></pre><p>The above is only needed to be done once.
+It might be necessary to install pip if that is not already installed on the computer.</p>
+<p>To then use the HIM configurator it is sufficient with activating the virtual environment before using the HIM configurator.</p>
+<pre tabindex="0"><code>$ source ~/.venv/bin/activate
+</code></pre><p>and to deactivate it after the use.</p>
+<pre tabindex="0"><code>(.venv)$ deactivate
+</code></pre><h2 id="using-the-him-configurator">Using the HIM configurator</h2>
 <p>Starting the HIM configurator with the command:</p>
-<p>$ ./himConfigurator -h
+<p>(.venv)$ ./himConfigurator -h
 will show the command line options that is possible to apply at startup.</p>
-<pre tabindex="0"><code>$ ./himConfigurator -h
-usage: print [-h|--help] [-m|--makecommand (all|yaml|json|csv|binary)]
+<pre tabindex="0"><code>usage: print [-h|--help] [-m|--makecommand (all|yaml|json|csv|binary)]
              [-v|--vspecdir &#34;&lt;value&gt;&#34;] [-c|--saveconf] [-e|--enumSubstitute]
 
              HIM configurator
@@ -496,19 +516,19 @@ An example of a server using it like this is the <a href="https://github.com/COV
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/commercial-vehicle-information-specifications/js/clipboard.min.js?1726051391"></script>
-    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.min.js?1726051391"></script>
-    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.jquery.min.js?1726051391"></script>
-    <script src="/commercial-vehicle-information-specifications/js/jquery.sticky.js?1726051391"></script>
-    <script src="/commercial-vehicle-information-specifications/js/featherlight.min.js?1726051391"></script>
-    <script src="/commercial-vehicle-information-specifications/js/highlight.pack.js?1726051391"></script>
+    <script src="/commercial-vehicle-information-specifications/js/clipboard.min.js?1729069125"></script>
+    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.min.js?1729069125"></script>
+    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.jquery.min.js?1729069125"></script>
+    <script src="/commercial-vehicle-information-specifications/js/jquery.sticky.js?1729069125"></script>
+    <script src="/commercial-vehicle-information-specifications/js/featherlight.min.js?1729069125"></script>
+    <script src="/commercial-vehicle-information-specifications/js/highlight.pack.js?1729069125"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/commercial-vehicle-information-specifications/js/modernizr.custom-3.6.0.js?1726051391"></script>
-    <script src="/commercial-vehicle-information-specifications/js/learn.js?1726051391"></script>
-    <script src="/commercial-vehicle-information-specifications/js/hugo-learn.js?1726051391"></script>
+    <script src="/commercial-vehicle-information-specifications/js/modernizr.custom-3.6.0.js?1729069125"></script>
+    <script src="/commercial-vehicle-information-specifications/js/learn.js?1729069125"></script>
+    <script src="/commercial-vehicle-information-specifications/js/hugo-learn.js?1729069125"></script>
     
         
-            <script src="/commercial-vehicle-information-specifications/mermaid/mermaid.js?1726051391"></script>
+            <script src="/commercial-vehicle-information-specifications/mermaid/mermaid.js?1729069125"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
