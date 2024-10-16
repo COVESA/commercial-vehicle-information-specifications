@@ -22,7 +22,7 @@ According to the instructions for this tool a Python virtual environment should 
 The practical solution to this is to initialize this environment before starting the HIM configurator,
 exercise it while in this environment, and when done terminate the virtual environment.
 
-If this environment has not been set up before on the computer, it could e. g. been used in a VSS context to transform vspec files,
+If this environment has not been set up before on the computer, it could e. g. already been used in a VSS context to transform vspec files,
 then the first time the enviroment needs to be configured.
 This is one by cloning the VSS repo and then go to its root directory.
 ```
@@ -37,7 +37,7 @@ $ source ~/.venv/bin/activate
 (.venv)$ deactivate
 ```
 The above is only needed to be done once.
-It might be necessary to install pip if that is not already installed on the computer.
+It might be necessary to install both python and pip if that is not already installed on the computer.
 
 To then use the HIM configurator it is sufficient with activating the virtual environment before using the HIM configurator.
 ```
@@ -53,6 +53,7 @@ and to deactivate it after the use.
 Starting the HIM configurator with the command:
 
 (.venv)$ ./himConfigurator -h
+
 will show the command line options that is possible to apply at startup.
 
 ```
