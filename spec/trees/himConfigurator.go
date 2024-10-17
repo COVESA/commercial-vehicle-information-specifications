@@ -1116,7 +1116,7 @@ func main() {
 //	configFileName := parser.String("p", "pathconfigfile", &argparse.Options{Required: false, Help: "path to configuration file", Default: "himConfiguration.json"})
 	vspecDir := parser.String("v", "vspecdir", &argparse.Options{Required: false, Help: "path to vspec root directory", Default: "Vehicle/Truck/"})
 	sConf := parser.Flag("c", "saveconf", &argparse.Options{Required: false, Help: "Saves the configured vspec file with extension .conf", Default: false})
-	enumSubst := parser.Flag("e", "enumSubstitute", &argparse.Options{Required: false, Help: "Substitute enum links to Datatype tree with actual datatypes", Default: false})
+	enumSubst := parser.Flag("e", "enumSubstitute", &argparse.Options{Required: false, Help: "Substitute enum links to Datatype tree with actual datatypes", Default: true})
 	err := parser.Parse(os.Args)
 	if err != nil {
 		fmt.Print(parser.Usage(err))
@@ -1162,12 +1162,6 @@ func main() {
 
 	if enumSubstitute {
 		enumData = readEnumDefinitions(*vspecDir + "Datatypes.yaml")
-/*fmt.Printf("len(enumData)=%d\n", len(enumData))
-for i := 0; i < len(enumData); i++ {
-	fmt.Printf("enumData[%d].Name=%s\n", i, enumData[i].Name)
-	fmt.Printf("enumData[%d].Datatype=%s\n", i, enumData[i].Datatype)
-	fmt.Printf("len(enumData[%d].Allowed)=%d\n", i, len(enumData[i].Allowed))
-}*/
 		err = filepath.WalkDir(*vspecDir, walkEnumSubstitute)
 		if err != nil {
 			fmt.Printf("Enum substitute preprocessing failed. Terminating.\n")
@@ -1180,7 +1174,6 @@ for i := 0; i < len(enumData); i++ {
 		makeCmd = ""
 	}
 	cmd := exec.Command("/usr/bin/bash", "make.sh", makeCmd, "./spec/trees/" + *vspecDir+rootVspecFileName)
-//	cmd := exec.Command("/usr/bin/bash", "make.sh", makeCmd, *vspecDir+rootVspecFileName)
 	err = cmd.Run()
 	if err != nil {
 		fmt.Printf("Executing make failed with error=%s. Terminating.\n", err)
