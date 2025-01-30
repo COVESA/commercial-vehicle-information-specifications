@@ -83,23 +83,23 @@ type StructData struct {
 
 var structData []StructData
 
-func variantProcess(fileName string) error {
-	file, err := os.Open(fileName)
+func variantProcess(sourceFile string) error {  // sourceFile is always a .vspec2 file <- this must be the first iteration that may create a vspec file
+	sourceFp, err := os.Open(sourceFile)
 	if err != nil {
-		fmt.Printf("Error reading %s: %s\n", fileName, err)
+		fmt.Printf("Error reading %s: %s\n", sourceFile, err)
 		return err
 	}
-	scanner := bufio.NewScanner(file)
+	scanner := bufio.NewScanner(sourceFp)
 	scanner.Split(bufio.ScanLines)
 	var text string
 	continueScan := true
-	var variationFp *os.File
+	var vspecFp *os.File
 	var savedLines []string
 	for continueScan {
 		continueScan = scanner.Scan()
 		text = scanner.Text()
 		if strings.Contains(text, "VariationPoint:") {
-			fmt.Printf("Variation point line found in file=%s:%s\n", fileName, text)
+			fmt.Printf("Variation point line found in file=%s:%s\n", sourceFile, text)
 			commentIndex := strings.Index(text, "#")
 			if commentIndex == -1 {
 				fmt.Printf("Error no comment found in line=%s\n", text)
@@ -109,29 +109,18 @@ func variantProcess(fileName string) error {
 			var variationLines []string
 			var saveLine string
 			variationLines, saveLine, scanner = readVariations(scanner)
-			variationFp = updateVariationFile(variationFp, fileName, savedLines, variationLines, variationType, variabilityList, variantList)
+			vspecFp = updateVariationFile(vspecFp, sourceFile, savedLines, variationLines, variationType, variabilityList, variantList)
 			savedLines = nil
 			savedLines = append(savedLines,saveLine)
 		} else {
 			savedLines = append(savedLines,text)
 		}
 	}
-	if variationFp != nil {
-		copyRemainingLines(variationFp, savedLines)
-		variationFp.Close()
+	if vspecFp != nil {
+		copyRemainingLines(vspecFp, savedLines)
+		vspecFp.Close()
 	}
-	file.Close()
-	if variationFp != nil {   // rename files: fileName -> fileName + ".orig" and fileName + ".tmp" -> fileName
-		err = os.Rename(fileName, fileName + ".orig")
-		if err != nil {
-			fmt.Printf("Renaming %s failed. Err=%s\n", fileName, err)
-		} else {
-			err = os.Rename(fileName+".tmp", fileName)
-			if err != nil {
-				fmt.Printf("Renaming %s failed. Err=%s\n", fileName+".tmp", err)
-			}
-		}
-	}
+	sourceFp.Close()
 	return err
 }
 
@@ -151,24 +140,25 @@ func readVariations(scanner *bufio.Scanner) ([]string, string, *bufio.Scanner) {
 	return variations, text, scanner
 }
 
-func updateVariationFile(variationFp *os.File, fileName string, savedLines []string, variationLines []string, variationType string, variabilityList []Variability, variantList []Variant) *os.File {
-	if variationFp == nil {
-		tmpFileName := fileName+".tmp"
+func updateVariationFile(vspecFp *os.File, sourcefile string, savedLines []string, variationLines []string, variationType string, variabilityList []Variability, variantList []Variant) *os.File {
+	if vspecFp == nil {
+		extensionIndex := strings.Index(sourcefile, ".vspec2")
+		vspecFileName := sourcefile[:extensionIndex] + ".vspec"
 		var err error
-		variationFp, err = os.OpenFile(tmpFileName, os.O_RDWR|os.O_CREATE, 0755)
+		vspecFp, err = os.OpenFile(vspecFileName, os.O_RDWR|os.O_CREATE, 0755)
 		if err != nil {
-			fmt.Printf("Could not create %s\n", tmpFileName)
+			fmt.Printf("Could not create %s\n", vspecFileName)
 			return nil
 		}
 	}
 	for i := 0; i < len(savedLines); i++ {
-		variationFp.Write([]byte(savedLines[i] + "\n"))
+		vspecFp.Write([]byte(savedLines[i] + "\n"))
 	}
-	addVariation(variationFp, variationLines, variationType, variabilityList, variantList)
-	return variationFp
+	addVariation(vspecFp, variationLines, variationType, variabilityList, variantList)
+	return vspecFp
 }
 
-func addVariation(variationFp *os.File, variationLines []string, variationType string, variabilityList []Variability, variantList []Variant) {
+func addVariation(vspecFp *os.File, variationLines []string, variationType string, variabilityList []Variability, variantList []Variant) {
 	var selectedVariations []string
 	for i := 0; i < len(variantList); i++ {
 		if variationType == variantList[i].VariantType {
@@ -189,7 +179,7 @@ func addVariation(variationFp *os.File, variationLines []string, variationType s
 				if strings.Contains(variationLines[j], "- " + selectedVariations[i]) {
 					commentIndex := strings.Index(variationLines[j], "#")
 					if commentIndex != -1 {
-						variationFp.Write([]byte(variationLines[j][commentIndex:] + "\n"))
+						vspecFp.Write([]byte(variationLines[j][commentIndex:] + "\n"))
 						fmt.Printf("Variant %s: Inserted:%s\n", selectedVariations[i], variationLines[j][commentIndex:])
 					}
 				}
@@ -198,16 +188,20 @@ func addVariation(variationFp *os.File, variationLines []string, variationType s
 }
 
 
-func copyRemainingLines(variationFp *os.File, savedLines []string) {
+func copyRemainingLines(vspecFp *os.File, savedLines []string) {
 	for i := 0; i < len(savedLines); i++ {
-		variationFp.Write([]byte(savedLines[i] + "\n"))
+		vspecFp.Write([]byte(savedLines[i] + "\n"))
 	}
 }
 
-func instanceProcess(fileName string) error {
-	file, err := os.Open(fileName)
+func instanceProcess(sourceFile string) error {  // sourceFile input is always vspec2 file, but if earlier processing has created a vspec file that is used
+	extensionIndex := strings.Index(sourceFile, ".vspec2")
+	if fileExists(sourceFile[:extensionIndex] + ".vspec") {
+		sourceFile = sourceFile[:extensionIndex] + ".vspec"
+	}
+	file, err := os.Open(sourceFile)
 	if err != nil {
-		fmt.Printf("Error reading %s: %s\n", fileName, err)
+		fmt.Printf("Error reading %s: %s\n", sourceFile, err)
 		return err
 	}
 	scanner := bufio.NewScanner(file)
@@ -227,7 +221,7 @@ func instanceProcess(fileName string) error {
 		isConfigInstance, instanceTag := checkConfigInstance(text, 0)
 		if isConfigInstance {
 			isConfigDone = true
-			fmt.Printf("Instance line found in file=%s:%s\n", fileName, text)
+			fmt.Printf("Instance line found in file=%s:%s\n", sourceFile, text)
 			if instanceRows(instanceTag) == -1 {
 				fmt.Printf("Instance configuration=%s not found. Line skipped.\n", instanceTag)
 				continue
@@ -260,7 +254,7 @@ func instanceProcess(fileName string) error {
 				instExpTree := make([]string, 1)  // needed in calls to getInstanceExpression
 				for i := 0; i < instanceRows(instanceTag); i++ {  // create row branch nodes
 //fmt.Printf("instanceRow no=%d\n", i)
-					instSubTree := expandSubTree(subTree, filepath.Dir(fileName)+"/", nodeName, i, instanceTag)
+					instSubTree := expandSubTree(subTree, filepath.Dir(sourceFile)+"/", nodeName, i, instanceTag)
 					savedLines = addInstanceBranch(savedLines, nodeName, i, instanceTag, "")
 					for j := 0; j < len(instSubTree); j++ {  // followed by subtree with configured instance
 						instExpTree[0] = instSubTree[j]
@@ -281,32 +275,27 @@ func instanceProcess(fileName string) error {
 		}
 	}
 	file.Close()
-	if isConfigDone {   // if fileName.orig does not exist: rename fileName to fileName + ".orig" and rewrite fileName with savedLines
-//fmt.Printf("isConfigDone=true\n")
-		if !fileExists(fileName + ".orig") {
-			err = os.Rename(fileName, fileName + ".orig")
+	if isConfigDone {   // if sourceFile is vspec2 file, create vspec file, else delete vspec file and rewrite with savedLines
+		extensionIndex = strings.Index(sourceFile, ".vspec2")
+		if extensionIndex == -1 {
+			extensionIndex = strings.Index(sourceFile, ".vspec")
+			err = os.Remove(sourceFile)
 			if err != nil {
-				fmt.Printf("Renaming %s failed. Err=%s\n", fileName, err)
-			}
-		} else {
-			err = os.Remove(fileName)
-			if err != nil {
-				fmt.Printf("Deleting %s failed. Err=%s\n", fileName, err)
+				fmt.Printf("Deleting %s failed. Err=%s\n", sourceFile, err)
+				return err
 			}
 		}
-		if err == nil {
-			var instanceFp *os.File
-			instanceFp, err = os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0755)
-			if err != nil {
-				fmt.Printf("Could not create %s\n", fileName)
-			} else {
-				for i := 0; i < len(savedLines); i++ {
+		var vspecFp *os.File
+		vspecFp, err = os.OpenFile(sourceFile[:extensionIndex] + ".vspec", os.O_RDWR|os.O_CREATE, 0755)
+		if err != nil {
+			fmt.Printf("Could not create %s\n", sourceFile)
+			return err
+		}
+		for i := 0; i < len(savedLines); i++ {
 //fmt.Printf("SavedLine: %s\n", savedLines[i])
-					instanceFp.Write([]byte(savedLines[i] + "\n"))
-				}
-				instanceFp.Close()
-			}
+			vspecFp.Write([]byte(savedLines[i] + "\n"))
 		}
+		vspecFp.Close()
 	}
 	return err
 }
@@ -494,7 +483,7 @@ func walkVariantPass(s string, d fs.DirEntry, err error) error {
 	if d.IsDir() {
 //		fmt.Printf("Enter dir=%s\n", s)
 	} else {
-		if filepath.Ext(s) == ".vspec" {
+		if filepath.Ext(s) == ".vspec2" {
 //			fmt.Printf("Vspec path=%s\n", s)
 			err = variantProcess(s)
 		}
@@ -509,7 +498,7 @@ func walkInstancePass(s string, d fs.DirEntry, err error) error {
 	if d.IsDir() {
 //		fmt.Printf("Enter dir=%s\n", s)
 	} else {
-		if filepath.Ext(s) == ".vspec" {  // it is assumed that variantProcess() is run and created .orig file copies.
+		if filepath.Ext(s) == ".vspec2" {
 //			fmt.Printf("instanceProcess:Vspec path=%s\n", s)
 			err = instanceProcess(s)
 		}
@@ -524,18 +513,22 @@ func walkEnumSubstitute(s string, d fs.DirEntry, err error) error {
 	if d.IsDir() {
 //		fmt.Printf("Enter dir=%s\n", s)
 	} else {
-		if filepath.Ext(s) == ".vspec" {  // it is assumed that variantProcess() and instanceProcess() re run and created .orig file copies.
-//			fmt.Printf("enumProcess:Vspec path=%s\n", s)
+		if filepath.Ext(s) == ".vspec2" {
+			fmt.Printf("enumProcess:Vspec path=%s\n", s)
 			err = enumProcess(s)
 		}
 	}
 	return err
 }
 
-func enumProcess(fileName string) error {
-	file, err := os.Open(fileName)
+func enumProcess(sourceFile string) error {  // sourceFile input is always vspec2 file, but if earlier processing has created a vspec file that is used
+	extensionIndex := strings.Index(sourceFile, ".vspec2")
+	if fileExists(sourceFile[:extensionIndex] + ".vspec") {
+		sourceFile = sourceFile[:extensionIndex] + ".vspec"
+	}
+	file, err := os.Open(sourceFile)
 	if err != nil {
-		fmt.Printf("Error reading %s: %s\n", fileName, err)
+		fmt.Printf("Error reading %s: %s\n", sourceFile, err)
 		return err
 	}
 	scanner := bufio.NewScanner(file)
@@ -558,32 +551,27 @@ func enumProcess(fileName string) error {
 		}
 	}
 	file.Close()
-	if isConfigDone {   // if fileName.orig does not exist: rename fileName to fileName + ".orig" and rewrite fileName with savedLines
-//fmt.Printf("isConfigDone=true\n")
-		if !fileExists(fileName + ".orig") {
-			err = os.Rename(fileName, fileName + ".orig")
+	if isConfigDone {   // if sourceFile is vspec2 file, create vspec file, else delete vspec file and rewrite with savedLines
+		extensionIndex = strings.Index(sourceFile, ".vspec2")
+		if extensionIndex == -1 {
+			extensionIndex = strings.Index(sourceFile, ".vspec")
+			err = os.Remove(sourceFile)
 			if err != nil {
-				fmt.Printf("Renaming %s failed. Err=%s\n", fileName, err)
-			}
-		} else {
-			err = os.Remove(fileName)
-			if err != nil {
-				fmt.Printf("Deleting %s failed. Err=%s\n", fileName, err)
+				fmt.Printf("Deleting %s failed. Err=%s\n", sourceFile, err)
+				return err
 			}
 		}
-		if err == nil {
-			var instanceFp *os.File
-			instanceFp, err = os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0755)
-			if err != nil {
-				fmt.Printf("Could not create %s\n", fileName)
-			} else {
-				for i := 0; i < len(savedLines); i++ {
+		var vspecFp *os.File
+		vspecFp, err = os.OpenFile(sourceFile[:extensionIndex] + ".vspec", os.O_RDWR|os.O_CREATE, 0755)
+		if err != nil {
+			fmt.Printf("Could not create %s\n", sourceFile)
+			return err
+		}
+		for i := 0; i < len(savedLines); i++ {
 //fmt.Printf("SavedLine: %s\n", savedLines[i])
-					instanceFp.Write([]byte(savedLines[i] + "\n"))
-				}
-				instanceFp.Close()
-			}
+			vspecFp.Write([]byte(savedLines[i] + "\n"))
 		}
+		vspecFp.Close()
 	}
 	return err
 }
@@ -631,34 +619,15 @@ func walkPostmake(s string, d fs.DirEntry, err error) error {
 	if d.IsDir() {
 //		fmt.Printf("Enter dir=%s\n", s)
 	} else {
-		if filepath.Ext(s) == ".orig" {
-			origIndex := strings.Index(s, ".orig")
-			postProcess(s[:origIndex])
+		if filepath.Ext(s) == ".vspec2" && !saveConf{
+			extensionIndex := strings.Index(s, ".vspec2")
+			err := os.Remove(s[:extensionIndex] + ".vspec")
+			if err != nil {
+				fmt.Printf("Failed to remove %s" + ".vspec\n", s[:extensionIndex])
+			}
 		}
 	}
 	return nil
-}
-
-func postProcess(fileName string) {  // rename or delete fileName, fileName+".orig" -> fileName
-	var err error
-	if saveConf {
-		err = os.Rename(fileName, fileName+".conf")
-	} else {
-		err = os.Remove(fileName)
-	}
-	if err != nil {
-		if saveConf {
-			fmt.Printf("Renaming %s failed. Err=%s\n", fileName, err)
-		} else {
-			fmt.Printf("Deleting %s failed. Err=%s\n", fileName, err)
-		}
-	} else {
-		err = os.Rename(fileName+".orig", fileName)
-		if err != nil {
-			fmt.Printf("Renaming %s failed. Err=%s\n", fileName+".orig", err)
-		} else {
-		}
-	}
 }
 
 func decodeVariantConfigs(variantConfigs string) []Variant { //JSON object:{"var-type1":"var-name1", ., "var-typeN":"var-nameN"}

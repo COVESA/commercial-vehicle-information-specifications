@@ -36,7 +36,7 @@ Body.Hood:
            Depending on vehicle, it can be either in the front or back of the vehicle.
            Luggage compartments are in VSS called trunks, even if they are located at the front of the vehicle.
 
-#include ../include/MovableItem.yaml Body.Hood
+#include ../include/MovableItem.vspec Body.Hood
 
 #
 # Trunk description
@@ -111,4 +111,4 @@ Body.RearMainSpoilerPosition:
   max: 100
   description: Rear spoiler position, 0% = Spoiler fully stowed. 100% = Spoiler fully exposed.
 
-#include ../include/PowerOptimize.yaml Body
+#include ../include/PowerOptimize.vspec Body

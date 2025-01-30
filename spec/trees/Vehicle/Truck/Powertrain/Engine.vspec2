@@ -14,10 +14,10 @@ Engine:
   description: Engine-specific data.
 
 VariationPoint: #EngineType
-  - ICE #include CombustionEngine.yaml Engine
+  - ICE #include CombustionEngine.vspec Engine
   - EV  #include ElectricEngine.vspec Engine
 
-#include EngineCoolant.yaml Engine
+#include EngineCoolant.vspec Engine
 
-#include FuelSystem.yaml Engine
+#include FuelSystem.vspec Engine
 

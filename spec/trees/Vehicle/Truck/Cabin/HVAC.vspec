@@ -44,4 +44,4 @@ AmbientAirTemperature:
   unit: celsius
   description: Ambient air temperature inside the vehicle.
 
-#include ../include/PowerOptimize.yaml
+#include ../include/PowerOptimize.vspec

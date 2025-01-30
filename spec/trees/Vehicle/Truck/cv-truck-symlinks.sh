@@ -8,67 +8,67 @@ OBJECTPATH=../../../../objects/
 echo "Updating Truck symlinks."
 echo "In Vehicle directory..."
 
-rm Vehicle/CurrentLocation.yaml
-rm Vehicle/GenericVehicle.yaml
-rm Vehicle/LowVoltageBattery.yaml
-rm Vehicle/Trailer.yaml
-rm Vehicle/VehicleIdentification.yaml
-rm Vehicle/Version.yaml
+rm Vehicle/CurrentLocation.vspec
+rm Vehicle/GenericVehicle.vspec
+rm Vehicle/LowVoltageBattery.vspec
+rm Vehicle/Trailer.vspec
+rm Vehicle/VehicleIdentification.vspec
+rm Vehicle/Version.vspec
 
-ln -s ${OBJECTPATH}Vehicle/CurrentLocation.yaml Vehicle/CurrentLocation.yaml
-ln -s ${OBJECTPATH}Vehicle/GenericVehicle.yaml Vehicle/GenericVehicle.yaml
-ln -s ${OBJECTPATH}Vehicle/LowVoltageBattery.yaml Vehicle/LowVoltageBattery.yaml
-ln -s ${OBJECTPATH}Vehicle/Trailer.yaml Vehicle/Trailer.yaml
-ln -s ${OBJECTPATH}Vehicle/VehicleIdentification.yaml Vehicle/VehicleIdentification.yaml
-ln -s ${OBJECTPATH}Vehicle/Version.yaml Vehicle/Version.yaml
+ln -s ${OBJECTPATH}Vehicle/CurrentLocation.vspec Vehicle/CurrentLocation.vspec
+ln -s ${OBJECTPATH}Vehicle/GenericVehicle.vspec Vehicle/GenericVehicle.vspec
+ln -s ${OBJECTPATH}Vehicle/LowVoltageBattery.vspec Vehicle/LowVoltageBattery.vspec
+ln -s ${OBJECTPATH}Vehicle/Trailer.vspec Vehicle/Trailer.vspec
+ln -s ${OBJECTPATH}Vehicle/VehicleIdentification.vspec Vehicle/VehicleIdentification.vspec
+ln -s ${OBJECTPATH}Vehicle/Version.vspec Vehicle/Version.vspec
 
 echo "In Powertrain directory..."
 
-rm Powertrain/BatteryConditioning.yaml
-rm Powertrain/CombustionEngine.yaml
-rm Powertrain/ElectricMotor.yaml
-rm Powertrain/EnergyManagement.yaml
-rm Powertrain/EngineCoolant.yaml
-rm Powertrain/FuelSystem.yaml
-rm Powertrain/TractionBattery.yaml
-rm Powertrain/Transmission.yaml
+rm Powertrain/BatteryConditioning.vspec
+rm Powertrain/CombustionEngine.vspec
+rm Powertrain/ElectricMotor.vspec
+rm Powertrain/EnergyManagement.vspec
+rm Powertrain/EngineCoolant.vspec
+rm Powertrain/FuelSystem.vspec
+rm Powertrain/TractionBattery.vspec
+rm Powertrain/Transmission.vspec
 
-ln -s ${OBJECTPATH}Powertrain/BatteryConditioning.yaml Powertrain/BatteryConditioning.yaml
-ln -s ${OBJECTPATH}Powertrain/CombustionEngine.yaml Powertrain/CombustionEngine.yaml
-ln -s ${OBJECTPATH}Powertrain/ElectricMotor.yaml Powertrain/ElectricMotor.yaml
-ln -s ${OBJECTPATH}Powertrain/EnergyManagement.yaml Powertrain/EnergyManagement.yaml
-ln -s ${OBJECTPATH}Powertrain/EngineCoolant.yaml Powertrain/EngineCoolant.yaml
-ln -s ${OBJECTPATH}Powertrain/FuelSystem.yaml Powertrain/FuelSystem.yaml
-ln -s ${OBJECTPATH}Powertrain/TractionBattery.yaml Powertrain/TractionBattery.yaml
-ln -s ${OBJECTPATH}Powertrain/Transmission.yaml Powertrain/Transmission.yaml
+ln -s ${OBJECTPATH}Powertrain/BatteryConditioning.vspec Powertrain/BatteryConditioning.vspec
+ln -s ${OBJECTPATH}Powertrain/CombustionEngine.vspec Powertrain/CombustionEngine.vspec
+ln -s ${OBJECTPATH}Powertrain/ElectricMotor.vspec Powertrain/ElectricMotor.vspec
+ln -s ${OBJECTPATH}Powertrain/EnergyManagement.vspec Powertrain/EnergyManagement.vspec
+ln -s ${OBJECTPATH}Powertrain/EngineCoolant.vspec Powertrain/EngineCoolant.vspec
+ln -s ${OBJECTPATH}Powertrain/FuelSystem.vspec Powertrain/FuelSystem.vspec
+ln -s ${OBJECTPATH}Powertrain/TractionBattery.vspec Powertrain/TractionBattery.vspec
+ln -s ${OBJECTPATH}Powertrain/Transmission.vspec Powertrain/Transmission.vspec
 
 echo "In Chassis directory..."
 
-rm Chassis/Accelerator.yaml
-rm Chassis/Brake.yaml
-rm Chassis/ParkingBrake.yaml
-rm Chassis/SteeringWheel.yaml
-rm Chassis/Axle.vspec
-rm Chassis/Wheel.yaml
+rm Chassis/Accelerator.vspec
+rm Chassis/Brake.vspec
+rm Chassis/ParkingBrake.vspec
+rm Chassis/SteeringWheel.vspec
+rm Chassis/Axle.vspec2
+rm Chassis/Wheel.vspec
 
-ln -s ${OBJECTPATH}Chassis/Accelerator.yaml Chassis/Accelerator.yaml
-ln -s ${OBJECTPATH}Chassis/Brake.yaml Chassis/Brake.yaml
-ln -s ${OBJECTPATH}Chassis/ParkingBrake.yaml Chassis/ParkingBrake.yaml
-ln -s ${OBJECTPATH}Chassis/SteeringWheel.yaml Chassis/SteeringWheel.yaml
-ln -s ${OBJECTPATH}Chassis/Axle.vspec Chassis/Axle.vspec
-ln -s ${OBJECTPATH}Chassis/Wheel.yaml Chassis/Wheel.yaml
+ln -s ${OBJECTPATH}Chassis/Accelerator.vspec Chassis/Accelerator.vspec
+ln -s ${OBJECTPATH}Chassis/Brake.vspec Chassis/Brake.vspec
+ln -s ${OBJECTPATH}Chassis/ParkingBrake.vspec Chassis/ParkingBrake.vspec
+ln -s ${OBJECTPATH}Chassis/SteeringWheel.vspec Chassis/SteeringWheel.vspec
+ln -s ${OBJECTPATH}Chassis/Axle.vspec2 Chassis/Axle.vspec2
+ln -s ${OBJECTPATH}Chassis/Wheel.vspec Chassis/Wheel.vspec
 
 echo "In include directory..."
 
-rm include/ItemHeatingCooling.yaml
+rm include/ItemHeatingCooling.vspec
 rm include/LockableMovableItem.vspec
-rm include/MovableItem.yaml
-rm include/PowerOptimize.yaml
+rm include/MovableItem.vspec
+rm include/PowerOptimize.vspec
 
-ln -s ${OBJECTPATH}include/ItemHeatingCooling.yaml include/ItemHeatingCooling.yaml
+ln -s ${OBJECTPATH}include/ItemHeatingCooling.vspec include/ItemHeatingCooling.vspec
 ln -s ${OBJECTPATH}include/LockableMovableItem.vspec include/LockableMovableItem.vspec
-ln -s ${OBJECTPATH}include/MovableItem.yaml include/MovableItem.yaml
-ln -s ${OBJECTPATH}include/PowerOptimize.yaml include/PowerOptimize.yaml
+ln -s ${OBJECTPATH}include/MovableItem.vspec include/MovableItem.vspec
+ln -s ${OBJECTPATH}include/PowerOptimize.vspec include/PowerOptimize.vspec
 
 echo "Truck symlinks update done."
 

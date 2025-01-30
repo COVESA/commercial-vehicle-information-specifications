@@ -97,4 +97,4 @@ Wheel:
   type: branch
   description: Wheel signals for axle
 
-#include Wheel.yaml Wheel
+#include Wheel.vspec Wheel

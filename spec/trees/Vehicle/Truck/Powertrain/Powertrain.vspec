@@ -14,11 +14,11 @@ Powertrain:
   type: branch
   description: Powertrain data for battery management, etc.
 
-#include EnergyManagement.yaml Powertrain
+#include EnergyManagement.vspec Powertrain
 
 #include Engine.vspec Powertrain
 
-#include Transmission.yaml Powertrain
+#include Transmission.vspec Powertrain
 
 
 

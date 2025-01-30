@@ -20,7 +20,7 @@ Window:
   type: branch
   description: Door window status. Start position for Window is Closed.
 
-#include ../include/MovableItem.yaml Window
+#include ../include/MovableItem.vspec Window
 
 #
 # Child lock active for door
@@ -43,4 +43,4 @@ Shade:
 # Include the standard shade definition used by sunroof
 # and rear shade.
 
-#include ../include/MovableItem.yaml Shade
+#include ../include/MovableItem.vspec Shade
