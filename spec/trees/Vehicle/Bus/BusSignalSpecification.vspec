@@ -10,9 +10,11 @@
 # Root Bus Signal Specification file
 #
 # This top level signal specification file includes all other vspec
-# and yaml files into a complete specification that can be processed
-# by the pre-processor tool, which in turn uses
-# the tools available in https://github.com/COVESA/vss-tools.
+# files into a complete specification.
+# To generate other formats using the exporters
+# available in https://github.com/COVESA/vss-tools,
+# any vspec2 files are first operated on by
+# the HimConfigurator pre-processor tool.
 #
 
 #
@@ -26,7 +28,7 @@ Bus:
 
 #include Cabin/Cabin.vspec Bus
 
-##include Chassis/Chassis.vspec Bus
+#include Chassis/Chassis.vspec Bus
 
 ##include Exterior/Exterior.vspec Bus
 

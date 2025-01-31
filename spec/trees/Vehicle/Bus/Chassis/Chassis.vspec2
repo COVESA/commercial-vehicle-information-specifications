@@ -27,20 +27,25 @@ Chassis.AxleCount:
   default: 2
   description: Number of axles on the vehicle
 
+#Chassis.Axle:
+#  instances:
+#    - Row[1,2]
+#  type: branch
+#  description: Axle signals
+
 Chassis.Axle:
-  instances:
-    - Row[1,2]
+  instances0: 0 #Axle
   type: branch
   description: Axle signals
 
-#include Axle.vspec Chassis.Axle
+#include Axle.vspec2 Chassis.Axle
 
 
-#include Accelerator.yaml Chassis
+#include Accelerator.vspec Chassis
 
 
-#include ParkingBrake.yaml Chassis
+#include ParkingBrake.vspec Chassis
 
 
-#include Brake.yaml Chassis
+#include Brake.vspec Chassis
 

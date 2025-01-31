@@ -23,7 +23,7 @@ Cabin.RearShade:
                Start position for RearShade is Open/Retracted.
 
 # Include the same shade spec used for sunroof and side windows.
-#include ../include/MovableItem.yaml Cabin.RearShade
+#include ../include/MovableItem.vspec Cabin.RearShade
 
 ##
 # HVAC signals
@@ -73,7 +73,7 @@ Cabin.Sunroof.Shade:
                Start position for Sunroof.Shade is Open/Retracted.
 
 # Include shade specification also used by side and rear window.
-#include ../include/MovableItem.yaml Cabin.Sunroof.Shade
+#include ../include/MovableItem.vspec Cabin.Sunroof.Shade
 
 #
 # Rear-view mirror signals
@@ -191,5 +191,5 @@ Cabin.Convertible.Status:
   allowed: ['UNDEFINED', 'CLOSED', 'OPEN', 'CLOSING', 'OPENING', 'STALLED']
   description: Roof status on convertible vehicles.
 
-#include ../include/PowerOptimize.yaml Cabin
+#include ../include/PowerOptimize.vspec Cabin
 

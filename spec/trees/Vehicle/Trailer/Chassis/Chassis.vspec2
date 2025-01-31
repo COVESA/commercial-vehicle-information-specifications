@@ -38,13 +38,13 @@ Chassis.Axle:
   type: branch
   description: Axle signals
 
-#include Axle.vspec Chassis.Axle
+#include Axle.vspec2 Chassis.Axle
 
-#include Accelerator.yaml Chassis
-
-
-#include ParkingBrake.yaml Chassis
+#include Accelerator.vspec Chassis
 
 
-#include Brake.yaml Chassis
+#include ParkingBrake.vspec Chassis
+
+
+#include Brake.vspec Chassis
 

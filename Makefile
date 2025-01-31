@@ -2,15 +2,13 @@
 # Makefile to generate specifications
 #
 
-.PHONY: clean all mandatory_targets json franca yaml csv ddsidl tests binary protobuf ttl graphql ocf c overlays id jsonschema install
+.PHONY: clean all mandatory_targets json franca yaml csv ddsidl tests binary protobuf ttl graphql ocf c overlays id jsonschema
 
-all: clean mandatory_targets
-# all: clean mandatory_targets optional_targets
+all: clean mandatory_targets optional_targets
 
 # All mandatory targets that shall be built and pass on each pull request for
 # vehicle-signal-specification or vss-tools
-mandatory_targets: clean json json-noexpand franca yaml binary csv graphql ddsidl id jsonschema
-# mandatory_targets: clean json json-noexpand franca yaml binary csv graphql ddsidl id jsonschema overlays tests
+mandatory_targets: clean json json-noexpand franca yaml binary csv graphql ddsidl id jsonschema apigear samm overlays
 
 # Additional targets that shall be built by travis, but where it is not mandatory
 # that the builds shall pass.
@@ -21,67 +19,69 @@ mandatory_targets: clean json json-noexpand franca yaml binary csv graphql ddsid
 optional_targets: clean protobuf ttl
 
 TOOLSDIR?=./vss-tools
-#COMMON_ARGS=-u ./spec/units.yaml --strict
-COMMON_ARGS= --uuid -u ./spec/units.yaml
-# Default vspec root file if not overridden by command line input.
+VSS_VERSION ?= 0.0
+#COMMON_ARGS=-u ./spec/units.yaml -q ./spec/quantities.yaml  --strict
+COMMON_ARGS=-u ./spec/units.yaml -q ./spec/quantities.yaml
+# Default vspec root file  and validate extension if not overridden by command line input.
 VSPECROOT=
 VALIDATE=
 
 json:
-	${TOOLSDIR}/vspec2json.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) $(VALIDATE) vss_rel_$$(cat VERSION).json
+	vspec export json ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.json
 
 json-noexpand:
-	${TOOLSDIR}/vspec2json.py -I ./spec ${COMMON_ARGS} --no-expand $(VSPECROOT) vss_rel_$$(cat VERSION)_noexpand.json
+	vspec export json ${COMMON_ARGS} --no-expand -s ${VSPECROOT} $(VALIDATE) -o vss_noexpand.json
 
 jsonschema:
-	${TOOLSDIR}/vspec2jsonschema.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).jsonschema
+	vspec export jsonschema ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.jsonschema
 
 franca:
-	${TOOLSDIR}/vspec2franca.py --franca-vss-version $$(cat VERSION) -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).fidl
+	vspec export franca --franca-vss-version $(VSS_VERSION) ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.fidl
 
 yaml:
-	${TOOLSDIR}/vspec2yaml.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) $(VALIDATE) vss_rel_$$(cat VERSION).yaml
+	vspec export yaml ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.yaml
 
 csv:
-	${TOOLSDIR}/vspec2csv.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) $(VALIDATE) vss_rel_$$(cat VERSION).csv
+	vspec export csv ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.csv
 
 ddsidl:
-	${TOOLSDIR}/vspec2ddsidl.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).idl
+	vspec export ddsidl ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.idl
 
-# Verifies that supported overlay combinations are syntactically correct.
+# Verifies that supported overlay combinations are syntactically correct. The overlay files not available on CVIS.
 overlays:
-	${TOOLSDIR}/vspec2json.py -I ./spec ${COMMON_ARGS} -o overlays/profiles/motorbike.vspec $(VSPECROOT) vss_rel_$$(cat VERSION)_motorbike.json
-	${TOOLSDIR}/vspec2json.py -I ./spec ${COMMON_ARGS} -o overlays/extensions/dual_wiper_systems.vspec $(VSPECROOT) vss_rel_$$(cat VERSION)_dualwiper.json
-	${TOOLSDIR}/vspec2json.py -I ./spec ${COMMON_ARGS} -o overlays/extensions/OBD.vspec $(VSPECROOT) vss_rel_$$(cat VERSION)_obd.json
+#	vspec export json ${COMMON_ARGS} -l overlays/profiles/motorbike.vspec -s ${VSPECROOT} $(VALIDATE) -o vss_motorbike.json
+#	vspec export json ${COMMON_ARGS} -l overlays/extensions/dual_wiper_systems.vspec -s ${VSPECROOT} $(VALIDATE) -o vss_dualwiper.json
+#	vspec export json ${COMMON_ARGS} -l overlays/extensions/OBD.vspec -s ${VSPECROOT} $(VALIDATE) -o vss_obd.json
 
 tests:
 	PYTHONPATH=${TOOLSDIR} pytest
 
 binary:
-#	cd ${TOOLSDIR}/binary
-	gcc -shared -o ${TOOLSDIR}/binary/binarytool.so -fPIC ${TOOLSDIR}/binary/binarytool.c
-	${TOOLSDIR}/vspec2binary.py ${COMMON_ARGS} $(VSPECROOT) $(VALIDATE) vss_rel_$$(cat VERSION).binary
+	vspec export binary ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.binary
 
 protobuf:
-	${TOOLSDIR}/vspec2protobuf.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).proto
+	vspec export protobuf ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.proto
 
 graphql:
-	${TOOLSDIR}/vspec2graphql.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).graphql.ts
+	vspec export graphql ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.graphql.ts
+
+
+apigear:
+	vspec export apigear ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) --output-dir apigear
+	cd apigear && tar -czvf ../vss_apigear.tar.gz * && cd ..
+
+samm:
+	vspec export samm ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) --target-folder samm
+	cd samm && tar -czvf ../vss_samm.tar.gz * && cd ..
 
 # vspec2ttl does not use common generator framework
 ttl:
-	${TOOLSDIR}/contrib/vspec2ttl/vspec2ttl.py -u ./spec/units.yaml $(VSPECROOT) vss_rel_$$(cat VERSION).ttl
+	${TOOLSDIR}/contrib/vspec2ttl/vspec2ttl.py -u ./spec/units.yaml ./spec/VehicleSignalSpecification.vspec cvis.ttl
 
 id:
-	${TOOLSDIR}/vspec2id.py -I ./spec ${COMMON_ARGS} $(VSPECROOT) vss_rel_$$(cat VERSION).vspec
+	vspec export id ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.vspec
 
 clean:
-	cd ${TOOLSDIR}/binary && $(MAKE) clean
-	rm -f vss_rel_*
-
-install:
-	git submodule init
-	git submodule update
-	(cd ${TOOLSDIR}/; python3 setup.py install --install-scripts=${DESTDIR}/bin)
-	install -d ${DESTDIR}/share/vss
-	(cd spec; cp -r * ${DESTDIR}/share/vss)
+	rm -f cvis.*
+	rm -rf apigear
+	rm -rf samm

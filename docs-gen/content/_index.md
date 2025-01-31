@@ -20,11 +20,16 @@ The [HIM rule set for resource data](https://covesa.github.io/hierarchical_infor
 This syntax can be directly used as input to any of the exporter tools provided by [VSS-tools](https://github.com/COVESA/vss-tools).
 
 ### HIM extensions
-The HIM syntax is in this project extended with two features.
+The HIM syntax is in this project extended with the three features described below.
 These can be preprocessed by the HIM configurator which transforms them into a HIM compliant format, thus making it possible to use the SS-tools for exporting to other formats.
 If these extensions are found to be useful it is likely that they will become included in the HIM standard rule set for resurce data.
 
-### Variability configuration
+The rules for when the file extension "vspec2" shall be used instead of "vspec" are the following:
+* A file that contains any extended syntax must be named with the file extension "vspec2"
+* If a vspec2 file is referenced from within another file then this reference shall use the extension vspec if this file is located in the "trees" directory strucure.
+* If a vspec2 file is referenced from within another file then this reference shall use the extension vspec2 if this file is located in the "objects" directory strucure.
+
+### Extension 1: Variability configuration
 The tree in vspec format may contain multiple variations of objects that in a deployment typically are not included.
 An example are the [Combustion engine](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/objects/Powertrain/CombustionEngine.yaml)
 and the [Electric engine](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Powertrain/ElectricEngine.vspec).
@@ -64,7 +69,7 @@ expressed by the rows below in this example:
         "EngineType": "PHEV"
 ```
 
-### Instantiation configuration
+### Extension 2: Instantiation configuration
 The HIM rule set supports the instantiation syntax inherited from [VSS instantiation](https://covesa.github.io/vehicle_signal_specification/rule_set/instances/) 
 that can be used to request the VSS-tools to generate multiple instances of a branch/set of signals.
 This syntax has two options exemplified below
@@ -122,9 +127,9 @@ The expressions can use any of the two syntax options mentioned above.
 
 Currently this syntax can only be used for two-dimensional instantiations.
 
-### Datatypes tree
+### Extension 3: Allowed datatype reference
 One of the information rule sets that HIM supports is the type definition rule set.
-A type definition tree is able to define strutcs and enums (allowed) that can be referenced from trees of other information types.
+A type definition tree is able to define structs and enums (allowed) that can be referenced from trees of other information types.
 Such a tree is defined in the spec/objects/Datatypes directory, currently containing the enums (allowed) that is used in the VSS tree.
 This tree has a structure that mirrors the structure from the VSS tree where the enums were originally used.
 This structure might later be changed to a more generic structuring to yield reference path names more decoupled from the VSS structure.
@@ -143,8 +148,10 @@ until a moodified version of VSS-tools is created, or that the HIM configurator 
 
 ## Trees under development
 Currently two trees are being developed:
-* [Tractor tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Heavyduty/Tractor)
-* [Trailer tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Heavyduty/Trailer)
+* [Truck tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Truck)
+* [Trailer tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Trailer)
+* [Bus tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Bus)
+* [Driver tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Driver)
 
 
 ## HIM configurator

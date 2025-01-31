@@ -636,7 +636,7 @@ func decodeVariantConfigs(variantConfigs string) []Variant { //JSON object:{"var
 	var variantMap = make(map[string]interface{})
 	err := json.Unmarshal([]byte(variantConfigs), &variantMap)
 	if err != nil {
-		fmt.Printf("decodeVariantConfigs():unmarshal error=%s\n", err)
+		fmt.Printf("decodeVariantConfigs():unmarshal %s, error=%s\n", variantConfigs, err)
 		return nil
 	}
 	i := 0
@@ -962,6 +962,7 @@ func readEnumDefinitions(fileName string) []PropertyData {
 				structIndex++
 				structDefs = append(structDefs, StructData{})
 				structDefs[structIndex].Name = thisNode.Name
+			case "sensor": fallthrough  //sensor used as vss-tools reject property in combination with allowed...
 			case "property":
 				if populateStruct {
 					structDefs[structIndex].Property = append(structDefs[structIndex].Property, PropertyData{})
@@ -1085,28 +1086,28 @@ func main() {
 //	configFileName := parser.String("p", "pathconfigfile", &argparse.Options{Required: false, Help: "path to configuration file", Default: "himConfiguration.json"})
 	vspecDir := parser.String("v", "vspecdir", &argparse.Options{Required: false, Help: "path to vspec root directory", Default: "Vehicle/Truck/"})
 	sConf := parser.Flag("c", "saveconf", &argparse.Options{Required: false, Help: "Saves the configured vspec file with extension .conf", Default: false})
-	enumSubst := parser.Flag("e", "enumSubstitute", &argparse.Options{Required: false, Help: "Substitute enum links to Datatype tree with actual datatypes", Default: true})
+	enumSubst := parser.Flag("p", "preventEnumSubst", &argparse.Options{Required: false, Help: "Prevent substitution of enum links to Datatype tree with actual datatypes"})
 	err := parser.Parse(os.Args)
 	if err != nil {
 		fmt.Print(parser.Usage(err))
 	}
 	saveConf = *sConf
 	makeCmd = *makeCommand
-	if *enumSubst {
+	if !*enumSubst {
 		if !fileExists(*vspecDir + "Datatypes.yaml") {
 			cmd := exec.Command("/usr/bin/bash", "make.sh", "yaml", "./spec/objects/Datatype/Datatype.vspec")
 			err = cmd.Run()
 			if err != nil {
 				fmt.Printf("Executing make failed with error=%s\n", err)
 			} else {
-				err = os.Rename("../../vss_rel_0.1-dev.yaml", *vspecDir+"Datatypes.yaml")  //TODO: VERSION=0.1-dev no will not be persistent
+				err = os.Rename("../../cvis.yaml", *vspecDir+"Datatypes.yaml")
 				if err != nil {
 					fmt.Printf("Failed to rename and move %s error=%s\n", *vspecDir+"Datatypes.yaml", err)
 				}
 			}
 		}
 	}
-	enumSubstitute = *enumSubst && fileExists(*vspecDir + "Datatypes.yaml")
+	enumSubstitute = !*enumSubst && fileExists(*vspecDir + "Datatypes.yaml")
 
 	variantConfigs, instanceConfigs := readConfigFile(*vspecDir)
 	if variantConfigs != "" {
