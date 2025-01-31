@@ -44,7 +44,7 @@ Windshield.Wiping.System:
                The overlay in overlays/extensions/dual_wiper_systems.vspec can be used to modify this branch
                to support two instances; Primary and Secondary.
 
-#include WiperSystem.yaml Windshield.Wiping.System
+#include WiperSystem.vspec Windshield.Wiping.System
 
 Windshield.Wiping.WiperWear:
   datatype: uint8

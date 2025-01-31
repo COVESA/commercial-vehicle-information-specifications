@@ -20,7 +20,7 @@ Body:
 
 Body.RefuelPositionValues:
   type: sensor
-  datatype: stringx
+  datatype: string
   allowed: ['FRONT_LEFT', 'FRONT_RIGHT', 'MIDDLE_LEFT', 'MIDDLE_RIGHT', 'REAR_LEFT', 'REAR_RIGHT']
   description: RefuelPosition allowed values.
 

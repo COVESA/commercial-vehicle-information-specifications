@@ -14,4 +14,4 @@ IsLocked:
   type: actuator
   description: Is item locked or unlocked. True = Locked. False = Unlocked.
 
-#include MovableItem.yaml
+#include MovableItem.vspec

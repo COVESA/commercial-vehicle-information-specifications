@@ -311,4 +311,4 @@ ADAS.DMS.IsError:
   type: sensor
   description: Indicates if DMS incurred an error condition. True = Error. False = No Error.
 
-#include ../include/PowerOptimize.yaml
+#include ../include/PowerOptimize.vspec

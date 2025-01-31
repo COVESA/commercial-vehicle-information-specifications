@@ -267,4 +267,4 @@ SmartphoneProjection.SupportedMode:
   allowed: [ 'ANDROID_AUTO', 'APPLE_CARPLAY', 'MIRROR_LINK', 'OTHER' ]
   description: Supportable list for projection.
 
-#include ../include/PowerOptimize.yaml
+#include ../include/PowerOptimize.vspec

@@ -17,14 +17,14 @@ ElectricEngine.ElectricMotor:
   type: branch
   description: Electric Motor specific data.
 
-#include ElectricMotor.yaml ElectricEngine.ElectricMotor
+#include ElectricMotor.vspec ElectricEngine.ElectricMotor
 
 
 ElectricEngine.TractionBattery:
   type: branch
   description: Battery Management data.
 
-#include TractionBattery.yaml ElectricEngine.TractionBattery
+#include TractionBattery.vspec ElectricEngine.TractionBattery
 
-#include BatteryConditioning.yaml ElectricEngine.TractionBattery
+#include BatteryConditioning.vspec ElectricEngine.TractionBattery
 

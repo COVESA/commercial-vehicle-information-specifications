@@ -18,19 +18,19 @@ Vehicle.Version:
   type: branch
   description: Supported Version of the tree.
 
-#include Version.yaml Vehicle.Version
+#include Version.vspec Vehicle.Version
 
 Vehicle.VehicleIdentification:
   type: branch
   description: Attributes that identify a vehicle.
 
-#include VehicleIdentification.yaml Vehicle.VehicleIdentification
+#include VehicleIdentification.vspec Vehicle.VehicleIdentification
 
 Vehicle.GenericVehicle:
   type: branch
   description: Generic vehicle signals.
 
-#include GenericVehicle.yaml Vehicle.GenericVehicle
+#include GenericVehicle.vspec Vehicle.GenericVehicle
 
 Vehicle.LowVoltageBattery:
   type: branch

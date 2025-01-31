@@ -58,7 +58,7 @@ Heating:
   unit: percent
   description: Seat cooling / heating. 0 = off. -100 = max cold. +100 = max heat.
 
-#include ../include/ItemHeatingCooling.yaml
+#include ../include/ItemHeatingCooling.vspec
 
 Massage:
   datatype: uint8
