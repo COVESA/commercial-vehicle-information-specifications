@@ -44,7 +44,7 @@ $ source ~/.venv/bin/activate
 ```
 Then the HIM configurator can be run in the spec/trees directory with commands like:
 ```
-(.venv)$ ./himConfigurator -m binary -e -v Vehicle/Trailer/
+(.venv)$ ./himConfigurator -m binary -v Vehicle/Trailer/
 ```
 Finally the environment shall be deactivated it after the use.
 ```
@@ -65,17 +65,16 @@ will show the command line options that is possible to apply at startup.
 
 ```
 usage: print [-h|--help] [-m|--makecommand (all|yaml|json|csv|binary)]
-             [-v|--vspecdir "<value>"] [-c|--saveconf] [-e|--enumSubstitute]
+             [-v|--vspecdir "<value>"] [-c|--saveconf] [-p|--preventEnumSubst]
 
              HIM configurator
 
 Arguments:
 
   -h  --help              Print help information
-  -m  --makecommand       Make command parameter must be either: all, yaml, csv,
-                          or binary. Default: all
-  -v  --vspecdir          path to vspec root directory. Default:
-                          Vehicle/CargoVehicle/
+  -m  --makecommand       Make command parameter must be either: all, yaml,
+                          csv, or binary. Default: all
+  -v  --vspecdir          path to vspec root directory. Default: Vehicle/Truck/
   -c  --saveconf          Saves the configured vspec file with extension .conf.
                           Default: false
   -p  --preventEnumSubst  Prevent substitution of enum links to Datatype tree
