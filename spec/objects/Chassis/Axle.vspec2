@@ -87,11 +87,6 @@ TireAspectRatio:
 #
 # Wheels on Axles
 #
-#Wheel:
-#  instances: ["Left","Right"]
-#  type: branch
-#  description: Wheel signals for axle
-
 Wheel:
   instances1: 0 #Axle
   type: branch

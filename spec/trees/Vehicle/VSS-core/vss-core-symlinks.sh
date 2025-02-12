@@ -5,7 +5,7 @@
 
 OBJECTPATH=../../../../objects/
 
-echo "Updating Driver symlinks."
+echo "Updating VSS core symlinks."
 
 #echo "In Vehicle directory..."
 
@@ -19,5 +19,5 @@ echo "Updating Driver symlinks."
 
 #ln -s ${OBJECTPATH}Chassis/xxxxx.vspec Chassis/xxxxx.vspec
 
-echo "Driver symlinks update done."
+echo "VSS core symlinks update done."
 
