@@ -27,12 +27,6 @@ Chassis.AxleCount:
   default: 2
   description: Number of axles on the vehicle
 
-#Chassis.Axle:
-#  instances:
-#    - Row[1,2]
-#  type: branch
-#  description: Axle signals
-
 Chassis.Axle:
   instances0: 0 #Axle
   type: branch

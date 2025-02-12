@@ -54,6 +54,14 @@ If the HIM configurator complains with error logs it may help to, one time, try 
 ```
 (.venv)$ pip install -e .
 ```
+A bash script file in the spec/trees directory, venv.sh, can be used instead of typing the commands manually in the terminal window.
+If this file is issued as shown below it responds with displaying the two supported usages.
+```
+$ source venv.sh 
+usage: source venv.sh startme|installme
+```
+As shown it can either be used to install venv, which as described above is only needed to be run the very first time.
+The other alternative can thereafter be used to activate venv.
 
 ## Using the HIM configurator
 
