@@ -73,7 +73,7 @@ will show the command line options that is possible to apply at startup.
 
 ```
 usage: print [-h|--help] [-m|--makecommand (all|yaml|json|csv|binary)]
-             [-v|--vspecdir "<value>"] [-c|--saveconf] [-p|--preventEnumSubst]
+             [-r|--rootdir "<value>"] [-v|--vspec] [-p|--preventEnumSubst]
 
              HIM configurator
 
@@ -82,9 +82,9 @@ Arguments:
   -h  --help              Print help information
   -m  --makecommand       Make command parameter must be either: all, yaml,
                           csv, or binary. Default: all
-  -v  --vspecdir          path to vspec root directory. Default: Vehicle/Truck/
-  -c  --saveconf          Saves the configured vspec file with extension .conf.
-                          Default: false
+  -r  --rootdir           path to vspec root directory. Default: Vehicle/Truck/
+  -v  --vspec             Saves the configured .vspec2 files with extension
+                          .vspec. Default: false
   -p  --preventEnumSubst  Prevent substitution of enum links to Datatype tree
                           with actual datatypes
 ```
@@ -92,13 +92,12 @@ The -m command line option is used to set which VSS-tools exporter the configure
 The value 'all' leads to that all the exporters that are compatible with the HIM configurator are executed.
 If not used the default is 'all'.
 
-The -v command line option is used to set the path to the tree that should be used as input for the configuration.
+The -r command line option is used to set the path to the tree that should be used as input for the configuration.
 The path is relative to the tree directory, and should have the slash '/' character at the end of the path.
-If not used the default is 'Heavyduty/Tractor/'.
+If not used the default is 'Vehicle/Truck/'.
 
-The -c command line option is used to save a copy of the vspec files that are changed during the HIM configurator session.
-These files are saved with their original name post-fixed by '.conf'.
-If not set these files are deleted after being used as input to the call of the VSS-tools exporter(s).
+If the -v command  is set the the HIM configurator does not delete the vspec files that it generates from the vspec2 files that are found in the tree structure.
+If not set these vspec files are deleted after being used as input to the call of the VSS-tools exporter(s).
 If not used the default is false, i. e. not to save the files.
 
 The -p command line option is used if substitution is not desired of the external datatype references with the actual enum definitions
