@@ -1,10 +1,41 @@
 {
-    "DriverLegislation": [
+    "AxleFeature": [
         {
-            "EU": "EU"
+            "AXLE": ""
         },
         {
-            "US": "US"
+            "AXLE+LIFT": "LIFTABLE"
+        },
+        {
+            "AXLE+STEER": "STEERABLE"
+        },
+        {
+            "AXLE+DRIVE": "DRIVING"
+        },
+        {
+            "AXLE+LIFT+STEER": [
+                "LIFTABLE",
+                "STEERABLE"
+            ]
+        },
+        {
+            "AXLE+LIFT+DRIVE": [
+                "LIFTABLE",
+                "STEERABLE"
+            ]
+        },
+        {
+            "AXLE+STEER+DRIVE": [
+                "STEERABLE",
+                "DRIVING"
+            ]
+        },
+        {
+            "AXLE+LIFT+STEER+DRIVE": [
+                "LIFTABLE",
+                "STEERABLE",
+                "DRIVING"
+            ]
         }
     ]
 }

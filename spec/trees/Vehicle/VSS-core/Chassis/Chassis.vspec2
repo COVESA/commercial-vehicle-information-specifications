@@ -21,22 +21,27 @@ Wheelbase:
 #
 # Axle definition
 #
-Axle:
-  instances:
-    - Row[1,2]
-  type: branch
-  description: Axle signals
-
 AxleCount:
   datatype: uint8
   type: attribute
   default: 2
   description: Number of axles on the vehicle
 
+#Axle:
+#  instances:
+#    - Row[1,2]
+#  type: branch
+#  description: Axle signals
 
-#
-# Axle attributes
-#
+Axle:
+  instances0: 0 #Axle
+  type: branch
+  description: Axle signals
+
+LocalVP: #AxleFeature
+  - LIFTABLE #include Liftable.vspec Axle
+  - STEERABLE  #include Steerable.vspec Axle
+  - DRIVING  #include Driving.vspec Axle
 
 Axle.TreadWidth:
   datatype: uint16
@@ -116,9 +121,14 @@ Axle.TireAspectRatio:
 # Wheels on Axles
 #
 Axle.Wheel:
-  instances: ["Left","Right"]
+  instances1: 0 #Axle
   type: branch
   description: Wheel signals for axle
+
+#Axle.Wheel:
+#  instances: ["Left","Right"]
+#  type: branch
+#  description: Wheel signals for axle
 
 #include Wheel.vspec Axle.Wheel
 

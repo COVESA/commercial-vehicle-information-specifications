@@ -1,6 +1,8 @@
 {
     "variants": {
-        "DriverLegislation": "EU"
+        "AxleFeature.Row1": "AXLE+STEER",
+        "AxleFeature.Row2": "AXLE+LIFT",
+        "AxleFeature.Row3": "AXLE+STEER+DRIVE"
     },
     "instances": {
         "Seat": [

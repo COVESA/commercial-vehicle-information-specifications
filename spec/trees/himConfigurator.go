@@ -83,17 +83,21 @@ type StructData struct {
 
 var structData []StructData
 
-func variantProcess(sourceFile string) error {  // sourceFile is always a .vspec2 file <- this must be the first iteration that may create a vspec file
+func variantProcess(sourceFile string) error {  // sourceFile input is always vspec2 file, but if earlier processing has created a vspec file that is used
+	extensionIndex := strings.Index(sourceFile, ".vspec2")
+	if fileExists(sourceFile[:extensionIndex] + ".vspec") {
+		sourceFile = sourceFile[:extensionIndex] + ".vspec"
+	}
 	sourceFp, err := os.Open(sourceFile)
 	if err != nil {
-		fmt.Printf("Error reading %s: %s\n", sourceFile, err)
+		fmt.Printf("variantProcess:Error reading %s: %s\n", sourceFile, err)
 		return err
 	}
 	scanner := bufio.NewScanner(sourceFp)
 	scanner.Split(bufio.ScanLines)
 	var text string
 	continueScan := true
-	var vspecFp *os.File
+	var newFileLines []string  // this is the content to save at the end of this configuration
 	var savedLines []string
 	for continueScan {
 		continueScan = scanner.Scan()
@@ -109,18 +113,17 @@ func variantProcess(sourceFile string) error {  // sourceFile is always a .vspec
 			var variationLines []string
 			var saveLine string
 			variationLines, saveLine, scanner = readVariations(scanner)
-			vspecFp = updateVariationFile(vspecFp, sourceFile, savedLines, variationLines, variationType, variabilityList, variantList)
+			newFileLines = updateVariation(newFileLines, sourceFile, savedLines, variationLines, variationType, variabilityList, variantList)
 			savedLines = nil
 			savedLines = append(savedLines,saveLine)
 		} else {
 			savedLines = append(savedLines,text)
 		}
 	}
-	if vspecFp != nil {
-		copyRemainingLines(vspecFp, savedLines)
-		vspecFp.Close()
-	}
+	newFileLines = copyRemainingLines(newFileLines, savedLines)
 	sourceFp.Close()
+	err = updateVspec(sourceFile, newFileLines)
+
 	return err
 }
 
@@ -140,25 +143,15 @@ func readVariations(scanner *bufio.Scanner) ([]string, string, *bufio.Scanner) {
 	return variations, text, scanner
 }
 
-func updateVariationFile(vspecFp *os.File, sourcefile string, savedLines []string, variationLines []string, variationType string, variabilityList []Variability, variantList []Variant) *os.File {
-	if vspecFp == nil {
-		extensionIndex := strings.Index(sourcefile, ".vspec2")
-		vspecFileName := sourcefile[:extensionIndex] + ".vspec"
-		var err error
-		vspecFp, err = os.OpenFile(vspecFileName, os.O_RDWR|os.O_CREATE, 0755)
-		if err != nil {
-			fmt.Printf("Could not create %s\n", vspecFileName)
-			return nil
-		}
-	}
+func updateVariation(newFileLines []string, sourcefile string, savedLines []string, variationLines []string, variationType string, variabilityList []Variability, variantList []Variant) []string {
 	for i := 0; i < len(savedLines); i++ {
-		vspecFp.Write([]byte(savedLines[i] + "\n"))
+		newFileLines = append(newFileLines,savedLines[i] + "\n")
 	}
-	addVariation(vspecFp, variationLines, variationType, variabilityList, variantList)
-	return vspecFp
+	newFileLines = addVariation(newFileLines, variationLines, variationType, variabilityList, variantList)
+	return newFileLines
 }
 
-func addVariation(vspecFp *os.File, variationLines []string, variationType string, variabilityList []Variability, variantList []Variant) {
+func addVariation(newFileLines []string, variationLines []string, variationType string, variabilityList []Variability, variantList []Variant) []string {
 	var selectedVariations []string
 	for i := 0; i < len(variantList); i++ {
 		if variationType == variantList[i].VariantType {
@@ -174,34 +167,42 @@ func addVariation(vspecFp *os.File, variationLines []string, variationType strin
 			
 		}
 	}
-		for i := 0; i < len(selectedVariations); i++ {
-			for j := 0; j < len(variationLines); j++ {
-				if strings.Contains(variationLines[j], "- " + selectedVariations[i]) {
-					commentIndex := strings.Index(variationLines[j], "#")
-					if commentIndex != -1 {
-						vspecFp.Write([]byte(variationLines[j][commentIndex:] + "\n"))
-						fmt.Printf("Variant %s: Inserted:%s\n", selectedVariations[i], variationLines[j][commentIndex:])
-					}
+	for i := 0; i < len(selectedVariations); i++ {
+		for j := 0; j < len(variationLines); j++ {
+			if strings.Contains(variationLines[j], "- " + selectedVariations[i]) {
+				commentIndex := strings.Index(variationLines[j], "#")
+				if commentIndex != -1 {
+					newFileLines = append(newFileLines,variationLines[j][commentIndex:] + "\n")
+					fmt.Printf("Variant %s: Inserted:%s\n", selectedVariations[i], variationLines[j][commentIndex:])
 				}
 			}
 		}
-}
-
-
-func copyRemainingLines(vspecFp *os.File, savedLines []string) {
-	for i := 0; i < len(savedLines); i++ {
-		vspecFp.Write([]byte(savedLines[i] + "\n"))
 	}
+	return newFileLines
 }
 
-func instanceProcess(sourceFile string) error {  // sourceFile input is always vspec2 file, but if earlier processing has created a vspec file that is used
+
+func copyRemainingLines(newFileLines []string, savedLines []string) []string {
+	for i := 0; i < len(savedLines); i++ {
+		newFileLines = append(newFileLines,savedLines[i] + "\n")
+	}
+	return newFileLines
+}
+
+// sourceFile input is always vspec2 file. 
+//As the asymmetric instance config is the first to run it hall remove any existing "old" vspec
+func instanceProcess(sourceFile string) error {
 	extensionIndex := strings.Index(sourceFile, ".vspec2")
 	if fileExists(sourceFile[:extensionIndex] + ".vspec") {
-		sourceFile = sourceFile[:extensionIndex] + ".vspec"
+		err := os.Remove(sourceFile[:extensionIndex] + ".vspec")
+		if err != nil {
+			fmt.Printf("Deleting %s failed. Err=%s\n", sourceFile, err)
+			return err
+		}
 	}
 	file, err := os.Open(sourceFile)
 	if err != nil {
-		fmt.Printf("Error reading %s: %s\n", sourceFile, err)
+		fmt.Printf("instanceProcess:Error reading %s: %s\n", sourceFile, err)
 		return err
 	}
 	scanner := bufio.NewScanner(file)
@@ -238,7 +239,15 @@ func instanceProcess(sourceFile string) error {  // sourceFile input is always v
 					savedLines = addInstanceBranch(savedLines, nodeName, i, instanceTag, instanceExpression)
 					for j := 0; j < len(subTree); j++ {  // followed by subtree
 						if strings.Contains(subTree[j], "#include") {
-							savedLines = append(savedLines,subTree[j] + "." + getRowInstance(instanceTag,i))
+							nodeNameIndex := strings.Index(subTree[j], nodeName) + len(nodeName)
+//							savedLines = append(savedLines, subTree[j])
+							savedLines = append(savedLines, subTree[j][:nodeNameIndex] + "." + getRowInstance(instanceTag,i) + subTree[j][nodeNameIndex:])
+fmt.Printf("nodeName=%\n", nodeName)
+//							savedLines = append(savedLines,subTree[j] + "." + getRowInstance(instanceTag,i))
+						} else if strings.Contains(subTree[j], "LocalVP:") {
+							sharpIndex := strings.Index(subTree[j], "#")
+							localVpTag := subTree[j][sharpIndex+1:]
+							savedLines = append(savedLines,"VariationPoint: #" + localVpTag + "." + getRowInstance(instanceTag,i))
 						} else {
 							savedLines = append(savedLines,subTree[j])
 						}
@@ -253,7 +262,7 @@ func instanceProcess(sourceFile string) error {  // sourceFile input is always v
 				}
 				instExpTree := make([]string, 1)  // needed in calls to getInstanceExpression
 				for i := 0; i < instanceRows(instanceTag); i++ {  // create row branch nodes
-//fmt.Printf("instanceRow no=%d\n", i)
+fmt.Printf("instanceRow no=%d, nodeName=%s\n", i, nodeName)
 					instSubTree := expandSubTree(subTree, filepath.Dir(sourceFile)+"/", nodeName, i, instanceTag)
 					savedLines = addInstanceBranch(savedLines, nodeName, i, instanceTag, "")
 					for j := 0; j < len(instSubTree); j++ {  // followed by subtree with configured instance
@@ -261,7 +270,12 @@ func instanceProcess(sourceFile string) error {  // sourceFile input is always v
 						instanceExp := getInstanceExpression(instExpTree, 1, instanceTag)
 						if len(instanceExp) > 0 {
 							savedLines = append(savedLines,"  " + createConfiguredInstance(instanceExp, i, instanceTag))
-						}  else {
+						}  else if strings.Contains(instSubTree[j], "LocalVP") {
+							savedLines = append(savedLines,"\n")
+							sharpIndex := strings.Index(instSubTree[j], "#")
+							localVpTag := instSubTree[j][sharpIndex+1:]
+							savedLines = append(savedLines,"VariationPoint: #" + localVpTag + "." + getRowInstance(instanceTag,i))
+						} else {
 							savedLines = append(savedLines,instSubTree[j])
 						}
 					}
@@ -275,42 +289,62 @@ func instanceProcess(sourceFile string) error {  // sourceFile input is always v
 		}
 	}
 	file.Close()
-	if isConfigDone {   // if sourceFile is vspec2 file, create vspec file, else delete vspec file and rewrite with savedLines
-		extensionIndex = strings.Index(sourceFile, ".vspec2")
-		if extensionIndex == -1 {
-			extensionIndex = strings.Index(sourceFile, ".vspec")
-			err = os.Remove(sourceFile)
-			if err != nil {
-				fmt.Printf("Deleting %s failed. Err=%s\n", sourceFile, err)
-				return err
-			}
-		}
-		var vspecFp *os.File
-		vspecFp, err = os.OpenFile(sourceFile[:extensionIndex] + ".vspec", os.O_RDWR|os.O_CREATE, 0755)
-		if err != nil {
-			fmt.Printf("Could not create %s\n", sourceFile)
-			return err
-		}
-		for i := 0; i < len(savedLines); i++ {
-//fmt.Printf("SavedLine: %s\n", savedLines[i])
-			vspecFp.Write([]byte(savedLines[i] + "\n"))
-		}
-		vspecFp.Close()
+	if isConfigDone {
+		err = updateVspec(sourceFile, savedLines)
 	}
 	return err
 }
+
+func updateVspec(sourceFile string, savedLines []string) error {   // if sourceFile is vspec2 file, create vspec file, else delete vspec file and rewrite with savedLines
+	var err error
+	extensionIndex := strings.Index(sourceFile, ".vspec2")
+	if extensionIndex == -1 {
+		extensionIndex = strings.Index(sourceFile, ".vspec")
+		err = os.Remove(sourceFile)
+		if err != nil {
+			fmt.Printf("Deleting %s failed. Err=%s\n", sourceFile, err)
+			return err
+		}
+	}
+	var vspecFp *os.File
+	vspecFp, err = os.OpenFile(sourceFile[:extensionIndex] + ".vspec", os.O_RDWR|os.O_CREATE, 0755)
+	if err != nil {
+		fmt.Printf("Could not create %s\n", sourceFile)
+		return err
+	}
+	for i := 0; i < len(savedLines); i++ {
+//fmt.Printf("SavedLine: %s\n", savedLines[i])
+		linebreak := "\n"
+		if len(savedLines[i]) > 0 && savedLines[i][len(savedLines[i])-1] == '\n' {
+			linebreak = ""
+		}
+		vspecFp.Write([]byte(savedLines[i] + linebreak))
+	}
+	vspecFp.Close()
+	return nil
+}
+
 
 func expandSubTree(subTree []string, path string, rootNodeName string, index int, instanceTag string) []string {
 	var expandedTree []string
 	for i := 0; i < len(subTree); i++ {
 		if strings.Contains(subTree[i], "#include") && strings.Contains(subTree[i], rootNodeName) {
-//fmt.Printf("expandSubTree: Include to be expanded found for root node:%s=%s\n", rootNodeName, subTree[i])
-			includeExpansion := readIncludefile(subTree[i], path, index, instanceTag)
+			nodeNameIndex := strings.Index(subTree[i], rootNodeName) + len(rootNodeName)
+//fmt.Printf("rootNodeName: %s line=%s\n", rootNodeName, subTree[i])
+			updatedIncludeExpression := subTree[i][:nodeNameIndex] + "." + getRowInstance(instanceTag,index) + subTree[i][nodeNameIndex:]
+			includeExpansion := readIncludefile(updatedIncludeExpression, path, index, instanceTag)
 			for j := 0; j < len(includeExpansion); j++ {
 				expandedTree = append(expandedTree, includeExpansion[j])
 			}
 		} else {
-			expandedTree = append(expandedTree, subTree[i])
+			newNodeName := ""
+			getNodeName(subTree[i], &newNodeName)
+			if len(newNodeName) > 0 {
+				dotIndex := strings.Index(subTree[i], ".")
+				expandedTree = append(expandedTree, subTree[i][:dotIndex] + "." + getRowInstance(instanceTag,index) + subTree[i][dotIndex:])
+			} else {
+				expandedTree = append(expandedTree, subTree[i])
+			}
 		}
 	} 
 	return expandedTree
@@ -318,10 +352,15 @@ func expandSubTree(subTree []string, path string, rootNodeName string, index int
 
 func readIncludefile(includeDirective string, path string, index int, instanceTag string) []string { 
 // if config instance directive found, update it with config data, update node names and #include directives with rootnode data
-	vspecFile, nodeNamePrefix := decodeIncludeDirective(includeDirective)
+	vspecFile, nodeNamePrefix, doInclude := decodeIncludeDirective(includeDirective)
+	var includeLines []string
+	if !doInclude {
+		includeLines = append(includeLines, includeDirective + "." + getRowInstance(instanceTag,index))  //Fixas???
+		return includeLines
+	}
 	file, err := os.Open(path + vspecFile)
 	if err != nil {
-		fmt.Printf("Error reading %s: %s\n", path + vspecFile, err)
+		fmt.Printf("readIncludefile:Error reading %s: %s\n", path + vspecFile, err)
 		return nil
 	}
 //fmt.Printf("vspecfile: %s\n", path + vspecFile)
@@ -329,7 +368,6 @@ func readIncludefile(includeDirective string, path string, index int, instanceTa
 	scanner.Split(bufio.ScanLines)
 	var line string
 	continueScan := true
-	var includeLines []string
 	newNodeName := ""
 	for continueScan {
 		continueScan = scanner.Scan()
@@ -337,11 +375,10 @@ func readIncludefile(includeDirective string, path string, index int, instanceTa
 		getNodeName(line, &newNodeName)
 		if len(line) == 0 || line[0] != '#' || strings.Contains(line, "#include") {
 			if len(newNodeName) > 0 {
-				line = nodeNamePrefix + "." + getRowInstance(instanceTag,index) + "." + line
+				line = nodeNamePrefix + "." + line
 			} else if strings.Contains(line, "#include") {
-//fmt.Printf("includeLine: %s\n", line)
 				incFields := strings.Fields(line)
-				line = incFields[0] + " " + incFields[1] + " " + nodeNamePrefix + "." + getRowInstance(instanceTag,index) + "." + incFields[2]
+				line = incFields[0] + " " + incFields[1] + " " + nodeNamePrefix + "." + incFields[2]
 			}
 			includeLines = append(includeLines, line)
 		}
@@ -350,12 +387,15 @@ func readIncludefile(includeDirective string, path string, index int, instanceTa
 	return includeLines
 }
 
-func decodeIncludeDirective(includeDirective string) (string, string) {  // e.g. #include Axle.vspec Chassis.Axle
+func decodeIncludeDirective(includeDirective string) (string, string, bool) {  // Syntax: #include Axle.vspec Chassis.Axle, or - vpTag #include Axle.vspec Chassis.Axle
 	fields := strings.Fields(includeDirective)
-	if len(fields) > 2{
-		return fields[1], fields[2]
+	if len(fields) == 3 {
+		return fields[1], fields[2], true
 	}
-	return fields[1], ""
+	if len(fields) == 5 {
+		return fields[3], fields[4], false
+	}
+	return "", "", false
 }
 
 func fileExists(fileName string) bool {
@@ -458,7 +498,7 @@ func readSubtree(scanner *bufio.Scanner, rootNodeName string) ([]string, []strin
 	for i := 0; i < len(tree); i++ {
 //fmt.Printf("1stpass:line[%d]=%s\n", i, tree[i])
 		getNodeName(tree[i], &newNodeName)
-		if len(tree[i]) > 0 && (strings.Contains(tree[i], "#include") || len(newNodeName) > 0) {
+		if len(tree[i]) > 0 && (strings.Contains(tree[i], "#include") || strings.Contains(tree[i], "LocalVP") || len(newNodeName) > 0) {
 			splitIndex1 = i
 			break
 		}
@@ -514,7 +554,7 @@ func walkEnumSubstitute(s string, d fs.DirEntry, err error) error {
 //		fmt.Printf("Enter dir=%s\n", s)
 	} else {
 		if filepath.Ext(s) == ".vspec2" {
-			fmt.Printf("enumProcess:Vspec path=%s\n", s)
+//			fmt.Printf("enumProcess:Vspec path=%s\n", s)
 			err = enumProcess(s)
 		}
 	}
@@ -528,7 +568,7 @@ func enumProcess(sourceFile string) error {  // sourceFile input is always vspec
 	}
 	file, err := os.Open(sourceFile)
 	if err != nil {
-		fmt.Printf("Error reading %s: %s\n", sourceFile, err)
+		fmt.Printf("enumProcess:Error reading %s: %s\n", sourceFile, err)
 		return err
 	}
 	scanner := bufio.NewScanner(file)
@@ -1084,8 +1124,8 @@ func main() {
 	makeCommand := parser.Selector("m", "makecommand", []string{"all", "yaml", "json", "csv", "binary"}, &argparse.Options{Required: false,
 		Help: "Make command parameter must be either: all, yaml, csv, or binary", Default: "all"})
 //	configFileName := parser.String("p", "pathconfigfile", &argparse.Options{Required: false, Help: "path to configuration file", Default: "himConfiguration.json"})
-	vspecDir := parser.String("v", "vspecdir", &argparse.Options{Required: false, Help: "path to vspec root directory", Default: "Vehicle/Truck/"})
-	sConf := parser.Flag("c", "saveconf", &argparse.Options{Required: false, Help: "Saves the configured vspec file with extension .conf", Default: false})
+	vspecDir := parser.String("r", "rootdir", &argparse.Options{Required: false, Help: "path to vspec root directory", Default: "Vehicle/Truck/"})
+	sConf := parser.Flag("v", "vspec", &argparse.Options{Required: false, Help: "Saves the configured .vspec2 files with extension .vspec", Default: false})
 	enumSubst := parser.Flag("p", "preventEnumSubst", &argparse.Options{Required: false, Help: "Prevent substitution of enum links to Datatype tree with actual datatypes"})
 	err := parser.Parse(os.Args)
 	if err != nil {
@@ -1118,18 +1158,29 @@ func main() {
 	}
 	variabilityList = readVariabilityFile(*vspecDir + "Variability.json")
 
-	err = filepath.WalkDir(*vspecDir, walkVariantPass)
-	if err != nil {
-		fmt.Printf("Variant preprocessing failed. Terminating.\n")
-		os.Exit(1)
-	}
-
+	// configure instances <- Should be the first config pass
 	err = filepath.WalkDir(*vspecDir, walkInstancePass)
 	if err != nil {
 		fmt.Printf("Instance preprocessing failed. Terminating.\n")
 		os.Exit(1)
 	}
+//os.Exit(1)
 
+/*	// configure local variation points <- Should run before the global variation point config pass
+	err = filepath.WalkDir(*vspecDir, walkLocalVariantPass)
+	if err != nil {
+		fmt.Printf("Local variant preprocessing failed. Terminating.\n")
+		os.Exit(1)
+	}*/
+
+	// configure global variation points
+	err = filepath.WalkDir(*vspecDir, walkVariantPass)
+	if err != nil {
+		fmt.Printf("Global variant preprocessing failed. Terminating.\n")
+		os.Exit(1)
+	}
+
+	// configure enums
 	if enumSubstitute {
 		enumData = readEnumDefinitions(*vspecDir + "Datatypes.yaml")
 		err = filepath.WalkDir(*vspecDir, walkEnumSubstitute)
@@ -1139,6 +1190,9 @@ func main() {
 		}
 	}
 
+	// TODO: configure defaults
+
+	// run VSS-tools
 	rootVspecFileName := getRootVspecFileName(*vspecDir)
 	if makeCmd == "all" {
 		makeCmd = ""
@@ -1150,6 +1204,7 @@ func main() {
 		os.Exit(1)
 	}
 
+	// file clean up  
 	filepath.WalkDir(*vspecDir, walkPostmake)
 	if err == nil {
 		fmt.Printf("\nMake command output from configured vspec file in %s is available in the root directory.\n", *vspecDir)
