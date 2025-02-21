@@ -98,10 +98,26 @@ If not used the default is 'Vehicle/Truck/'.
 
 If the -v command  is set the the HIM configurator does not delete the vspec files that it generates from the vspec2 files that are found in the tree structure.
 If not set these vspec files are deleted after being used as input to the call of the VSS-tools exporter(s).
-If not used the default is false, i. e. not to save the files.
+If not used the default is false, i. e. not to save the files.\
+With the vspec files saved it becomes possible to run the VSS-tols exporters "manually" with the vspec root node as input.
+This might be helpful if the development environment is not a Linux compatible environment,
+or if there is a need to debug the VSS-tools processing, se below.
 
 The -p command line option is used if substitution is not desired of the external datatype references with the actual enum definitions
 from the common Datatypes tree in the generated tree(s). However, VSS-tools currently does not accept this syntax.
+
+## VSS-tools debug
+'in the development of the trees it might happen that errors are introdued in the vspec2/vspec files.
+VSS-tools have a compehensive error logging support, but this does not show up in the HIM configurator UI.
+It is however possible to get this error logging support by manually issuing a make command in a terminal window
+on the make file in the cvis root catalog, after first running the HIM configurator on the tree under development,
+with the -v CLI parameter so that the vspec files are saved.
+The make command shall then have the following general format:
+```
+make yaml VSPECROOT=./spec/trees/Vehicle/Truck/TruckSignalSpecification.vspec
+```
+where yaml can be replaced by any other supported exporter, and the path to the root vspec file could be to any tree in the CVIS "forest".
+The VSS-tools error logging will then be shown in the terminal window.
 
 ## Creation of a vehicle variant specific signal tree
 The HIM configurator enables a model where a "super tree" covering all variations that a vehicle may be equipped with,

@@ -20,7 +20,7 @@ The [HIM rule set for resource data](https://covesa.github.io/hierarchical_infor
 This syntax can be directly used as input to any of the exporter tools provided by [VSS-tools](https://github.com/COVESA/vss-tools).
 
 ### HIM extensions
-The HIM syntax is in this project extended with the three features described below.
+The HIM syntax is in this project extended with the features described below.
 These can be preprocessed by the HIM configurator which transforms them into a HIM compliant format, thus making it possible to use the SS-tools for exporting to other formats.
 If these extensions are found to be useful it is likely that they will become included in the HIM standard rule set for resurce data.
 
@@ -127,7 +127,72 @@ The expressions can use any of the two syntax options mentioned above.
 
 Currently this syntax can only be used for two-dimensional instantiations.
 
-### Extension 3: Allowed datatype reference
+### Extension 3: Local variation point
+If an instantiation configuration has a need of including a variation point with different variants for the different intances
+then the Variation point feature described above cannot be used as it would apply the same variant to all instances.
+To meet this need the Local Variation point (LocalVP) is available.
+An expression like shown below is inserted in the subtree to be instantiated
+```
+LocalVP: #AxleFeature
+  - LIFTABLE #include Liftable.vspec Axle
+  - STEERABLE  #include Steerable.vspec Axle
+  - DRIVING  #include Driving.vspec Axle
+```
+The himConfiguration.json file is then updated with the different configurations for the different instances as shown below.
+```
+    "variants": {
+        "AxleFeature.Row1": "AXLE+STEER",
+        "AxleFeature.Row2": "AXLE+LIFT",
+        "AxleFeature.Row3": "AXLE+STEER+DRIVE"
+    }
+```
+As seen the AxlePoint local varation point name is extended with the names of the different instances Row1..Row3,
+which must be the same as the instantiation is configured with.
+The Variability.json shall then contain the definition of which include alternatives in the LocalVP command that shall be included.
+```
+    "AxleFeature": [
+        {
+            "AXLE": ""
+        },
+        {
+            "AXLE+LIFT": "LIFTABLE"
+        },
+        {
+            "AXLE+STEER": "STEERABLE"
+        },
+        {
+            "AXLE+DRIVE": "DRIVING"
+        },
+        {
+            "AXLE+LIFT+STEER": [
+                "LIFTABLE",
+                "STEERABLE"
+            ]
+        },
+        {
+            "AXLE+LIFT+DRIVE": [
+                "LIFTABLE",
+                "STEERABLE"
+            ]
+        },
+        {
+            "AXLE+STEER+DRIVE": [
+                "STEERABLE",
+                "DRIVING"
+            ]
+        },
+        {
+            "AXLE+LIFT+STEER+DRIVE": [
+                "LIFTABLE",
+                "STEERABLE",
+                "DRIVING"
+            ]
+        }
+    ]
+```
+With the above in place the HIM configurator will create the different variants for the different instances.
+
+### Extension 4: Allowed datatype reference
 One of the information rule sets that HIM supports is the type definition rule set.
 A type definition tree is able to define structs and enums (allowed) that can be referenced from trees of other information types.
 Such a tree is defined in the spec/objects/Datatypes directory, currently containing the enums (allowed) that is used in the VSS tree.
