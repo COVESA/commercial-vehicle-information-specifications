@@ -156,7 +156,7 @@ func addVariation(newFileLines []string, variationLines []string, variationType 
 	for i := 0; i < len(variantList); i++ {
 		if variationType == variantList[i].VariantType {
 			for j := 0; j < len(variabilityList); j++ {
-				if variationType == variabilityList[j].VariabilityType {
+				if getRootVariation(variationType) == variabilityList[j].VariabilityType {
 					for k := 0; k < len(variabilityList[j].VariationPointList); k++ {
 						if variantList[i].VariantName == variabilityList[j].VariationPointList[k].VariantName {
 							selectedVariations = variabilityList[j].VariationPointList[k].VariabilityName
@@ -181,6 +181,13 @@ func addVariation(newFileLines []string, variationLines []string, variationType 
 	return newFileLines
 }
 
+func getRootVariation(variationType string) string {
+	dotIndex := strings.Index(variationType, ".")
+	if dotIndex == -1 {
+		return variationType
+	}
+	return variationType[:dotIndex]
+}
 
 func copyRemainingLines(newFileLines []string, savedLines []string) []string {
 	for i := 0; i < len(savedLines); i++ {
@@ -355,7 +362,8 @@ func readIncludefile(includeDirective string, path string, index int, instanceTa
 	vspecFile, nodeNamePrefix, doInclude := decodeIncludeDirective(includeDirective)
 	var includeLines []string
 	if !doInclude {
-		includeLines = append(includeLines, includeDirective + "." + getRowInstance(instanceTag,index))  //Fixas???
+		includeLines = append(includeLines, includeDirective)
+//		includeLines = append(includeLines, includeDirective + "." + getRowInstance(instanceTag,index))  //Fixas???
 		return includeLines
 	}
 	file, err := os.Open(path + vspecFile)
