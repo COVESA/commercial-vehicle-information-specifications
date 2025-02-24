@@ -23,6 +23,7 @@ import (
 
 var  saveConf bool
 var makeCmd string
+var configFileName string
 var enumSubstitute bool
 
 type VariationPoint struct {
@@ -269,7 +270,6 @@ fmt.Printf("nodeName=%\n", nodeName)
 				}
 				instExpTree := make([]string, 1)  // needed in calls to getInstanceExpression
 				for i := 0; i < instanceRows(instanceTag); i++ {  // create row branch nodes
-fmt.Printf("instanceRow no=%d, nodeName=%s\n", i, nodeName)
 					instSubTree := expandSubTree(subTree, filepath.Dir(sourceFile)+"/", nodeName, i, instanceTag)
 					savedLines = addInstanceBranch(savedLines, nodeName, i, instanceTag, "")
 					for j := 0; j < len(instSubTree); j++ {  // followed by subtree with configured instance
@@ -936,7 +936,7 @@ func unpackInstMapLevel3(index1 int, index2 int, columnDefMap interface{}, insta
 func readConfigFile(vspecDir string) (string, string) {
 	variantReadError := false
 	instanceReadError := false
-	configFileName := vspecDir + "himConfiguration.json"
+	configFileName := vspecDir + configFileName
 	data, err := os.ReadFile(configFileName)
 	if err != nil {
 		fmt.Printf("readConfigFile: Could not read %s\n", configFileName)
@@ -1131,7 +1131,7 @@ func main() {
 	parser := argparse.NewParser("print", "HIM configurator")
 	makeCommand := parser.Selector("m", "makecommand", []string{"all", "yaml", "json", "csv", "binary"}, &argparse.Options{Required: false,
 		Help: "Make command parameter must be either: all, yaml, csv, or binary", Default: "all"})
-//	configFileName := parser.String("p", "pathconfigfile", &argparse.Options{Required: false, Help: "path to configuration file", Default: "himConfiguration.json"})
+	confFName := parser.String("c", "configfile", &argparse.Options{Required: false, Help: "configuration file name", Default: "himConfiguration.json"})
 	vspecDir := parser.String("r", "rootdir", &argparse.Options{Required: false, Help: "path to vspec root directory", Default: "Vehicle/Truck/"})
 	sConf := parser.Flag("v", "vspec", &argparse.Options{Required: false, Help: "Saves the configured .vspec2 files with extension .vspec", Default: false})
 	enumSubst := parser.Flag("p", "preventEnumSubst", &argparse.Options{Required: false, Help: "Prevent substitution of enum links to Datatype tree with actual datatypes"})
@@ -1141,6 +1141,7 @@ func main() {
 	}
 	saveConf = *sConf
 	makeCmd = *makeCommand
+	configFileName = *confFName
 	if !*enumSubst {
 		if !fileExists(*vspecDir + "Datatypes.yaml") {
 			cmd := exec.Command("/usr/bin/bash", "make.sh", "yaml", "./spec/objects/Datatype/Datatype.vspec")

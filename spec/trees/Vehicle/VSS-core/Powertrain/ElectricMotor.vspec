@@ -6,6 +6,10 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+ElectricMotor:
+  type: branch
+  description: Electric Motor specific data.
+
 #
 # EV Motor signals and attributes
 #

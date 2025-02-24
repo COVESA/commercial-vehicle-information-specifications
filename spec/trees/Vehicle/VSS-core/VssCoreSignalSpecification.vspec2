@@ -35,18 +35,12 @@ Vehicle.Powertrain:
   description: Powertrain data for battery management, etc.
 #include Powertrain/Powertrain.vspec Vehicle.Powertrain
 
-
 #
-# Internal combustion engine signals and attributes.
+# The engine type.
 #
-Vehicle.Powertrain.CombustionEngine:
-  type: branch
-  description: Engine-specific data, stopping at the bell housing.
-
-# Include the engine.vspec file and attach all its signals and attributes under the engine
-# branch created above.
-#include Powertrain/CombustionEngine.vspec Vehicle.Powertrain.CombustionEngine
-
+VariationPoint: #EngineType
+  - ICE #include Powertrain/CombustionEngine.vspec Vehicle.Powertrain
+  - EV  #include Powertrain/ElectricMotor.vspec Vehicle.Powertrain
 #
 # The transmission branch used to host the signals and attributes in transmission.vspec.
 #
@@ -57,19 +51,6 @@ Vehicle.Powertrain.Transmission:
 # Include the transmission.vspec file and attach all its signals and attributes under the
 # transmission branch created above.
 #include Powertrain/Transmission.vspec Vehicle.Powertrain.Transmission
-
-
-#
-# The electric motor branch used to host the signals and attributes in ElectricMotor.vspec.
-#
-Vehicle.Powertrain.ElectricMotor:
-  type: branch
-  description: Electric Motor specific data.
-
-# Include the electric motor vspec file and attach all its signals and attributes under the
-# electric motor branch created above.
-#include Powertrain/ElectricMotor.vspec Vehicle.Powertrain.ElectricMotor
-
 
 #
 # The traction battery branch refers to signals and attributes related to the battery used by electrical
