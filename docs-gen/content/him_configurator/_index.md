@@ -82,6 +82,8 @@ Arguments:
   -h  --help              Print help information
   -m  --makecommand       Make command parameter must be either: all, yaml,
                           csv, or binary. Default: all
+  -c  --configfile        configuration file name. Default:
+                          himConfiguration.json
   -r  --rootdir           path to vspec root directory. Default: Vehicle/Truck/
   -v  --vspec             Saves the configured .vspec2 files with extension
                           .vspec. Default: false
@@ -91,6 +93,9 @@ Arguments:
 The -m command line option is used to set which VSS-tools exporter the configured tree should have.
 The value 'all' leads to that all the exporters that are compatible with the HIM configurator are executed.
 If not used the default is 'all'.
+
+The -c command line option is used to select the HIM configurator file. This is useful when a tree has multiple configuration files.
+Default is himConfiguration.json.
 
 The -r command line option is used to set the path to the tree that should be used as input for the configuration.
 The path is relative to the tree directory, and should have the slash '/' character at the end of the path.

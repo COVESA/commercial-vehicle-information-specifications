@@ -13,6 +13,10 @@
 # root.vspec file, contains all engine-based signals.
 #
 
+CombustionEngine:
+  type: branch
+  description: Engine-specific data, stopping at the bell housing.
+
 #
 # Engine attributes
 #

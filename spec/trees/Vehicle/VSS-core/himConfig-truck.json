@@ -2,7 +2,8 @@
     "variants": {
         "AxleFeature.Row1": "AXLE+STEER",
         "AxleFeature.Row2": "AXLE+LIFT",
-        "AxleFeature.Row3": "AXLE+STEER+DRIVE"
+        "AxleFeature.Row3": "AXLE+STEER+DRIVE",
+        "EngineType": "ICE"
     },
     "instances": {
         "Seat": [
