@@ -10,17 +10,24 @@
 # Occupant data
 #
 
-Identifier:
+Occupant:
+  type: branch
+  instances:
+    - Row[1,2]
+    - ["DriverSide","Middle","PassengerSide"]
+  description: Occupant (Driver or Passenger) data.
+
+Occupant.Identifier:
   type: branch
   description: Identifier attributes based on OAuth 2.0.
-#include ../include/Identifier.vspec Identifier
+#include ../include/Identifier.vspec Occupant.Identifier
 
-HeadPosition:
+Occupant.HeadPosition:
   type: branch
   description: The current position of the driver head on vehicle axis according to ISO 23150:2023.
-#include Occupant/HeadPosition.vspec HeadPosition
+#include Occupant/HeadPosition.vspec Occupant.HeadPosition
 
-MidEyeGaze:
+Occupant.MidEyeGaze:
   type: branch
   description: Direction from mid eye position to object driver is looking at.
-#include Occupant/MidEyeGaze.vspec MidEyeGaze
+#include Occupant/MidEyeGaze.vspec Occupant.MidEyeGaze

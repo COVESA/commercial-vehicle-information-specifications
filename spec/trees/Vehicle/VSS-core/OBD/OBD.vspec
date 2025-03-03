@@ -50,168 +50,172 @@
 #
 
 
-PidsA:
+OBD:
+  type: branch
+  description: OBD data.
+
+OBD.PidsA:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: string[]
   type: attribute
   allowed: ["01","02","03","04","05","06","07","08","09","0A","0B","0C","0D","0E","0F","10","11","12","13","14","15","16","17","18","19","1A","1B","1C","1D","1E","1F","20"]
   description: PID 00 - Array of the supported PIDs 01 to 20 in Hexadecimal.
 
-PidsB:
+OBD.PidsB:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: string[]
   type: attribute
   allowed: ["21","22","23","24","25","26","27","28","29","2A","2B","2C","2D","2E","2F","30","31","32","33","34","35","36","37","38","39","3A","3B","3C","3D","3E","3F","40"]
   description: PID 20 - Array of the supported PIDs 21 to 40 in Hexadecimal.
 
-PidsC:
+OBD.PidsC:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: string[]
   type: attribute
   allowed: ["41","42","43","44","45","46","47","48","49","4A","4B","4C","4D","4E","4F","50","51","52","53","54","55","56","57","58","59","5A","5B","5C","5D","5E","5F","60"]
   description: PID 40 - Array of the supported PIDs 41 to 60 in Hexadecimal.
 
-Status:
+OBD.Status:
   deprecation: v5.0 OBD-branch is deprecated.
   type: branch
   description: PID 01 - OBD status
 
-Status.IsMILOn:
+OBD.Status.IsMILOn:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: boolean
   type: sensor
   description: Malfunction Indicator Light (MIL) False = Off, True = On
 
-Status.DTCCount:
+OBD.Status.DTCCount:
   deprecation: v5.0 replaced with Vehicle.Diagnostics.DTCCount
   datatype: uint8
   type: sensor
   description: Number of Diagnostic Trouble Codes (DTC)
 
-Status.IgnitionType:
+OBD.Status.IgnitionType:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: string
   type: attribute
   allowed: ['SPARK', 'COMPRESSION']
   description: Type of the ignition for ICE - spark = spark plug ignition, compression = self-igniting (Diesel engines)
 
-DTCList:
+OBD.DTCList:
   deprecation: v5.0 replaced with Vehicle.Diagnostics.DTCList
   datatype: string[]
   type: sensor
   description: List of currently active DTCs formatted according OBD II (SAE-J2012DA_201812) standard ([P|C|B|U]XXXXX )
 
-FreezeDTC:
+OBD.FreezeDTC:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: string
   type: sensor
   description: PID 02 - DTC that triggered the freeze frame
 
-FuelStatus:
+OBD.FuelStatus:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: string
   type: sensor
   description: PID 03 - Fuel status
 
-EngineLoad:
+OBD.EngineLoad:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 04 - Engine load in percent - 0 = no load, 100 = full load
 
-CoolantTemperature:
+OBD.CoolantTemperature:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: celsius
   description: PID 05 - Coolant temperature
 
-ShortTermFuelTrim1:
+OBD.ShortTermFuelTrim1:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 06 - Short Term (immediate) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer
 
-LongTermFuelTrim1:
+OBD.LongTermFuelTrim1:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 07 - Long Term (learned) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer
 
-ShortTermFuelTrim2:
+OBD.ShortTermFuelTrim2:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 08 - Short Term (immediate) Fuel Trim - Bank 2 - negative percent leaner, positive percent richer
 
-LongTermFuelTrim2:
+OBD.LongTermFuelTrim2:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 09 - Long Term (learned) Fuel Trim - Bank 2 - negative percent leaner, positive percent richer
 
-FuelPressure:
+OBD.FuelPressure:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: kPa
   description: PID 0A - Fuel pressure
 
-MAP:
+OBD.MAP:
   datatype: float
   deprecation: v5.0 OBD-branch is deprecated.
   type: sensor
   unit: kPa
   description: PID 0B - Intake manifold pressure
 
-EngineSpeed:
+OBD.EngineSpeed:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: rpm
   description: PID 0C - Engine speed measured as rotations per minute
 
-Speed:
+OBD.Speed:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: km/h
   description: PID 0D - Vehicle speed
 
-TimingAdvance:
+OBD.TimingAdvance:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: degrees
   description: PID 0E - Time advance
 
-IntakeTemp:
+OBD.IntakeTemp:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: celsius
   description: PID 0F - Intake temperature
 
-MAF:
+OBD.MAF:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: g/s
   description: PID 10 - Grams of air drawn into engine per second
 
-ThrottlePosition:
+OBD.ThrottlePosition:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 11 - Throttle position - 0 = closed throttle, 100 = open throttle
 
-AirStatus:
+OBD.AirStatus:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: string
   type: sensor
@@ -223,327 +227,327 @@ AirStatus:
 # PID 14 is then first sensor on bank 1, PID 18 is the first sensor on bank2
 # Vehicles with more than 2 banks report sensor mapping in PID 1D instead of PID 13
 #
-OxygenSensorsIn2Banks:
+OBD.OxygenSensorsIn2Banks:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: uint8
   type: sensor
   description: PID 13 - Presence of oxygen sensors in 2 banks. [A0..A3] == Bank 1, Sensors 1-4. [A4..A7] == Bank 2, Sensors 1-4
 
-O2:
+OBD.O2:
   deprecation: v5.0 OBD-branch is deprecated.
   instances:
     - Sensor[1,8]
   type: branch
   description: Oxygen sensors (PID 14 - PID 1B)
 
-O2.Voltage:
+OBD.O2.Voltage:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: V
   description: PID 1x (byte A) - Sensor voltage
 
-O2.ShortTermFuelTrim:
+OBD.O2.ShortTermFuelTrim:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 1x (byte B) - Short term fuel trim
 
-OBDStandards:
+OBD.OBDStandards:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: uint8
   type: attribute
   description: PID 1C - OBD standards this vehicle conforms to
 
-OxygenSensorsIn4Banks:
+OBD.OxygenSensorsIn4Banks:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: uint8
   type: sensor
   description: PID 1D - Presence of oxygen sensors in 4 banks. Similar to PID 13, but [A0..A7] == [B1S1, B1S2, B2S1, B2S2, B3S1, B3S2, B4S1, B4S2]
 
-IsPTOActive:
+OBD.IsPTOActive:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: boolean
   type: sensor
   description: PID 1E - Auxiliary input status (power take off)
 
-RunTime:
+OBD.RunTime:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: s
   description: PID 1F - Engine run time
 
-DistanceWithMIL:
+OBD.DistanceWithMIL:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: km
   description: PID 21 - Distance traveled with MIL on
 
-FuelRailPressureVac:
+OBD.FuelRailPressureVac:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: kPa
   description: PID 22 - Fuel rail pressure relative to vacuum
 
-FuelRailPressureDirect:
+OBD.FuelRailPressureDirect:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: kPa
   description: PID 23 - Fuel rail pressure direct inject
 
-O2WR:
+OBD.O2WR:
   deprecation: v5.0 OBD-branch is deprecated.
   instances:
     - Sensor[1,8]
   type: branch
   description: Wide range/band oxygen sensors (PID 24 - 2B and PID 34 - 3B)
 
-O2WR.Lambda:
+OBD.O2WR.Lambda:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   description: PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor
 
-O2WR.Voltage:
+OBD.O2WR.Voltage:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: V
   description: PID 2x (byte CD) - Voltage for wide range/band oxygen sensor
 
-O2WR.Current:
+OBD.O2WR.Current:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: A
   description: PID 3x (byte CD) - Current for wide range/band oxygen sensor
 
-CommandedEGR:
+OBD.CommandedEGR:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 2C - Commanded exhaust gas recirculation (EGR)
 
-EGRError:
+OBD.EGRError:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 2D - Exhaust gas recirculation (EGR) error
 
-CommandedEVAP:
+OBD.CommandedEVAP:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 2E - Commanded evaporative purge (EVAP) valve
 
-FuelLevel:
+OBD.FuelLevel:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 2F - Fuel level in the fuel tank
 
-WarmupsSinceDTCClear:
+OBD.WarmupsSinceDTCClear:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: uint8
   type: sensor
   description: PID 30 - Number of warm-ups since codes cleared
 
-DistanceSinceDTCClear:
+OBD.DistanceSinceDTCClear:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: km
   description: PID 31 - Distance traveled since codes cleared
 
-EVAPVaporPressure:
+OBD.EVAPVaporPressure:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: Pa
   description: PID 32 - Evaporative purge (EVAP) system pressure
 
-BarometricPressure:
+OBD.BarometricPressure:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: kPa
   description: PID 33 - Barometric pressure
 
-Catalyst:
+OBD.Catalyst:
   deprecation: v5.0 OBD-branch is deprecated.
   type: branch
   description: Catalyst signals
 
-Catalyst.Bank1:
+OBD.Catalyst.Bank1:
   deprecation: v5.0 OBD-branch is deprecated.
   type: branch
   description: Catalyst bank 1 signals
 
-Catalyst.Bank1.Temperature1:
+OBD.Catalyst.Bank1.Temperature1:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: celsius
   description: PID 3C - Catalyst temperature from bank 1, sensor 1
 
-Catalyst.Bank1.Temperature2:
+OBD.Catalyst.Bank1.Temperature2:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: celsius
   description: PID 3E - Catalyst temperature from bank 1, sensor 2
 
-Catalyst.Bank2:
+OBD.Catalyst.Bank2:
   deprecation: v5.0 OBD-branch is deprecated.
   type: branch
   description: Catalyst bank 2 signals
 
-Catalyst.Bank2.Temperature1:
+OBD.Catalyst.Bank2.Temperature1:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: celsius
   description: PID 3D - Catalyst temperature from bank 2, sensor 1
 
-Catalyst.Bank2.Temperature2:
+OBD.Catalyst.Bank2.Temperature2:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: celsius
   description: PID 3F - Catalyst temperature from bank 2, sensor 2
 
-DriveCycleStatus:
+OBD.DriveCycleStatus:
   deprecation: v5.0 OBD-branch is deprecated.
   type: branch
   description: PID 41 - OBD status for the current drive cycle
 
-DriveCycleStatus.IsMILOn:
+OBD.DriveCycleStatus.IsMILOn:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: boolean
   type: sensor
   description: Malfunction Indicator Light (MIL) - False = Off, True = On
 
-DriveCycleStatus.DTCCount:
+OBD.DriveCycleStatus.DTCCount:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: uint8
   type: sensor
   description: Number of sensor Trouble Codes (DTC)
 
-DriveCycleStatus.IgnitionType:
+OBD.DriveCycleStatus.IgnitionType:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: string
   type: sensor
   allowed: ['SPARK', 'COMPRESSION']
   description: Type of the ignition for ICE - spark = spark plug ignition, compression = self-igniting (Diesel engines)
 
-ControlModuleVoltage:
+OBD.ControlModuleVoltage:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: V
   description: PID 42 - Control module voltage
 
-AbsoluteLoad:
+OBD.AbsoluteLoad:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 43 - Absolute load value
 
-CommandedEquivalenceRatio:
+OBD.CommandedEquivalenceRatio:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: ratio
   description: PID 44 - Commanded equivalence ratio
 
-RelativeThrottlePosition:
+OBD.RelativeThrottlePosition:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 45 - Relative throttle position
 
-AmbientAirTemperature:
+OBD.AmbientAirTemperature:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: celsius
   description: PID 46 - Ambient air temperature
 
-ThrottlePositionB:
+OBD.ThrottlePositionB:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 47 - Absolute throttle position B
 
-ThrottlePositionC:
+OBD.ThrottlePositionC:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 48 - Absolute throttle position C
 
-AcceleratorPositionD:
+OBD.AcceleratorPositionD:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 49 - Accelerator pedal position D
 
-AcceleratorPositionE:
+OBD.AcceleratorPositionE:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 4A - Accelerator pedal position E
 
-AcceleratorPositionF:
+OBD.AcceleratorPositionF:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 4B - Accelerator pedal position F
 
-ThrottleActuator:
+OBD.ThrottleActuator:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 4C - Commanded throttle actuator
 
-RunTimeMIL:
+OBD.RunTimeMIL:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: min
   description: PID 4D - Run time with MIL on
 
-TimeSinceDTCCleared:
+OBD.TimeSinceDTCCleared:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: min
   description: PID 4E - Time since trouble codes cleared
 
-MaxMAF:
+OBD.MaxMAF:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: g/s
   description: PID 50 - Maximum flow for mass air flow sensor
 
-FuelType:
+OBD.FuelType:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: uint8
   type: attribute
@@ -551,119 +555,119 @@ FuelType:
   max: 23
   description: PID 51 - Fuel type
 
-EthanolPercent:
+OBD.EthanolPercent:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 52 - Percentage of ethanol in the fuel
 
-EVAPVaporPressureAbsolute:
+OBD.EVAPVaporPressureAbsolute:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: kPa
   description: PID 53 - Absolute evaporative purge (EVAP) system pressure
 
-EVAPVaporPressureAlternate:
+OBD.EVAPVaporPressureAlternate:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: Pa
   description: PID 54 - Alternate evaporative purge (EVAP) system pressure
 
-ShortTermO2Trim1:
+OBD.ShortTermO2Trim1:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 55 (byte A) - Short term secondary O2 trim - Bank 1
 
-ShortTermO2Trim3:
+OBD.ShortTermO2Trim3:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 55 (byte B) - Short term secondary O2 trim - Bank 3
 
-LongTermO2Trim1:
+OBD.LongTermO2Trim1:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 56 (byte A) - Long term secondary O2 trim - Bank 1
 
-LongTermO2Trim3:
+OBD.LongTermO2Trim3:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 56 (byte B) - Long term secondary O2 trim - Bank 3
 
-ShortTermO2Trim2:
+OBD.ShortTermO2Trim2:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 57 (byte A) - Short term secondary O2 trim - Bank 2
 
-ShortTermO2Trim4:
+OBD.ShortTermO2Trim4:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 57 (byte B) - Short term secondary O2 trim - Bank 4
 
-LongTermO2Trim2:
+OBD.LongTermO2Trim2:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 58 (byte A) - Long term secondary O2 trim - Bank 2
 
-LongTermO2Trim4:
+OBD.LongTermO2Trim4:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 58 (byte B) - Long term secondary O2 trim - Bank 4
 
-FuelRailPressureAbsolute:
+OBD.FuelRailPressureAbsolute:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: kPa
   description: PID 59 - Absolute fuel rail pressure
 
-RelativeAcceleratorPosition:
+OBD.RelativeAcceleratorPosition:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 5A - Relative accelerator pedal position
 
-HybridBatteryRemaining:
+OBD.HybridBatteryRemaining:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: percent
   description: PID 5B - Remaining life of hybrid battery
 
-OilTemperature:
+OBD.OilTemperature:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: celsius
   description: PID 5C - Engine oil temperature
 
-FuelInjectionTiming:
+OBD.FuelInjectionTiming:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor
   unit: degrees
   description: PID 5D - Fuel injection timing
 
-FuelRate:
+OBD.FuelRate:
   deprecation: v5.0 OBD-branch is deprecated.
   datatype: float
   type: sensor

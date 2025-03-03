@@ -126,38 +126,21 @@ Vehicle.Chassis:
 #
 # On-board Diagnostic (OBD) Branch
 #
-Vehicle.OBD:
-  type: branch
-  description: OBD data.
-
-# Include the OBD/OBD.vspec file and attach all its data under the
-# OBD branch created above.
-
-#include OBD/OBD.vspec Vehicle.OBD
+VariationPoint: #VehicleType
+  - CAR #include OBD/OBD.vspec Vehicle
 
 #
 # Driver
 #
-Vehicle.Driver:
-  type: branch
-  description: Driver data.
-
-# Include the Driver/Driver.vspec file and attach all its data under the
-# Driver branch created above and will include Occupant attributes
-
-#include Driver/Driver.vspec Vehicle.Driver
+VariationPoint: #VehicleType
+  - CAR #include Driver/Driver.vspec Vehicle
 
 #
 # Occupant Data
 #
 
-Vehicle.Occupant:
-  type: branch
-  instances:
-    - Row[1,2]
-    - ["DriverSide","Middle","PassengerSide"]
-  description: Occupant (Driver or Passenger) data.
-#include Vehicle/Occupant.vspec Vehicle.Occupant
+VariationPoint: #VehicleType
+  - CAR #include Vehicle/Occupant.vspec Vehicle
 
 #
 # Exterior information
