@@ -2,7 +2,8 @@
     "variants": {
         "AxleFeature.Row1": "AXLE+STEER",
         "AxleFeature.Row2": "AXLE+DRIVE",
-        "EngineType": "EV"
+        "EngineType": "EV",
+        "VehicleType": "CAR"
     },
     "instances": {
         "Seat": [

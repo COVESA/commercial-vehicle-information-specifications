@@ -1132,7 +1132,7 @@ func main() {
 	makeCommand := parser.Selector("m", "makecommand", []string{"all", "yaml", "json", "csv", "binary"}, &argparse.Options{Required: false,
 		Help: "Make command parameter must be either: all, yaml, csv, or binary", Default: "all"})
 	confFName := parser.String("c", "configfile", &argparse.Options{Required: false, Help: "configuration file name", Default: "himConfiguration.json"})
-	vspecDir := parser.String("r", "rootdir", &argparse.Options{Required: false, Help: "path to vspec root directory", Default: "Vehicle/Truck/"})
+	vspecDir := parser.String("r", "rootdir", &argparse.Options{Required: false, Help: "path to vspec root directory", Default: "Vehicle/VSS-core/"})
 	sConf := parser.Flag("v", "vspec", &argparse.Options{Required: false, Help: "Saves the configured .vspec2 files with extension .vspec", Default: false})
 	enumSubst := parser.Flag("p", "preventEnumSubst", &argparse.Options{Required: false, Help: "Prevent substitution of enum links to Datatype tree with actual datatypes"})
 	err := parser.Parse(os.Args)
