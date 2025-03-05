@@ -4,16 +4,51 @@ title: "Commercial Vehicle Information Specifications"
 # Commercial Vehicle Information Specifications
 
 ## Overview
-The HIM rule set for signals is used in this project, and since it is identical to the VSS rule set this framework inherits "patterns" from VSS
+The ambition of the CVIS project is to develop a framework that can be used to define signal trees for different vehicle types,
+and then to use this framework to develop signal trees for vehicle types as e. g. Trucks, Trailers, Buses, and Passenger cars.
+The trees for these vehicle types shall share as much as possible of signals that can be commonly defined.
+The basis for common signals shall be the [VSS tree](https://github.com/COVESA/vehicle_signal_specification).
+This tree has a focus on signals for passenger cars, but a significant part of these can very well be shared with the other vehicle types.
 
-* The vspec file format.
-* The usage of VSS-tools to transform from the vspec format to other exporter formats.
-* The CVIS signal trees are defined in two directory structures -
+The CVIS project uses the Resource profile of the
+[Hierarchical Information Model](https://github.com/COVESA/hierarchical_information_model) [HIM), which is fully compatible with the
+[VSS rule set](https://covesa.github.io/vehicle_signal_specification/rule_set/index.html).
 
-objects directory structure: This is where the common "tree objects" are stored that may be shared between multiple trees.
-trees directory structure: Thisis where the unique trees for different domains are stored.
+The basis of the framework that can be used to define signal trees for different vehicle types is the HIM configurator.
+It works as a pre-processor that reads the extended vspec format, vspec2,
+and processes the extended instruction set described below from which it generates vspec formatted files which are applied as input to the
+[VSS-tools](https://github.com/COVESA/vss-tools) exporters to generate fully configured trees for desired vehicle types and models.
 
-The directory structure for a single tree follows the VSS pattern with "#include" links in the vspec files that logically links to other files of the tree. However, to link to a file in the common objects structure the corresponding file in the trees structure is realized as a symbolic link file. This means that when the content of the file is accessed the underlying file system follows the symbolic link to the file in the objects structure for the actual content of the file. This is transparent to the entity accessing the file, so e. g. the exporter tools from VSS-tools will when used for a transformation of a specific tree access file content from the common objects files tranparently.
+The HIM configuration instructions are declared in JSON formatted files. These instructions can be applied to trees that have a pre-configured
+vehicle type specific structure, or that have a vehicle type agnostic structure.
+The [VSS-core tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/VSS-core) is an example of the latter,
+while the other trees in the [Vehicle](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle)
+directory have a pre-configure vehicle type specific structure.
+
+A tree, whether it is vehicle type specific or not, shall be located on the spec/trees directory structure.
+These trees may then link to common objects which shall be located on the spec/objects directory structure.
+
+The linking to common objects use the symbolic linking file system feature, which have differen syntax in Linux and Windows,
+see more in the Symlink chapter below.
+
+### Symbolic linking
+The directory structure for a single tree follows the VSS pattern with "#include" links in the vspec files that logically links to other files of the tree. However, to link to a file in the common objects structure the corresponding file in the trees structure is realized as a symbolic link file. This means that when the content of the file is accessed the underlying file system follows the symbolic link to the file in the objects structure for the actual content of the file. This is transparent to the entity accessing the file, so e. g. the exporter tools from VSS-tools will when used for a transformation of a specific tree access file content from the common objects files transparently.
+
+The symbolic links used in a tree structure definition shall be declared in a script file that can be run to refresh the symlinks if a link is broken.
+The syntax of these script files differ between Linux and Windows, see the chapter below.
+
+### Linux / Windows specific parts
+
+#### Symlink script files
+The symlink cript files used in Linux are standard bash script files, see e. g.
+[cv-truck-symlinks.sh](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Vehicle/Truck/cv-truck-symlinks.sh).
+
+For Windows a Powershell](https://en.wikipedia.org/wiki/PowerShell) script is used, see e. g. [xxxxx]().
+
+#### VSS-tools activation
+The HIM configurator activates the VSS-tools exporter via a [Makefile](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Makefile).
+
+In Windows the VSS-tools activation is done by xxxxx...
 
 ## Tree development
 The [HIM rule set for resource data](https://covesa.github.io/hierarchical_information_model/resource_data_rule_set/) is used to define signals in a tree.
