@@ -1130,11 +1130,12 @@ func clearPropertyNode(nextNodeName string) PropertyData {
 func main() {
 	parser := argparse.NewParser("print", "HIM configurator")
 	makeCommand := parser.Selector("m", "makecommand", []string{"all", "yaml", "json", "csv", "binary"}, &argparse.Options{Required: false,
-		Help: "Make command parameter must be either: all, yaml, csv, or binary", Default: "all"})
-	confFName := parser.String("c", "configfile", &argparse.Options{Required: false, Help: "configuration file name", Default: "himConfiguration.json"})
+		Help: "Make command parameter must be either: all, yaml, json, csv, or binary", Default: "yaml"})
+	confFName := parser.String("c", "configfile", &argparse.Options{Required: false, Help: "configuration file name", Default: "himConfig-truck.json"})
 	vspecDir := parser.String("r", "rootdir", &argparse.Options{Required: false, Help: "path to vspec root directory", Default: "Vehicle/VSS-core/"})
-	sConf := parser.Flag("v", "vspec", &argparse.Options{Required: false, Help: "Saves the configured .vspec2 files with extension .vspec", Default: false})
-	enumSubst := parser.Flag("p", "preventEnumSubst", &argparse.Options{Required: false, Help: "Prevent substitution of enum links to Datatype tree with actual datatypes"})
+	sConf := parser.Flag("v", "vspec", &argparse.Options{Required: false, Help: "Saves the configured .vspec2 files with extension .vspec"})
+	preProcessOnly := parser.Flag("p", "preprocess", &argparse.Options{Required: false, Help: "Pre-process only. Do not run VSS-tools"})
+	enumSubst := parser.Flag("n", "noEnumSubst", &argparse.Options{Required: false, Help: "No substitution of enum links to Datatype tree with actual datatypes"})
 	err := parser.Parse(os.Args)
 	if err != nil {
 		fmt.Print(parser.Usage(err))
@@ -1173,7 +1174,6 @@ func main() {
 		fmt.Printf("Instance preprocessing failed. Terminating.\n")
 		os.Exit(1)
 	}
-//os.Exit(1)
 
 /*	// configure local variation points <- Should run before the global variation point config pass
 	err = filepath.WalkDir(*vspecDir, walkLocalVariantPass)
@@ -1201,6 +1201,9 @@ func main() {
 
 	// TODO: configure defaults
 
+	if *preProcessOnly {
+		os.Exit(0)
+	}
 	// run VSS-tools
 	rootVspecFileName := getRootVspecFileName(*vspecDir)
 	if makeCmd == "all" {
