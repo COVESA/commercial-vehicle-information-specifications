@@ -2,7 +2,7 @@
 # Makefile to generate specifications
 #
 
-.PHONY: clean all mandatory_targets json franca yaml csv ddsidl tests binary protobuf ttl graphql ocf c overlays id jsonschema
+.PHONY: clean all mandatory_targets json franca yaml csv ddsidl tests binary protobuf graphql ocf c overlays id jsonschema
 
 all: clean mandatory_targets optional_targets
 
@@ -16,7 +16,7 @@ mandatory_targets: clean json json-noexpand franca yaml binary csv graphql ddsid
 # from time to time
 # Can be run from e.g. travis with "make -k optional_targets || true" to continue
 # even if errors occur and not do not halt travis build if errors occur
-optional_targets: clean protobuf ttl
+optional_targets: clean protobuf
 
 TOOLSDIR?=./vss-tools
 VSS_VERSION ?= 0.0
@@ -30,7 +30,7 @@ json:
 	vspec export json ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.json
 
 json-noexpand:
-	vspec export json ${COMMON_ARGS} --no-expand -s ${VSPECROOT} $(VALIDATE) -o vss_noexpand.json
+	vspec export json ${COMMON_ARGS} --no-expand -s ${VSPECROOT} $(VALIDATE) -o cvis_noexpand.json
 
 jsonschema:
 	vspec export jsonschema ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.jsonschema
@@ -68,15 +68,11 @@ graphql:
 
 apigear:
 	vspec export apigear ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) --output-dir apigear
-	cd apigear && tar -czvf ../vss_apigear.tar.gz * && cd ..
+	cd apigear && tar -czvf ../cvis_apigear.tar.gz * && cd ..
 
 samm:
 	vspec export samm ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) --target-folder samm
-	cd samm && tar -czvf ../vss_samm.tar.gz * && cd ..
-
-# vspec2ttl does not use common generator framework
-ttl:
-	${TOOLSDIR}/contrib/vspec2ttl/vspec2ttl.py -u ./spec/units.yaml ./spec/VehicleSignalSpecification.vspec cvis.ttl
+	cd samm && tar -czvf ../cvis_samm.tar.gz * && cd ..
 
 id:
 	vspec export id ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.vspec
