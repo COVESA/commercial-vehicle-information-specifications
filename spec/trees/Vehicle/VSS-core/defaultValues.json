@@ -1,0 +1,26 @@
+[
+    {
+        "path": "Vehicle.Cabin.DoorCount",
+        "value": "6"
+    },
+    {
+        "path": "Vehicle.Cabin.DriverPosition",
+        "value": "LEFT"
+    },
+    {
+        "path": "Vehicle.Cabin.SeatPosCount",
+        "value": "[2, 4]"
+    },
+    {
+        "path": "Vehicle.Chassis.Axle.Row1.TreadWidth",
+        "value": "1750"
+    },
+    {
+        "path": "Vehicle.Chassis.Axle.Row2.TreadWidth",
+        "value": "1750"
+    },
+    {
+        "path": "Vehicle.Chassis.Axle.Row3.TreadWidth",
+        "value": "1750"
+    }
+]

@@ -43,12 +43,14 @@ The syntax of these script files differ between Linux and Windows, see the chapt
 The symlink cript files used in Linux are standard bash script files, see e. g.
 [cv-truck-symlinks.sh](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Vehicle/Truck/cv-truck-symlinks.sh).
 
-For Windows a Powershell](https://en.wikipedia.org/wiki/PowerShell) script is used, see e. g. [xxxxx]().
+For Windows a Powershell](https://en.wikipedia.org/wiki/PowerShell) script is used, see e. g.
+[cv-truck-symlink.ps1](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Win-setup/cv-truck-symlink.ps1).
 
 #### VSS-tools activation
 The HIM configurator activates the VSS-tools exporter via a [Makefile](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Makefile).
 
-In Windows the VSS-tools activation is done by xxxxx...
+In Windows the setup for VSS-tools activation is done by following the instructions found in the
+[Win-setup](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Win-setup/) directory.
 
 ## Tree development
 The [HIM rule set for resource data](https://covesa.github.io/hierarchical_information_model/resource_data_rule_set/) is used to define signals in a tree.
@@ -246,13 +248,35 @@ the signal tree that it is working on. The node type in a type definition tree s
 separate trees with that node type, the node type 'sensor' is used instead. This must therefore be manually edited to rename to 'property'
 until a moodified version of VSS-tools is created, or that the HIM configurator is updated to handle the node type renaming.
 
+### Extension 5: Configuration of default values
+It is allowed according the the HIM rule set to include default values in the node definitions.
+This is mainly meant to be used for nodes of the node type attribute, but can also be applied to the node types sensor and actuator.
+To define that a node shall be configured with a default value, a JSON expression like the example below must be added to a JSON file
+stored in the tree directory, see
+[defaultValues.json](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/VSS-core/defaultValues.json) as an example.
+```
+    {
+        "path": "Vehicle.Cabin.DoorCount",
+        "value": "6"
+    }
+```
+The default configuration file is specified in the CLI command when starting the HIM configurator following the -d tag.
+
+If the tree already has a default value for a node that is in the list it will be replaced by the new value,
+otherwise a default line is added to the node.
+
 ## Trees under development
 Currently two trees are being developed:
 * [Truck tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Truck)
 * [Trailer tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Trailer)
 * [Bus tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Bus)
 * [Driver tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Driver)
+* [VSS-core tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/VSS-core)
 
+The VSS-core tree is a vehicle type agnostic tree that is configured by the HIM configurator to become vehicle type specific.
+Configuration templates for the vehicle types Car and Truck are available, and can be used as starting poin to create templates for other vehicle types.
+
+The other trees are vehicle type specific from the start, or for Driver a supplementary tree to be used together with e. g. the Truck tree.
 
 ## HIM configurator
 

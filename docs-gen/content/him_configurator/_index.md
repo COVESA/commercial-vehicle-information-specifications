@@ -74,21 +74,26 @@ will show the command line options that is possible to apply at startup.
 ```
 usage: print [-h|--help] [-m|--makecommand (all|yaml|json|csv|binary)]
              [-c|--configfile "<value>"] [-r|--rootdir "<value>"] [-v|--vspec]
-             [-p|--preprocess] [-n|--noEnumSubst]
+             [-p|--preprocess] [-n|--noEnumSubst] [-d|--defaultdatafile
+             "<value>"]
 
              HIM configurator
 
 Arguments:
 
-  -h  --help         Print help information
-  -m  --makecommand  Make command parameter must be either: all, yaml, json, csv, or
-                     binary. Default: yaml
-  -c  --configfile   configuration file name. Default: himConfig-truck.json
-  -r  --rootdir      path to vspec root directory. Default: Vehicle/VSS-core/
-  -v  --vspec        Saves the configured .vspec2 files with extension .vspec
-  -p  --preprocess   Pre-process only. Do not run VSS-tools
-  -n  --noEnumSubst  No substitution of enum links to Datatype tree with actual
-                     datatypes
+  -h  --help             Print help information
+  -m  --makecommand      Make command parameter must be either: all, yaml,
+                         json, csv, or binary. Default: yaml
+  -c  --configfile       configuration file name. Default: himConfig-truck.json
+  -r  --rootdir          path to vspec root directory. Default:
+                         Vehicle/VSS-core/
+  -v  --vspec            Saves the configured .vspec2 files with extension
+                         .vspec
+  -p  --preprocess       Pre-process only, save configured vspec files. Do not
+                         run VSS-tools.
+  -n  --noEnumSubst      No substitution of enum links to Datatype tree with
+                         actual datatypes
+  -d  --defaultdatafile  Default values file name
 ```
 The -m command line option is used to set which VSS-tools exporter the configured tree should have.
 The value 'all' leads to that all the exporters that are compatible with the HIM configurator are executed.
@@ -114,6 +119,8 @@ and the VSS-tools exporters can be activated "manually" with the pre-processed t
 
 The -n command line option is used if substitution is not desired of the external datatype references with the actual enum definitions
 from the common Datatypes tree in the generated tree(s). However, VSS-tools currently does not accept the syntax using a reference.
+
+The -d command line option is used to configure nodes with a default value that is defined in the named file.
 
 ## VSS-tools debug
 'in the development of the trees it might happen that errors are introdued in the vspec2/vspec files.
