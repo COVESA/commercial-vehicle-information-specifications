@@ -2,7 +2,7 @@
     "variants": {
         "AxleFeature.Row1": "AXLE+STEER",
         "AxleFeature.Row2": "AXLE+DRIVE",
-        "EngineType": "EV",
+        "EngineType": "ICE",
         "VehicleType": "CAR"
     },
     "instances": {
@@ -11,6 +11,7 @@
             [
                 [
                     "DriverSide",
+                    "Middle",
                     "PassengerSide"
                 ],
                 [

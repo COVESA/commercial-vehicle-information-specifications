@@ -10,43 +10,47 @@
 # All in-cabin originated signals and attributes
 #
 
+Cabin:
+  type: branch
+  description: All in-cabin components, including doors.
+
 ##
 # Rear window shade signals
 ##
-RearShade:
+Cabin.RearShade:
   type: branch
   description: Rear window shade. Open = Retracted, Closed = Deployed.
                Start position for RearShade is Open/Retracted.
 
 # Include the same shade spec used for sunroof and side windows.
-#include ../include/MovableItem.vspec RearShade
+#include ../include/MovableItem.vspec Cabin.RearShade
 
 ##
 # HVAC signals
 ##
-HVAC:
+Cabin.HVAC:
   type: branch
   description: Climate control
-#include HVAC.vspec HVAC
+
+#include HVAC.vspec Cabin.HVAC
 
 ##
 # Infotainment
 ##
-Infotainment:
+Cabin.Infotainment:
   type: branch
   description: Infotainment system.
 
-
-#include Infotainment.vspec Infotainment
+#include Infotainment.vspec Cabin.Infotainment
 
 ##
 # Sunroof status
 ##
-Sunroof:
+Cabin.Sunroof:
   type: branch
   description: Sun roof status.
 
-Sunroof.Position:
+Cabin.Sunroof.Position:
   datatype: int8
   type: sensor
   unit: percent
@@ -57,28 +61,28 @@ Sunroof.Position:
 #
 # Sunroof controlling switch.
 # We cannot use SingleSliderSwitch.vspec since we have TiltUp and TiltDown also
-Sunroof.Switch:
+Cabin.Sunroof.Switch:
   datatype: string
   type: actuator
   allowed: ['INACTIVE', 'CLOSE', 'OPEN', 'ONE_SHOT_CLOSE', 'ONE_SHOT_OPEN', 'TILT_UP', 'TILT_DOWN']
   description: Switch controlling sliding action such as window, sunroof, or shade.
 
-Sunroof.Shade:
+Cabin.Sunroof.Shade:
   type: branch
   description: Sun roof shade status. Open = Retracted, Closed = Deployed.
                Start position for Sunroof.Shade is Open/Retracted.
 
 # Include shade specification also used by side and rear window.
-#include ../include/MovableItem.vspec Sunroof.Shade
+#include ../include/MovableItem.vspec Cabin.Sunroof.Shade
 
 #
 # Rear-view mirror signals
 #
-RearviewMirror:
+Cabin.RearviewMirror:
   type: branch
   description: Rear-view mirror.
 
-RearviewMirror.DimmingLevel:
+Cabin.RearviewMirror.DimmingLevel:
   datatype: uint8
   type: actuator
   unit: percent
@@ -89,11 +93,11 @@ RearviewMirror.DimmingLevel:
 ##
 # Interior lights signals and sensors
 ##
-Light:
+Cabin.Light:
   type: branch
   description: Light that is part of the Cabin.
   comment: V4.0 branch renamed from "Lights" to "Light" to comply with singular naming of entities. Use SingleConfigurableLight.vspec to describe interior lights that can be configured.
-#include InteriorLights.vspec Light
+#include InteriorLights.vspec Cabin.Light
 
 
 ##
@@ -108,23 +112,23 @@ Light:
 # as a door, but rather be represented as a trunk (Vehicle.Body.Trunk) and
 # rear shade (Vehicle.Cabin.RearShade)
 ##
-Door:
+Cabin.Door:
   type: branch
   instances:
     - Row[1,2]
     - ["DriverSide","PassengerSide"]
   description: All doors, including windows and switches.
-#include SingleDoor.vspec Door
+#include SingleDoor.vspec Cabin.Door
 
 # Default value based on instance declaration above with 2 rows and 2 doors in each row.
-DoorCount:
+Cabin.DoorCount:
   datatype: uint8
   type: attribute
   default: 4
   description: Number of doors in vehicle.
 
 
-IsWindowChildLockEngaged:
+Cabin.IsWindowChildLockEngaged:
   datatype: boolean
   type: actuator
   description: Is window child lock engaged. True = Engaged. False = Disengaged.
@@ -142,25 +146,24 @@ IsWindowChildLockEngaged:
 # Which seats that actually exist can be defined by SeatPosCount
 ##
 
-Seat:
+Cabin.Seat:
   type: branch
-  instances:
-    - Row[1,2]
-    - ["DriverSide","Middle","PassengerSide"]
+  instances0: 0 #Seat
+  instances1: 0 #Seat
   description: All seats.
-#include Seat.vspec Seat
+#include Seat.vspec Cabin.Seat
 
 #
 # Seat attributes.
 #
-DriverPosition:
+Cabin.DriverPosition:
   datatype: string
   type: attribute
   allowed: ['LEFT', 'MIDDLE', 'RIGHT']
   description: The position of the driver seat in row 1.
   comment: Some signals use DriverSide and PassengerSide as instances. If this signal specifies that DriverPosition is LEFT or MIDDLE, then DriverSide refers to left side and PassengerSide to right side. If this signal specifies that DriverPosition is RIGHT, then DriverSide refers to right side and PassengerSide to left side.
 
-SeatRowCount:
+Cabin.SeatRowCount:
   datatype: uint8
   type: attribute
   default: 2
@@ -168,7 +171,7 @@ SeatRowCount:
   comment: Default value corresponds to two rows of seats.
 
 
-SeatPosCount:
+Cabin.SeatPosCount:
   datatype: uint8[]
   type: attribute
   default: [2, 3]
@@ -178,14 +181,15 @@ SeatPosCount:
 ##
 # Convertible roof status
 ##
-Convertible:
+Cabin.Convertible:
   type: branch
   description: Convertible roof.
 
-Convertible.Status:
+Cabin.Convertible.Status:
   datatype: string
   type: sensor
   allowed: ['UNDEFINED', 'CLOSED', 'OPEN', 'CLOSING', 'OPENING', 'STALLED']
   description: Roof status on convertible vehicles.
 
-#include include/PowerOptimize.vspec
+#include ../include/PowerOptimize.vspec Cabin
+

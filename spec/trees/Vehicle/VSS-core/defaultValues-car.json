@@ -1,7 +1,7 @@
 [
     {
         "path": "Vehicle.Cabin.DoorCount",
-        "value": "6"
+        "value": "4"
     },
     {
         "path": "Vehicle.Cabin.DriverPosition",
@@ -9,7 +9,7 @@
     },
     {
         "path": "Vehicle.Cabin.SeatPosCount",
-        "value": "[2, 4]"
+        "value": "[2, 3]"
     },
     {
         "path": "Vehicle.Chassis.Axle.Row1.TreadWidth",

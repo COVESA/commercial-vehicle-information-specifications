@@ -20,32 +20,32 @@ CombustionEngine:
 #
 # Engine attributes
 #
-EngineCode:
+CombustionEngine.EngineCode:
   datatype: string
   type: attribute
   description: Engine code designation, as specified by vehicle manufacturer.
   comment: For hybrid vehicles the engine code may refer to the combination of
            combustion and electric engine.
 
-Displacement:
+CombustionEngine.Displacement:
   datatype: uint16
   type: attribute
   description: Displacement in cubic centimetres.
   unit: cm^3
 
-StrokeLength:
+CombustionEngine.StrokeLength:
   datatype: float
   type: attribute
   description: Stroke length in millimetres.
   unit: mm
 
-Bore:
+CombustionEngine.Bore:
   datatype: float
   type: attribute
   description: Bore in millimetres.
   unit: mm
 
-Configuration:
+CombustionEngine.Configuration:
   datatype: string
   type: attribute
   allowed: ['UNKNOWN', 'STRAIGHT', 'V', 'BOXER', 'W',
@@ -53,57 +53,57 @@ Configuration:
   description: Engine configuration.
   default: 'UNKNOWN'
 
-NumberOfCylinders:
+CombustionEngine.NumberOfCylinders:
   datatype: uint16
   type: attribute
   description: Number of cylinders.
 
-NumberOfValvesPerCylinder:
+CombustionEngine.NumberOfValvesPerCylinder:
   datatype: uint16
   type: attribute
   description: Number of valves per cylinder.
 
-CompressionRatio:
+CombustionEngine.CompressionRatio:
   datatype: string
   type: attribute
   description: Engine compression ratio, specified in the format 'X:1', e.g. '9.2:1'.
 
-EngineOilCapacity:
+CombustionEngine.EngineOilCapacity:
   deprecation: v5.0 moved to EngineOil.Capacity
   datatype: float
   type: attribute
   description: Engine oil capacity in liters.
   unit: l
 
-EngineCoolantCapacity:
+CombustionEngine.EngineCoolantCapacity:
   deprecation: v5.0 moved to EngineCoolant.Capacity
   datatype: float
   type: attribute
   description: Engine coolant capacity in liters.
   unit: l
 
-MaxPower:
+CombustionEngine.MaxPower:
   datatype: uint16
   type: attribute
   default: 0
   unit: kW
   description: Peak power, in kilowatts, that engine can generate.
 
-MaxTorque:
+CombustionEngine.MaxTorque:
   datatype: uint16
   type: attribute
   default: 0
   unit: Nm
   description: Peak torque, in newton meter, that the engine can generate.
 
-AspirationType:
+CombustionEngine.AspirationType:
   datatype: string
   type: attribute
   allowed: ['UNKNOWN', 'NATURAL', 'SUPERCHARGER', 'TURBOCHARGER']
   default: 'UNKNOWN'
   description: Type of aspiration (natural, turbocharger, supercharger etc).
 
-EngineOilLevel:
+CombustionEngine.EngineOilLevel:
   deprecation: v5.0 moved to EngineOil.Level
   datatype: string
   type: sensor
@@ -116,7 +116,7 @@ EngineOilLevel:
     ]
   description: Engine oil level.
 
-OilLifeRemaining:
+CombustionEngine.OilLifeRemaining:
   deprecation: v5.0 moved to EngineOil.LifeRemaining
   datatype: int32
   type: sensor
@@ -126,7 +126,7 @@ OilLifeRemaining:
            by Vehicle.Service.TimeToService.
   unit: s
 
-IsRunning:
+CombustionEngine.IsRunning:
   datatype: boolean
   type: sensor
   description: Engine Running. True if engine is rotating (Speed > 0).
@@ -134,19 +134,19 @@ IsRunning:
 #
 # Engine rotations per minute
 #
-Speed:
+CombustionEngine.Speed:
   datatype: uint16
   type: sensor
   unit: rpm
   description: Engine speed measured as rotations per minute.
 
-EngineHours:
+CombustionEngine.EngineHours:
   datatype: float
   type: sensor
   description: Accumulated time during engine lifetime with 'engine speed (rpm) > 0'.
   unit: h
 
-IdleHours:
+CombustionEngine.IdleHours:
   datatype: float
   type: sensor
   description: Accumulated idling time during engine lifetime.
@@ -158,7 +158,7 @@ IdleHours:
 #
 # Engine coolant temperature
 #
-ECT:
+CombustionEngine.ECT:
   deprecation: v5.0 moved to EngineCoolant.Temperature
   datatype: float
   type: sensor
@@ -168,7 +168,7 @@ ECT:
 #
 # Engine Oil Temperature
 #
-EOT:
+CombustionEngine.EOT:
   deprecation: v5.0 moved to EngineOil.Temperature
   datatype: float
   type: sensor
@@ -178,17 +178,17 @@ EOT:
 #
 # Engine oil
 #
-EngineOil:
+CombustionEngine.EngineOil:
   type: branch
   description: Signals related to the engine oil
 
-EngineOil.Capacity:
+CombustionEngine.EngineOil.Capacity:
   datatype: float
   type: attribute
   description: Engine oil capacity in liters.
   unit: l
 
-EngineOil.Level:
+CombustionEngine.EngineOil.Level:
   datatype: string
   type: sensor
   allowed: [
@@ -200,7 +200,7 @@ EngineOil.Level:
     ]
   description: Engine oil level.
 
-EngineOil.LifeRemaining:
+CombustionEngine.EngineOil.LifeRemaining:
   datatype: int32
   type: sensor
   description: Remaining engine oil life in seconds.
@@ -209,7 +209,7 @@ EngineOil.LifeRemaining:
            by Vehicle.Service.TimeToService.
   unit: s
 
-EngineOil.Temperature:
+CombustionEngine.EngineOil.Temperature:
   datatype: float
   type: sensor
   unit: celsius
@@ -218,15 +218,15 @@ EngineOil.Temperature:
 #
 # Engine coolant
 #
-EngineCoolant:
+CombustionEngine.EngineCoolant:
   type: branch
   description: Signals related to the engine coolant
-#include EngineCoolant.vspec EngineCoolant
+#include EngineCoolant.vspec CombustionEngine.EngineCoolant
 
 #
 # Manifold Absolute Pressure
 #
-MAP:
+CombustionEngine.MAP:
   datatype: uint16
   type: sensor
   unit: kPa
@@ -235,7 +235,7 @@ MAP:
 #
 # Mass Air Flow
 #
-MAF:
+CombustionEngine.MAF:
   datatype: uint16
   type: sensor
   unit: g/s
@@ -244,7 +244,7 @@ MAF:
 #
 # Throttle Position
 #
-TPS:
+CombustionEngine.TPS:
   datatype: uint8
   type: sensor
   unit: percent
@@ -254,7 +254,7 @@ TPS:
 #
 # Engine Oil Pressure
 #
-EOP:
+CombustionEngine.EOP:
   datatype: uint16
   type: sensor
   unit: kPa
@@ -263,7 +263,7 @@ EOP:
 #
 # Current Power
 #
-Power:
+CombustionEngine.Power:
   datatype: uint16
   type: sensor
   unit: kW
@@ -272,7 +272,7 @@ Power:
 #
 # Current Torque
 #
-Torque:
+CombustionEngine.Torque:
   datatype: int16
   type: sensor
   unit: Nm
@@ -283,19 +283,19 @@ Torque:
 # Diesel Exhaust Fluid
 #
 
-DieselExhaustFluid:
+CombustionEngine.DieselExhaustFluid:
   type: branch
   description: Signals related to Diesel Exhaust Fluid (DEF).
                DEF is called AUS32 in ISO 22241.
   comment: In retail and marketing other names are typically used for the fluid.
 
-DieselExhaustFluid.Capacity:
+CombustionEngine.DieselExhaustFluid.Capacity:
   datatype: float
   type: attribute
   unit: l
   description: Capacity in liters of the Diesel Exhaust Fluid Tank.
 
-DieselExhaustFluid.Level:
+CombustionEngine.DieselExhaustFluid.Level:
   datatype: uint8
   type: sensor
   unit: percent
@@ -303,13 +303,13 @@ DieselExhaustFluid.Level:
   max: 100
   description: Level of the Diesel Exhaust Fluid tank as percent of capacity. 0 = empty. 100 = full.
 
-DieselExhaustFluid.Range:
+CombustionEngine.DieselExhaustFluid.Range:
   datatype: uint32
   type: sensor
   unit: m
   description: Remaining range in meters of the Diesel Exhaust Fluid present in the vehicle.
 
-DieselExhaustFluid.IsLevelLow:
+CombustionEngine.DieselExhaustFluid.IsLevelLow:
   datatype: boolean
   type: sensor
   description: Indicates if the Diesel Exhaust Fluid level is low.
@@ -319,14 +319,14 @@ DieselExhaustFluid.IsLevelLow:
 #
 # Diesel Particulate Filter
 #
-DieselParticulateFilter:
+CombustionEngine.DieselParticulateFilter:
   type: branch
   description: Diesel Particulate Filter signals.
 
 #
 # Current inlet Temperature of Diesel Particulate Filter
 #
-DieselParticulateFilter.InletTemperature:
+CombustionEngine.DieselParticulateFilter.InletTemperature:
   datatype: float
   type: sensor
   unit: celsius
@@ -335,7 +335,7 @@ DieselParticulateFilter.InletTemperature:
 #
 # Current outlet Temperature of Diesel Particulate Filter
 #
-DieselParticulateFilter.OutletTemperature:
+CombustionEngine.DieselParticulateFilter.OutletTemperature:
   datatype: float
   type: sensor
   unit: celsius
@@ -344,7 +344,7 @@ DieselParticulateFilter.OutletTemperature:
 #
 # Current delta pressure of Diesel Particulate Filter
 #
-DieselParticulateFilter.DeltaPressure:
+CombustionEngine.DieselParticulateFilter.DeltaPressure:
   datatype: float
   type: sensor
   unit: Pa

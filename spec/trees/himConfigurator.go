@@ -260,10 +260,7 @@ func instanceProcess(sourceFile string) error {
 					for j := 0; j < len(subTree); j++ {  // followed by subtree
 						if strings.Contains(subTree[j], "#include") {
 							nodeNameIndex := strings.Index(subTree[j], nodeName) + len(nodeName)
-//							savedLines = append(savedLines, subTree[j])
 							savedLines = append(savedLines, subTree[j][:nodeNameIndex] + "." + getRowInstance(instanceTag,i) + subTree[j][nodeNameIndex:])
-fmt.Printf("nodeName=%\n", nodeName)
-//							savedLines = append(savedLines,subTree[j] + "." + getRowInstance(instanceTag,i))
 						} else if strings.Contains(subTree[j], "LocalVP:") {
 							sharpIndex := strings.Index(subTree[j], "#")
 							localVpTag := subTree[j][sharpIndex+1:]

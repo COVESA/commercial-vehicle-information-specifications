@@ -43,8 +43,8 @@ The syntax of these script files differ between Linux and Windows, see the chapt
 The symlink cript files used in Linux are standard bash script files, see e. g.
 [cv-truck-symlinks.sh](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Vehicle/Truck/cv-truck-symlinks.sh).
 
-For Windows a Powershell](https://en.wikipedia.org/wiki/PowerShell) script is used, see e. g.
-[cv-truck-symlink.ps1](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Win-setup/cv-truck-symlink.ps1).
+For Windows a [Powershell](https://en.wikipedia.org/wiki/PowerShell) script is used, see e. g.
+cv-truck-symlink.ps1 script in the [Win-setup](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Win-setup/) directory.
 
 #### VSS-tools activation
 The HIM configurator activates the VSS-tools exporter via a [Makefile](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Makefile).

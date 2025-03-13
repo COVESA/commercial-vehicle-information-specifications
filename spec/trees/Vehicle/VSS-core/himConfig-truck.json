@@ -11,13 +11,11 @@
             "Row[1,2]",
             [
                 [
-                    "Driver"
+                    "Driver",
+                    "Passenger"
                 ],
                 [
-                    "Left1",
-                    "Left2",
-                    "Right3",
-                    "Right4"
+                    "Couch"
                 ]
             ]
         ],
