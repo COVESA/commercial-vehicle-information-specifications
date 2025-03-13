@@ -89,17 +89,10 @@ Vehicle.Body:
 
 
 #
-# The Cabin branch and its included signals and attributes from Cabin/Cabin.vspec
+# The Cabin signals and attributes
 #
-Vehicle.Cabin:
-  type: branch
-  description: All in-cabin components, including doors.
 
-
-# Include the Cabin/Cabin.vspec file and attach all its signals and attributes under the
-# Cabin branch created above.
-
-#include Cabin/Cabin.vspec Vehicle.Cabin
+#include Cabin/Cabin.vspec Vehicle
 
 
 #

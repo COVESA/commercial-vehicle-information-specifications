@@ -9,15 +9,12 @@
 #
 # Internal combustion engine signals and attributes.
 #
-Engine:
-  type: branch
-  description: Engine-specific data.
 
 VariationPoint: #EngineType
-  - ICE #include CombustionEngine.vspec Engine
-  - EV  #include ElectricEngine.vspec Engine
+  - ICE #include CombustionEngine.vspec
+  - EV  #include ElectricEngine.vspec
 
-#include EngineCoolant.vspec Engine
+#include EngineCoolant.vspec
 
-#include FuelSystem.vspec Engine
+#include FuelSystem.vspec
 
