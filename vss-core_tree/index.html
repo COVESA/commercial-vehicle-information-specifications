@@ -9,7 +9,7 @@
 
     <link rel="shortcut icon" href="/hierarchical_information_model/images/fav.png" type="image/x-icon" />
 
-    <title>Tags :: Commercial Vehicle Information Specifications (CVIS)</title>
+    <title>VSS-core tree :: Commercial Vehicle Information Specifications (CVIS)</title>
 
     
     <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1741874586" rel="stylesheet">
@@ -40,7 +40,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/commercial-vehicle-information-specifications/tags/">
+  <body class="" data-url="/commercial-vehicle-information-specifications/vss-core_tree/">
     <nav id="sidebar" class="">
 
 
@@ -245,7 +245,7 @@
     
     <li data-nav-id="/commercial-vehicle-information-specifications/vss-core_tree/" title="VSS-core tree" class="dd-item
         
-        
+        active
         
         ">
       <a href="/commercial-vehicle-information-specifications/vss-core_tree/">
@@ -294,6 +294,17 @@
               <div>
                 <div id="top-bar">
                 
+                  
+                  
+                  
+                  <div id="top-github-link">
+                    <a class="github-link" title='Edit this page' href="https://github.com/covesa/commercial-vehicle-information-specifications/edit/master/docs/docs-gen/content/vss-core_tree/_index.md" target="blank">
+                      <i class="fas fa-code-branch"></i>
+                      <span id="top-github-link-text">Edit this page</span>
+                    </a>
+                  </div>
+                  
+                
                 
                 <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
                     <span id="sidebar-toggle-span">
@@ -301,8 +312,6 @@
                           <i class="fas fa-bars"></i>
                         </a>
                     </span>
-                  
-                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
                   
                   <span class="links">
                  
@@ -314,7 +323,7 @@
             
           
           
-            <a href='/commercial-vehicle-information-specifications/'>Commercial Vehicle Information Specifications</a> > Tags
+            <a href='/commercial-vehicle-information-specifications/'>Commercial Vehicle Information Specifications</a> > VSS-core tree
           
         
           
@@ -323,13 +332,6 @@
                   </span>
                 </div>
                 
-                    <div class="progress">
-    <div class="wrapper">
-
-    </div>
-</div>
-
-                
               </div>
             </div>
             
@@ -337,31 +339,45 @@
         
         </div>
         
+          <div id="chapter">
+        
         <div id="body-inner">
-          
-            <h1>
-              
-                tag ::
-              
-              Tags
-            </h1>
           
 
         
 
 
 
-
-
+	<h1 id="the-vss-core-tree">The VSS-core tree</h1>
+<p>The VSS-core tree is a vehicle type agnostic tree that supports the generation of vehicle type specific trees by usage of the HIM configurator.
+The HIM configurator is then instructed to read input from vehicle specific configuration files.
+This concept is in theory applicable to any vehicle type that shares at least some basic concepts with other vehicle types.
+Vehicle types that are likely to be able to use this concept are e. g.:</p>
 <ul>
-	
+<li>Car</li>
+<li>Truck</li>
+<li>Bus</li>
+<li>Van</li>
+<li>Pick-up</li>
 </ul>
+<p>It may also be useful for vehicle types like:</p>
+<ul>
+<li>Trailer</li>
+<li>Motorcycle</li>
+</ul>
+<p>For vehicle types that only share a small amount of basic concepts with other vehicle types the model that is also present in the CVIS project,
+a structure with common objects that can be shared may be a better fit.</p>
+
+
+
 
 
 <footer class=" footline" >
 	
 </footer>
 
+        
+            </div> 
         
         </div>
         
@@ -494,6 +510,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -513,6 +530,8 @@
 
 	 
 	 
+		
+			<a class="nav nav-prev" href="/commercial-vehicle-information-specifications/truck_tree/driver_tree/" title="Driver tree"> <i class="fa fa-chevron-left"></i></a>
 		
 		
 			<a class="nav nav-next" href="/commercial-vehicle-information-specifications/bus_tree/" title="Bus tree" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
