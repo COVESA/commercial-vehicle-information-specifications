@@ -1335,26 +1335,9 @@ func main() {
 		}
 	}
 
-	// TODO: configure defaults
 	if len(*defaultFName) > 0 {
 		configureDefaults(*vspecDir, *defaultFName)
 	}
-
-/*		err = filepath.WalkDir(*vspecDir, walkDefaultPass1)
-		if err != nil {
-			fmt.Printf("Default 1st pass preprocessing failed. Terminating.\n")
-			os.Exit(1)
-		}
-for i := 0; i < len(pathData); i++ {
-	fmt.Printf("pathData[%d].FName=%s, pathData[%d].BasePath=%s\n", i, pathData[i].FName, i, pathData[i].BasePath)
-}
-
-		err = filepath.WalkDir(*vspecDir, walkDefaultPass2)
-		if err != nil {
-			fmt.Printf("Default 2nd pass preprocessing failed. Terminating.\n")
-			os.Exit(1)
-		}
-	}*/
 
 	if *preProcessOnly {
 		fmt.Printf("VSS-tools is not called.\nConfigured vspec files are saved\n")

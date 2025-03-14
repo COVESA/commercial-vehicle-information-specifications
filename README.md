@@ -13,24 +13,26 @@ Minutes of meetings is found [here](https://wiki.covesa.global/display/WIK4/CVIS
 The Commercial Vehicle Information Specifications (CVIS) project is aiming at developing signal and service catalogues for commercial vehicles using the 
 [HIM rule set](https://covesa.github.io/hierarchical_information_model/).
 
-Using the HIM rule set enables the development of separate trees that each is tailored for the needs for specific vehicles,
-and it also enables the definition of trees representing services in the form of procedures with input and output parameters.
+Using the HIM resource profile rule set enables the development of separate trees that each is tailored for the needs for specific vehicles types and models,
+and it can be extended to separate vehicle individuals.
 
 HIM also provides support for its implementation in an interface where it simplifies the server management of multiple trees.
 
-Catalogues will be developed for different commercial vehicle types, e. g. Heavy duty tractors and trailers, buses, etc.
+Catalogues will be developed for different commercial vehicle types, e. g. trucks, trailers, buses, etc.
 
-The HIM rule set for signals is identical to the [VSS rule set](https://covesa.github.io/vehicle_signal_specification/rule_set/), 
+The HIM rule set for signals (the resource profile) is identical to the [VSS rule set](https://covesa.github.io/vehicle_signal_specification/rule_set/), 
 and this project will for the signal parts try to align and reuse as much as possible with the VSS project.
 
-One realization of this ambition is the structure of how different trees are defined, where the parts of the tree that is domain specific
+One attempt to realize this ambition is to use a structure where the parts of the tree that is domain specific
 is represented in "private" directories, while the parts that can be shared with other trees are stored in "common" directories.
-
 The use of symbolic links allow the private tree to access the common parts as if they were part of the private tree.
 This design is compatible with the [VSS-tools](https://github.com/COVESA/vss-tools) exporter tool,
 so it can be used to transform data in the vspec file structure to the different other formats supported by that tool.
 
-The documentation is [here](https://covesa.github.io/commercial-vehicle-information-specifications/) (under construction).
+Another attempt being tried out is to create a common tree for "all" vehicle types and then use the HIM configurator to configure this
+tree to become vehicle type specific.
+
+The CVIS documentation is [here](https://covesa.github.io/commercial-vehicle-information-specifications/).
 
 ## HIM configurator tool
 
