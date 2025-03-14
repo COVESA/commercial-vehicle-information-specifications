@@ -2,7 +2,7 @@
     "variants": {
         "AxleFeature.Row1": "AXLE+STEER",
         "AxleFeature.Row2": "AXLE+DRIVE",
-        "EngineType": "ICE",
+        "EngineType": "PHEV",
         "VehicleType": "CAR"
     },
     "instances": {

@@ -14,33 +14,33 @@ ElectricMotor:
 # EV Motor signals and attributes
 #
 
-EngineCode:
+ElectricMotor.EngineCode:
   datatype: string
   type: attribute
   description: Engine code designation, as specified by vehicle manufacturer.
 
-MaxPower:
+ElectricMotor.MaxPower:
   datatype: uint16
   type: attribute
   default: 0
   unit: kW
   description: Peak power, in kilowatts, that motor(s) can generate.
 
-MaxTorque:
+ElectricMotor.MaxTorque:
   datatype: uint16
   type: attribute
   default: 0
   unit: Nm
   description: Peak power, in newton meter, that the motor(s) can generate.
 
-MaxRegenPower:
+ElectricMotor.MaxRegenPower:
   datatype: uint16
   type: attribute
   default: 0
   unit: kW
   description: Peak regen/brake power, in kilowatts, that motor(s) can generate.
 
-MaxRegenTorque:
+ElectricMotor.MaxRegenTorque:
   datatype: uint16
   type: attribute
   default: 0
@@ -50,13 +50,13 @@ MaxRegenTorque:
 #
 # Motor rotations per minute
 #
-Speed:
+ElectricMotor.Speed:
   datatype: int32
   type: sensor
   unit: rpm
   description: Motor rotational speed measured as rotations per minute. Negative values indicate reverse driving mode.
 
-TimeInUse:
+ElectricMotor.TimeInUse:
   datatype: float
   type: sensor
   description: Accumulated time during engine lifetime when the vehicule state's is 'READY'.
@@ -66,7 +66,7 @@ TimeInUse:
 #
 # Motor temperature
 #
-Temperature:
+ElectricMotor.Temperature:
   datatype: float
   type: sensor
   unit: celsius
@@ -76,7 +76,7 @@ Temperature:
 #
 # Motor coolant temperature (if applicable)
 #
-CoolantTemperature:
+ElectricMotor.CoolantTemperature:
   deprecation: v5.0 moved to EngineCoolant.Temperature
   datatype: float
   type: sensor
@@ -86,15 +86,15 @@ CoolantTemperature:
 #
 # Engine coolant
 #
-EngineCoolant:
+ElectricMotor.EngineCoolant:
   type: branch
   description: Signals related to the engine coolant (if applicable).
-#include EngineCoolant.vspec EngineCoolant
+#include EngineCoolant.vspec ElectricMotor.EngineCoolant
 
 #
 # Current Power
 #
-Power:
+ElectricMotor.Power:
   datatype: int16
   type: sensor
   unit: kW
@@ -103,7 +103,7 @@ Power:
 #
 # Current Torque
 #
-Torque:
+ElectricMotor.Torque:
   datatype: int16
   type: sensor
   unit: Nm

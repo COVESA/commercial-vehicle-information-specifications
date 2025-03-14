@@ -455,7 +455,8 @@ func addInstanceBranch(savedLines []string, nodeName string, index int, instance
 	if len(instanceExpression) > 0 {
 		savedLines = append(savedLines, "  " + createConfiguredInstance(instanceExpression, index, instanceTag))
 	}
-	savedLines = append(savedLines, "  description: " + nodeName  + "." + getRowInstance(instanceTag,index))
+//	savedLines = append(savedLines, "  description: " + nodeName  + "." + getRowInstance(instanceTag,index))
+	savedLines = append(savedLines, "  description: " + instanceTag + ", " + getRowInstance(instanceTag,index) + " instance")
 	return savedLines
 }
 
