@@ -27,12 +27,6 @@ AxleCount:
   default: 2
   description: Number of axles on the vehicle
 
-#Axle:
-#  instances:
-#    - Row[1,2]
-#  type: branch
-#  description: Axle signals
-
 Axle:
   instances0: 0 #Axle
   type: branch
@@ -124,11 +118,6 @@ Axle.Wheel:
   instances1: 0 #Axle
   type: branch
   description: Wheel signals for axle
-
-#Axle.Wheel:
-#  instances: ["Left","Right"]
-#  type: branch
-#  description: Wheel signals for axle
 
 #include Wheel.vspec Axle.Wheel
 
