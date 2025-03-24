@@ -52,9 +52,11 @@ The HIM configurator activates the VSS-tools exporter via a [Makefile](https://g
 In Windows the setup for VSS-tools activation is done by following the instructions found in the
 [Win-setup](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Win-setup/) directory.
 
-## Tree development
-The [HIM rule set for resource data](https://covesa.github.io/hierarchical_information_model/resource_data_rule_set/) is used to define signals in a tree.
-This syntax can be directly used as input to any of the exporter tools provided by [VSS-tools](https://github.com/COVESA/vss-tools).
+## HIM configurator
+
+The framework also contains a new tool, the HIM configurator.
+This tool is pre-processes vspec2 files to generate vspec files that are then used as input to the VSS-tools exporters.
+In its current version it provides support for the types of tree configuration that is described in the HIM extensions chapter below.
 
 ### HIM extensions
 The HIM syntax is in this project extended with the features described below.
@@ -248,25 +250,54 @@ the signal tree that it is working on. The node type in a type definition tree s
 separate trees with that node type, the node type 'sensor' is used instead. This must therefore be manually edited to rename to 'property'
 until a moodified version of VSS-tools is created, or that the HIM configurator is updated to handle the node type renaming.
 
-### Extension 5: Configuration of default values
-It is allowed according the the HIM rule set to include default values in the node definitions.
+### Extension 5: Configuration of default or description values
+The configuration of default o description values are stored in a JSON file in the root directory of the tree, using the syntax described below.
+This file is included as input to the HIM configurator by the CLI parameter -v.
+As an example see
+[configValues-truck.json](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/VSS-core/configValues-truck.json).
+
+
+#### Default values
+The HIM rule set supports inclusion of default values in the node definitions.
 This is mainly meant to be used for nodes of the node type attribute, but can also be applied to the node types sensor and actuator.
 To define that a node shall be configured with a default value, a JSON expression like the example below must be added to a JSON file
-stored in the tree directory, see
-[defaultValues.json](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/VSS-core/defaultValues.json) as an example.
+stored in the tree directory.
 ```
-    {
-        "path": "Vehicle.Cabin.DoorCount",
-        "value": "6"
-    }
+{
+    "default": [
+        {
+            "path": "Vehicle.Cabin.DoorCount",
+            "value": "6"
+        }
+    ]
+}
 ```
 The default configuration file is specified in the CLI command when starting the HIM configurator following the -d tag.
 
 If the tree already has a default value for a node that is in the list it will be replaced by the new value,
 otherwise a default line is added to the node.
 
-## Trees under development
-Currently two trees are being developed:
+#### Description values
+When the instantiation feature is used it may be that the descriptions of the instantiated nodes needs to be updated with unique descriptions.
+The HIM configurator handles this in the same way as it handles the default updates,
+with the difference that the JSON object key-value shall be "description" instead, see below.
+```
+{
+    "description": [
+        {
+            "path": "Vehicle.Chassis.Axle.Row1",
+            "value": "A description of the first axle"
+        }
+    ]
+}
+```
+
+## Tree development
+The [HIM rule set for resource data](https://covesa.github.io/hierarchical_information_model/resource_data_rule_set/) is used to define signals in a tree.
+This syntax can be directly used as input to any of the exporter tools provided by [VSS-tools](https://github.com/COVESA/vss-tools).
+
+### Trees under development
+Currently the following trees are under development:
 * [Truck tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Truck)
 * [Trailer tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Trailer)
 * [Bus tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Bus)
@@ -277,17 +308,6 @@ The VSS-core tree is a vehicle type agnostic tree that is configured by the HIM 
 Configuration templates for the vehicle types Car and Truck are available, and can be used as starting poin to create templates for other vehicle types.
 
 The other trees are vehicle type specific from the start, or for Driver a supplementary tree to be used together with e. g. the Truck tree.
-
-## HIM configurator
-
-The framework also contains a new tool, the HIM configurator. In its current version it provides support for two types of tree configuration:
-
-* Variation point configuration: If the tree defined by the vspec files contains data structures that are not typically used together in a specific deployment of the tree, then these can be tagged as a variability point, and the HIM configurator can be used to pick the desired structure(s).
-* Instance configuration: This is an extension of the existing VSS-tools instance support that provides the possibility for a two dimensional instantiation to have unique "column instantiation" for each "row instantiation".
-
-Check out the [HIM configurator](/commercial-vehicle-information-specifications/him_configurator) chapter for more details.
-
-If this new tool is found to be useful it is planned to add support for "default configuration" later.
 
 ## Alignment with other standards
 The terminology used in these HIM based specifications should try to align with terminology and principles from other standards.
