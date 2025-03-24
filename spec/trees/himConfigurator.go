@@ -77,16 +77,21 @@ type PropertyData struct {
 
 var enumData []PropertyData
 
-var defaultData []DefaultConfig
-type DefaultConfig struct {
+var configData ConfigValues
+type ConfigValues struct {
+	Default []ConfigValueDefinition  `json:"default"`
+	Description []ConfigValueDefinition  `json:"description"`
+}
+type ConfigValueDefinition struct {
 	Path string  `json:"path"`
 	Value string `json:"value"`
 }
 
-type DefaultContext struct {
+type VspecContext struct {
 	BasePath string
 	Path string
 	FName string
+	KeyValue string
 }
 
 type StructData struct {
@@ -1001,24 +1006,24 @@ func getRootVspecFileName(vspecRootDir string) string {
 	return ""
 }
 
-func readDefaultDefinitions(fileName string) []DefaultConfig {
+func readConfigValues(fileName string) (ConfigValues, error) {
+	var configData ConfigValues
 	data, err := os.ReadFile(fileName)
 	if err != nil {
-		fmt.Printf("readDefaultDefinitions: Could not read %s\n", fileName)
-		return nil
+		fmt.Printf("readConfigValues: Could not read %s\n", fileName)
+		return configData, err
 	}
-	var defaultData []DefaultConfig
-	err = json.Unmarshal(data, &defaultData)
+	err = json.Unmarshal(data, &configData)
 	if err != nil {
-		fmt.Printf("readDefaultDefinitions:error=%s\n", err)
-		return nil
+		fmt.Printf("readConfigValues:error=%s\n", err)
+		return configData, err
 	}
-	return defaultData
+	return configData, nil
 }
 
-func defaultConfigIndex(path string) int {
-	for i := 0; i < len(defaultData); i++ {
-		if defaultData[i].Path == path {
+func defaultConfigIndex(path string, arrayPtr *[]ConfigValueDefinition) int {
+	for i := 0; i < len(*arrayPtr); i++ {
+		if (*arrayPtr)[i].Path == path {
 			return i
 		}
 	}
@@ -1171,26 +1176,37 @@ func clearPropertyNode(nextNodeName string) PropertyData {
 	return propertyNode
 }
 
-func configureDefaults(vspecDir string, defaultFName string) {
-fmt.Printf("configureDefaults: dir=%s, fil=%s\n", vspecDir, defaultFName)
-	defaultData = readDefaultDefinitions(vspecDir + defaultFName)
+func configureValues(vspecDir string, ConfigValueFName string) {
+fmt.Printf("configureValues: dir=%s, fil=%s\n", vspecDir, ConfigValueFName)
+	var err error
+	configData, err = readConfigValues(vspecDir + ConfigValueFName)
+	if err != nil {
+		fmt.Printf("configureValues: failed to read dir=%s/%s\n", vspecDir, ConfigValueFName)
+		return
+	}
 	files, _ := os.ReadDir(vspecDir)
 	for _, file := range files {
 		match, _ := filepath.Match("*Specification.vspec", file.Name())
 		if match {
-			var ctx DefaultContext
+			var ctx VspecContext
 			ctx.Path = vspecDir
 			ctx.FName = file.Name()
 			ctx.BasePath = ""
-			defaultConfigIteration(ctx)
+			ctx.KeyValue = "default"
+			valueConfigIteration(ctx)
+			ctx.Path = vspecDir
+			ctx.FName = file.Name()
+			ctx.BasePath = ""
+			ctx.KeyValue = "description"
+			valueConfigIteration(ctx)
 		}
 	}
 }
 
-func defaultConfigIteration(ctx DefaultContext) {
+func valueConfigIteration(ctx VspecContext) {
 	sourceFp, err := os.Open(ctx.Path + ctx.FName)
 	if err != nil {
-		fmt.Printf("defaultConfigIteration:Error reading %s: %s\n", ctx.Path + ctx.FName, err)
+		fmt.Printf("valueConfigIteration:Error reading %s: %s\n", ctx.Path + ctx.FName, err)
 		return
 	}
 	scanner := bufio.NewScanner(sourceFp)
@@ -1199,8 +1215,17 @@ func defaultConfigIteration(ctx DefaultContext) {
 	continueScan := true
 	var savedLines []string
 	var relativePath string
-	removeDefault := false
+	removeExistingConfig := false
 	isUpdated := false
+	var arrayPtr *[]ConfigValueDefinition
+	if ctx.KeyValue == "default" {
+		arrayPtr = &configData.Default
+	} else if ctx.KeyValue == "description" {
+		arrayPtr = &configData.Description
+	} else {
+		fmt.Printf("Unknown config key%s\n", ctx.KeyValue)
+		return
+	}
 	for continueScan {
 		relativePath = ""
 		continueScan = scanner.Scan()
@@ -1208,22 +1233,23 @@ func defaultConfigIteration(ctx DefaultContext) {
 		getNodeName(text, &relativePath)
 		if len(relativePath) > 0 {
 			savedLines = append(savedLines, text)
-			removeDefault = false
-			index := defaultConfigIndex(ctx.BasePath + "." + relativePath)
+			removeExistingConfig = false
+			index := defaultConfigIndex(ctx.BasePath + "." + relativePath, arrayPtr)
 			if index != -1 {
-				fmt.Printf("%s:New default value=%s\n", ctx.BasePath + "." + relativePath, defaultData[index].Value)
-				savedLines = append(savedLines, "  default: " + defaultData[index].Value + "\n")
+				fmt.Printf("%s:New %s value=%s\n", ctx.BasePath + "." + relativePath, ctx.KeyValue, (*arrayPtr)[index].Value)
+				savedLines = append(savedLines, "  " + ctx.KeyValue + ": " + (*arrayPtr)[index].Value + "\n")
 				isUpdated = true
-				removeDefault = true
+				removeExistingConfig = true
 			}
 		} else if len(text) > 8 && strings.Contains(text[:8], "#include") {  // example: #include Vehicle/Vehicle.vspec Vehicle
-			var childCtx DefaultContext
+			var childCtx VspecContext
 			incFields := strings.Fields(text)
 			dir, file := filepath.Split(incFields[1])
 			childCtx.FName = file
 			if strings.Contains(dir, "include/") && dir[0] == 'i' { // ugly fix...
 				dir = "../" + dir
 			}
+			childCtx.KeyValue = ctx.KeyValue
 			childCtx.Path = ctx.Path + dir
 			childCtx.BasePath = ctx.BasePath
 			if len(incFields) > 2 {
@@ -1233,8 +1259,8 @@ func defaultConfigIteration(ctx DefaultContext) {
 				}
 			}
 			savedLines = append(savedLines, text)
-			defaultConfigIteration(childCtx)
-		} else if removeDefault && strings.Contains(text, "default:") {
+			valueConfigIteration(childCtx)
+		} else if removeExistingConfig && strings.Contains(text, ctx.KeyValue + ":") {
 			// do not save stale default
 		} else {
 			savedLines = append(savedLines, text)
@@ -1269,10 +1295,10 @@ func main() {
 		Help: "Make command parameter must be either: all, yaml, json, csv, or binary", Default: "yaml"})
 	confFName := parser.String("c", "configfile", &argparse.Options{Required: false, Help: "configuration file name", Default: "himConfig-truck.json"})
 	vspecDir := parser.String("r", "rootdir", &argparse.Options{Required: false, Help: "path to vspec root directory", Default: "Vehicle/VSS-core/"})
-	sConf := parser.Flag("v", "vspec", &argparse.Options{Required: false, Help: "Saves the configured .vspec2 files with extension .vspec"})
+	sConf := parser.Flag("s", "vspecsave", &argparse.Options{Required: false, Help: "Saves the configured .vspec2 files with extension .vspec"})
 	preProcessOnly := parser.Flag("p", "preprocess", &argparse.Options{Required: false, Help: "Pre-process only, save configured vspec files. Do not run VSS-tools."})
 	enumSubst := parser.Flag("n", "noEnumSubst", &argparse.Options{Required: false, Help: "No substitution of enum links to Datatype tree with actual datatypes"})
-	defaultFName := parser.String("d", "defaultdatafile", &argparse.Options{Required: false, Help: "Default values file name"})
+	ConfigValueFName := parser.String("v", "configvaluesfile", &argparse.Options{Required: false, Help: "Config values file name"})
 	err := parser.Parse(os.Args)
 	if err != nil {
 		fmt.Print(parser.Usage(err))
@@ -1312,13 +1338,6 @@ func main() {
 		os.Exit(1)
 	}
 
-/*	// configure local variation points <- Should run before the global variation point config pass
-	err = filepath.WalkDir(*vspecDir, walkLocalVariantPass)
-	if err != nil {
-		fmt.Printf("Local variant preprocessing failed. Terminating.\n")
-		os.Exit(1)
-	}*/
-
 	// configure global variation points
 	err = filepath.WalkDir(*vspecDir, walkVariantPass)
 	if err != nil {
@@ -1336,8 +1355,8 @@ func main() {
 		}
 	}
 
-	if len(*defaultFName) > 0 {
-		configureDefaults(*vspecDir, *defaultFName)
+	if len(*ConfigValueFName) > 0 {
+		configureValues(*vspecDir, *ConfigValueFName)
 	}
 
 	if *preProcessOnly {

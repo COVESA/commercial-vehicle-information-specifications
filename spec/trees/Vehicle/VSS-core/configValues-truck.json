@@ -1,0 +1,42 @@
+{
+    "default": [
+        {
+            "path": "Vehicle.Cabin.DoorCount",
+            "value": "2"
+        },
+        {
+            "path": "Vehicle.Cabin.DriverPosition",
+            "value": "LEFT"
+        },
+        {
+            "path": "Vehicle.Cabin.SeatPosCount",
+            "value": "[2, 1]"
+        },
+        {
+            "path": "Vehicle.Chassis.Axle.Row1.TreadWidth",
+            "value": "1750"
+        },
+        {
+            "path": "Vehicle.Chassis.Axle.Row2.TreadWidth",
+            "value": "1750"
+        },
+        {
+            "path": "Vehicle.Chassis.Axle.Row3.TreadWidth",
+            "value": "1750"
+        }
+    ],
+    "description": [
+        {
+            "path": "Vehicle.Chassis.Axle.Row1",
+            "value": "A comment on the first axle"
+        },
+        {
+            "path": "Vehicle.Chassis.Axle.Row2",
+            "value": "A different comment on the 2nd axle"
+        },
+        {
+            "path": "Vehicle.Chassis.Axle.Row3",
+            "value": "And yet another on the third axle"
+        }
+    ]
+}
