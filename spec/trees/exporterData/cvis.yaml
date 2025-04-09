@@ -7726,6 +7726,12 @@ Vehicle.Powertrain.Type:
   description: Defines the powertrain type of the vehicle.
   type: attribute
 
+Vehicle.RoofLoad:
+  datatype: int16
+  description: The permitted total weight of cargo and installations (e.g. a roof rack) on top of the vehicle.
+  type: attribute
+  unit: kg
+
 Vehicle.Service:
   description: Service data.
   type: branch

@@ -119,21 +119,20 @@ Vehicle.Chassis:
 #
 # On-board Diagnostic (OBD) Branch
 #
-VariationPoint: #VehicleType
-  - CAR #include OBD/OBD.vspec Vehicle
+
+#include OBD/OBD.vspec Vehicle
 
 #
 # Driver
 #
-VariationPoint: #VehicleType
-  - CAR #include Driver/Driver.vspec Vehicle
+
+#include Driver/Driver.vspec Vehicle
 
 #
 # Occupant Data
 #
 
-VariationPoint: #VehicleType
-  - CAR #include Vehicle/Occupant.vspec Vehicle
+#include Vehicle/Occupant.vspec Vehicle
 
 #
 # Exterior information

@@ -3,8 +3,7 @@
         "AxleFeature.Row1": "AXLE+STEER",
         "AxleFeature.Row2": "AXLE+LIFT",
         "AxleFeature.Row3": "AXLE+STEER+DRIVE",
-        "EngineType": "ICE",
-        "VehicleType": "TRUCK"
+        "EngineType": "ICE"
     },
     "instances": {
         "Seat": [
@@ -42,7 +41,7 @@
         ]
     },
     "overlays": [
-        "overlay/overlay1.vspec",
-        "overlay/overlay2.vspec"
+        "overlay/Truck/overlay1.vspec",
+        "overlay/Truck/overlay2.vspec"
     ]
 }

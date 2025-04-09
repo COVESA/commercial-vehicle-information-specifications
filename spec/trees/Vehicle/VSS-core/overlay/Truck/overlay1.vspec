@@ -1,10 +1,18 @@
+# Delete the OBD branch
+Vehicle.OBD:
+  delete: true
+
+# Delete the Driver branch
+Vehicle.Driver:
+  delete: true
+
+# Delete the Occupant branch
+Vehicle.Occupant:
+  delete: true
+
 # Change from km/h to m/s
 Vehicle.Speed:
   unit: m/s
-
-# Delete RoofLoad
-Vehicle.RoofLoad:
-  delete: true
 
 # Add NewBranch.NewSensor
 Vehicle.NewBranch:
