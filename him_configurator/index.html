@@ -12,21 +12,21 @@
     <title>HIM configurator :: Commercial Vehicle Information Specifications (CVIS)</title>
 
     
-    <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1742807553" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/fontawesome-all.min.css?1742807553" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/hybrid.css?1742807553" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/featherlight.min.css?1742807553" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/perfect-scrollbar.min.css?1742807553" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/auto-complete.css?1742807553" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/atom-one-dark-reasonable.css?1742807553" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/theme.css?1742807553" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/hugo-theme.css?1742807553" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1744208859" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/fontawesome-all.min.css?1744208859" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/hybrid.css?1744208859" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/featherlight.min.css?1744208859" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/perfect-scrollbar.min.css?1744208859" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/auto-complete.css?1744208859" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/atom-one-dark-reasonable.css?1744208859" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/theme.css?1744208859" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/hugo-theme.css?1744208859" rel="stylesheet">
     
-    <link href="/commercial-vehicle-information-specifications/css/theme-blue.css?1742807553" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/theme-blue.css?1744208859" rel="stylesheet">
     
     
 
-    <script src="/commercial-vehicle-information-specifications/js/jquery-3.3.1.min.js?1742807553"></script>
+    <script src="/commercial-vehicle-information-specifications/js/jquery-3.3.1.min.js?1744208859"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/lunr.min.js?1742807553"></script>
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/auto-complete.js?1742807553"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/lunr.min.js?1744208859"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/auto-complete.js?1744208859"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/covesa.github.io\/commercial-vehicle-information-specifications\/";
     
 </script>
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/search.js?1742807553"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/search.js?1744208859"></script>
 
     
   </div>
@@ -391,26 +391,25 @@ The other alternative can thereafter be used to activate venv.</p>
 <pre tabindex="0"><code>usage: print [-h|--help] [-m|--makecommand (all|yaml|json|csv|binary)]
              [-c|--configfile &#34;&lt;value&gt;&#34;] [-r|--rootdir &#34;&lt;value&gt;&#34;]
              [-s|--vspecsave] [-p|--preprocess] [-n|--noEnumSubst]
-             [-v|--configvaluesfile &#34;&lt;value&gt;&#34;]
+             [-d|--disableOverlays]
 
              HIM configurator
 
 Arguments:
 
-  -h  --help              Print help information
-  -m  --makecommand       Make command parameter must be either: all, yaml,
-                          json, csv, or binary. Default: yaml
-  -c  --configfile        configuration file name. Default:
-                          himConfig-truck.json
-  -r  --rootdir           path to vspec root directory. Default:
-                          Vehicle/VSS-core/
-  -s  --vspecsave         Saves the configured .vspec2 files with extension
-                          .vspec
-  -p  --preprocess        Pre-process only, save configured vspec files. Do not
-                          run VSS-tools.
-  -n  --noEnumSubst       No substitution of enum links to Datatype tree with
-                          actual datatypes
-  -v  --configvaluesfile  Config values file name
+  -h  --help             Print help information
+  -m  --makecommand      Make command parameter must be either: all, yaml,
+                         json, csv, or binary. Default: yaml
+  -c  --configfile       configuration file name. Default: himConfig-truck.json
+  -r  --rootdir          path to vspec root directory. Default:
+                         Vehicle/VSS-core/
+  -s  --vspecsave        Saves the configured .vspec2 files with extension
+                         .vspec
+  -p  --preprocess       Pre-process only, save configured vspec files. Do not
+                         run VSS-tools.
+  -n  --noEnumSubst      No substitution of enum links to Datatype tree with
+                         actual datatypes
+  -d  --disableOverlays  Disables VSS-tools overlay configurations
 </code></pre><p>The -m command line option is used to set which VSS-tools exporter the configured tree should have.
 The value &lsquo;all&rsquo; leads to that all the exporters that are compatible with the HIM configurator are executed.
 If not used the default is &lsquo;yaml&rsquo;.</p>
@@ -419,28 +418,25 @@ Default is himConfig-truck.json.</p>
 <p>The -r command line option is used to set the path to the tree that should be used as input for the configuration.
 The path is relative to the tree directory, and should have the slash &lsquo;/&rsquo; character at the end of the path.
 If not used the default is &lsquo;Vehicle/VSS-core/&rsquo;.</p>
-<p>If the -s command  is set the the HIM configurator does not delete the vspec files that it generates from the vspec2 files that are found in the tree structure.
+<p>If the -s command line option is set the the HIM configurator does not delete the vspec files that it generates from the vspec2 files that are found in the tree structure.
 If not set these vspec files are deleted after being used as input to the call of the VSS-tools exporter(s).
 If not used the default is false, i. e. not to save the files.<br>
 With the vspec files saved it becomes possible to run the VSS-tols exporters &ldquo;manually&rdquo; with the vspec root node as input.
 This might be helpful if the development environment is not a Linux compatible environment,
 or if there is a need to debug the VSS-tools processing, se below.</p>
-<p>The -p command leads to that the HIM configurator does not issue a command to the VSS-tools exporters.
-If the -v command also was set, then the vspec files generated by the HIM configurator is saved, see above,
+<p>The -p command line option leads to that the HIM configurator does not issue a command to the VSS-tools exporters.
+The vspec files generated by the HIM configurator is saved,
 and the VSS-tools exporters can be activated &ldquo;manually&rdquo; with the pre-processed tree as input.</p>
 <p>The -n command line option is used if substitution is not desired of the external datatype references with the actual enum definitions
 from the common Datatypes tree in the generated tree(s). However, VSS-tools currently does not accept the syntax using a reference.</p>
-<p>The -v command line option is used to configure nodes with a default value that is defined in the named file.</p>
+<p>The -d command line option is used to disable the overlays to be invoked to the VSS-tools exporter.</p>
 <h2 id="vss-tools-debug">VSS-tools debug</h2>
-<p>&lsquo;in the development of the trees it might happen that errors are introdued in the vspec2/vspec files.
-VSS-tools have a compehensive error logging support, but this does not show up in the HIM configurator UI.
-It is however possible to get this error logging support by manually issuing a make command in a terminal window
-on the make file in the cvis root catalog, after first running the HIM configurator on the tree under development,
-with the -v CLI parameter so that the vspec files are saved.
-The make command shall then have the following general format:</p>
-<pre tabindex="0"><code>make yaml VSPECROOT=./spec/trees/Vehicle/Truck/TruckSignalSpecification.vspec
-</code></pre><p>where yaml can be replaced by any other supported exporter, and the path to the root vspec file could be to any tree in the CVIS &ldquo;forest&rdquo;.
-The VSS-tools error logging will then be shown in the terminal window.</p>
+<p>&lsquo;in the development of the trees it might happen that errors are introduced in the vspec2/vspec files.
+There is some logging information saved in the spec/trees/exporterData/exporterLog.txt.
+The first line in that file shows the command that is issued to the VSS-tools vspec service.
+This can be copied and then issued manaually in a terminal window,
+in which case the more comprehensive error logging by the VSS-tools exporter will be available.
+However, for it to work the HIM configurator must have saved the vspec files by adding the -p CLI parameter to the HIM configurator command.</p>
 <h2 id="creation-of-a-vehicle-variant-specific-signal-tree">Creation of a vehicle variant specific signal tree</h2>
 <p>The HIM configurator enables a model where a &ldquo;super tree&rdquo; covering all variations that a vehicle may be equipped with,
 e. g. propulsion technology like ICE, PHEV, EV, etc. can be defined in the vspec files,
@@ -631,19 +627,19 @@ An example of a server using it like this is the <a href="https://github.com/COV
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/commercial-vehicle-information-specifications/js/clipboard.min.js?1742807553"></script>
-    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.min.js?1742807553"></script>
-    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.jquery.min.js?1742807553"></script>
-    <script src="/commercial-vehicle-information-specifications/js/jquery.sticky.js?1742807553"></script>
-    <script src="/commercial-vehicle-information-specifications/js/featherlight.min.js?1742807553"></script>
-    <script src="/commercial-vehicle-information-specifications/js/highlight.pack.js?1742807553"></script>
+    <script src="/commercial-vehicle-information-specifications/js/clipboard.min.js?1744208859"></script>
+    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.min.js?1744208859"></script>
+    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.jquery.min.js?1744208859"></script>
+    <script src="/commercial-vehicle-information-specifications/js/jquery.sticky.js?1744208859"></script>
+    <script src="/commercial-vehicle-information-specifications/js/featherlight.min.js?1744208859"></script>
+    <script src="/commercial-vehicle-information-specifications/js/highlight.pack.js?1744208859"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/commercial-vehicle-information-specifications/js/modernizr.custom-3.6.0.js?1742807553"></script>
-    <script src="/commercial-vehicle-information-specifications/js/learn.js?1742807553"></script>
-    <script src="/commercial-vehicle-information-specifications/js/hugo-learn.js?1742807553"></script>
+    <script src="/commercial-vehicle-information-specifications/js/modernizr.custom-3.6.0.js?1744208859"></script>
+    <script src="/commercial-vehicle-information-specifications/js/learn.js?1744208859"></script>
+    <script src="/commercial-vehicle-information-specifications/js/hugo-learn.js?1744208859"></script>
     
         
-            <script src="/commercial-vehicle-information-specifications/mermaid/mermaid.js?1742807553"></script>
+            <script src="/commercial-vehicle-information-specifications/mermaid/mermaid.js?1744208859"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
