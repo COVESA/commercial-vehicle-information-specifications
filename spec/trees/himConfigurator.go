@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"sort"
 	"strings"
 	"strconv"
 	"encoding/json"
@@ -74,6 +75,8 @@ type PropertyData struct {
 	Max string
 	Unit string
 }
+
+var overlayToolsParameter string   // VSS-ools overlay parameter
 
 var enumData []PropertyData
 
@@ -703,6 +706,20 @@ func walkPostmake(s string, d fs.DirEntry, err error) error {
 	return nil
 }
 
+func decodeOverlayConfigs(overlayConfigs string, vspecDir string) string {
+	var overlays []string
+	err := json.Unmarshal([]byte(overlayConfigs), &overlays)
+	if err != nil {
+		fmt.Printf("decodeOverlayConfigs():unmarshal %s, error=%s\n", overlayConfigs, err)
+		return ""
+	}
+	toolsParameter := ""
+	for i := 0; i < len(overlays); i++ {
+		toolsParameter = toolsParameter + "-l " + vspecDir + overlays[i] + " "
+	}
+	return toolsParameter
+}
+
 func decodeVariantConfigs(variantConfigs string) []Variant { //JSON object:{"var-type1":"var-name1", ., "var-typeN":"var-nameN"}
 	var variantList []Variant
 	var variant Variant
@@ -958,38 +975,42 @@ func unpackInstMapLevel3(index1 int, index2 int, columnDefMap interface{}, insta
 	return instanceList
 }
 
-func readConfigFile(vspecDir string) (string, string) {
-	variantReadError := false
-	instanceReadError := false
+func readConfigFile(vspecDir string) []string {
 	configFileName := vspecDir + configFileName
 	data, err := os.ReadFile(configFileName)
 	if err != nil {
 		fmt.Printf("readConfigFile: Could not read %s\n", configFileName)
-		return "", ""
+		return nil
 	}
 	variantsIndex := strings.Index(string(data), `"variants":`)
 	if variantsIndex == -1 {
 		fmt.Printf("readConfigFile: Could not find 'variants' key in %s\n", configFileName)
-		variantReadError = true
 	}
 	instancesIndex := strings.Index(string(data), `"instances":`)
 	if instancesIndex == -1 {
 		fmt.Printf("readConfigFile: Could not find 'instances' key in %s\n", configFileName)
-		instanceReadError = true
 	}
-	variantReturn := ""
-	if !variantReadError {
-		variantsStr := string(data[variantsIndex+11:instancesIndex])
-		variantsStr = strings.TrimSpace(variantsStr)
-		variantReturn = variantsStr[:len(variantsStr)-1]
+	overlaysIndex := strings.Index(string(data), `"overlays":`)
+	if overlaysIndex == -1 {
+		fmt.Printf("readConfigFile: Could not find 'overlays' key in %s\n", configFileName)
 	}
-	instancesReturn := ""
-	if !instanceReadError {
-		instancesStr := string(data[instancesIndex+12:])
-		instancesStr = strings.TrimSpace(instancesStr)
-		instancesReturn = strings.TrimSpace(instancesStr[:len(instancesStr)-1])
+	keyIndex := []int{variantsIndex, instancesIndex, overlaysIndex}
+	sort.Ints(keyIndex)
+	returnString := []string{"", "", ""}
+	for i := 0; i < len(keyIndex); i++ {
+		if keyIndex[i] != -1 {
+			if i+1 < len(keyIndex) {
+				returnString[i] = string(data[keyIndex[i]:keyIndex[i+1]-1])
+				returnString[i] = strings.TrimSpace(returnString[i])
+				returnString[i] = returnString[i][:len(returnString[i])-1]
+			} else {
+				returnString[i] = string(data[keyIndex[i]:])
+				returnString[i] = strings.TrimSpace(returnString[i])
+				returnString[i] = returnString[i][:len(returnString[i])-1]
+			}
+		}
 	}
-	return variantReturn, instancesReturn
+	return returnString
 }
 
 func getRootVspecFileName(vspecRootDir string) string {
@@ -1176,119 +1197,6 @@ func clearPropertyNode(nextNodeName string) PropertyData {
 	return propertyNode
 }
 
-func configureValues(vspecDir string, ConfigValueFName string) {
-fmt.Printf("configureValues: dir=%s, fil=%s\n", vspecDir, ConfigValueFName)
-	var err error
-	configData, err = readConfigValues(vspecDir + ConfigValueFName)
-	if err != nil {
-		fmt.Printf("configureValues: failed to read dir=%s/%s\n", vspecDir, ConfigValueFName)
-		return
-	}
-	files, _ := os.ReadDir(vspecDir)
-	for _, file := range files {
-		match, _ := filepath.Match("*Specification.vspec", file.Name())
-		if match {
-			var ctx VspecContext
-			ctx.Path = vspecDir
-			ctx.FName = file.Name()
-			ctx.BasePath = ""
-			ctx.KeyValue = "default"
-			valueConfigIteration(ctx)
-			ctx.Path = vspecDir
-			ctx.FName = file.Name()
-			ctx.BasePath = ""
-			ctx.KeyValue = "description"
-			valueConfigIteration(ctx)
-		}
-	}
-}
-
-func valueConfigIteration(ctx VspecContext) {
-	sourceFp, err := os.Open(ctx.Path + ctx.FName)
-	if err != nil {
-		fmt.Printf("valueConfigIteration:Error reading %s: %s\n", ctx.Path + ctx.FName, err)
-		return
-	}
-	scanner := bufio.NewScanner(sourceFp)
-	scanner.Split(bufio.ScanLines)
-	var text string
-	continueScan := true
-	var savedLines []string
-	var relativePath string
-	removeExistingConfig := false
-	isUpdated := false
-	var arrayPtr *[]ConfigValueDefinition
-	if ctx.KeyValue == "default" {
-		arrayPtr = &configData.Default
-	} else if ctx.KeyValue == "description" {
-		arrayPtr = &configData.Description
-	} else {
-		fmt.Printf("Unknown config key%s\n", ctx.KeyValue)
-		return
-	}
-	for continueScan {
-		relativePath = ""
-		continueScan = scanner.Scan()
-		text = scanner.Text()
-		getNodeName(text, &relativePath)
-		if len(relativePath) > 0 {
-			savedLines = append(savedLines, text)
-			removeExistingConfig = false
-			index := defaultConfigIndex(ctx.BasePath + "." + relativePath, arrayPtr)
-			if index != -1 {
-				fmt.Printf("%s:New %s value=%s\n", ctx.BasePath + "." + relativePath, ctx.KeyValue, (*arrayPtr)[index].Value)
-				savedLines = append(savedLines, "  " + ctx.KeyValue + ": " + (*arrayPtr)[index].Value + "\n")
-				isUpdated = true
-				removeExistingConfig = true
-			}
-		} else if len(text) > 8 && strings.Contains(text[:8], "#include") {  // example: #include Vehicle/Vehicle.vspec Vehicle
-			var childCtx VspecContext
-			incFields := strings.Fields(text)
-			dir, file := filepath.Split(incFields[1])
-			childCtx.FName = file
-			if strings.Contains(dir, "include/") && dir[0] == 'i' { // ugly fix...
-				dir = "../" + dir
-			}
-			childCtx.KeyValue = ctx.KeyValue
-			childCtx.Path = ctx.Path + dir
-			childCtx.BasePath = ctx.BasePath
-			if len(incFields) > 2 {
-				childCtx.BasePath = ctx.BasePath + "." + incFields[2]
-				if childCtx.BasePath[0] == '.' {
-					childCtx.BasePath = childCtx.BasePath[1:]
-				}
-			}
-			savedLines = append(savedLines, text)
-			valueConfigIteration(childCtx)
-		} else if removeExistingConfig && strings.Contains(text, ctx.KeyValue + ":") {
-			// do not save stale default
-		} else {
-			savedLines = append(savedLines, text)
-		}
-	}
-	sourceFp.Close()
-	if isUpdated {  // rename .vspec as .vspec.orig, save lines in .vspec
-		err = os.Rename(ctx.Path + ctx.FName, ctx.Path + ctx.FName + ".orig")
-		if err != nil {
-			fmt.Printf("Failed to rename %s, error=%s\n", ctx.Path + ctx.FName, err)
-		} else {
-			vspecFp, err := os.OpenFile(ctx.Path + ctx.FName, os.O_RDWR|os.O_CREATE, 0755)
-			if err != nil {
-				fmt.Printf("Could not create %s\n", ctx.Path + ctx.FName)
-				return
-			}
-			for i := 0; i < len(savedLines); i++ {
-				linebreak := "\n"
-				if len(savedLines[i]) > 0 && savedLines[i][len(savedLines[i])-1] == '\n' {
-					linebreak = ""
-				}
-				vspecFp.Write([]byte(savedLines[i] + linebreak))
-			}
-			vspecFp.Close()
-		}
-	}
-}
-
 func main() {
 	parser := argparse.NewParser("print", "HIM configurator")
 	makeCommand := parser.Selector("m", "makecommand", []string{"all", "yaml", "json", "csv", "binary"}, &argparse.Options{Required: false,
@@ -1298,7 +1206,7 @@ func main() {
 	sConf := parser.Flag("s", "vspecsave", &argparse.Options{Required: false, Help: "Saves the configured .vspec2 files with extension .vspec"})
 	preProcessOnly := parser.Flag("p", "preprocess", &argparse.Options{Required: false, Help: "Pre-process only, save configured vspec files. Do not run VSS-tools."})
 	enumSubst := parser.Flag("n", "noEnumSubst", &argparse.Options{Required: false, Help: "No substitution of enum links to Datatype tree with actual datatypes"})
-	ConfigValueFName := parser.String("v", "configvaluesfile", &argparse.Options{Required: false, Help: "Config values file name"})
+	overlayDisable := parser.Flag("d", "disableOverlays", &argparse.Options{Required: false, Help: "Disables VSS-tools overlay configurations"})
 	err := parser.Parse(os.Args)
 	if err != nil {
 		fmt.Print(parser.Usage(err))
@@ -1322,13 +1230,17 @@ func main() {
 	}
 	enumSubstitute = !*enumSubst && fileExists(*vspecDir + "Datatypes.yaml")
 
-	variantConfigs, instanceConfigs := readConfigFile(*vspecDir)
-	if variantConfigs != "" {
-		variantList = decodeVariantConfigs(variantConfigs)
+	configurations := readConfigFile(*vspecDir)
+	for i := 0; i < len(configurations); i++ {
+		if strings.Contains(configurations[i], `"instances":`) {
+			instanceList = decodeInstanceConfigs(configurations[i][12:])
+		} else if strings.Contains(configurations[i], `"variants":`) {
+			variantList = decodeVariantConfigs(configurations[i][11:])
+		} else if strings.Contains(configurations[i], `"overlays":`) {
+			overlayToolsParameter = decodeOverlayConfigs(configurations[i][11:], *vspecDir)
+		}
 	}
-	if instanceConfigs != "" {
-		instanceList = decodeInstanceConfigs(instanceConfigs)
-	}
+
 	variabilityList = readVariabilityFile(*vspecDir + "Variability.json")
 
 	// configure instances <- Should be the first config pass
@@ -1355,10 +1267,6 @@ func main() {
 		}
 	}
 
-	if len(*ConfigValueFName) > 0 {
-		configureValues(*vspecDir, *ConfigValueFName)
-	}
-
 	if *preProcessOnly {
 		fmt.Printf("VSS-tools is not called.\nConfigured vspec files are saved\n")
 		os.Exit(0)
@@ -1366,9 +1274,14 @@ func main() {
 	// run VSS-tools
 	rootVspecFileName := getRootVspecFileName(*vspecDir)
 	if makeCmd == "all" {
-		makeCmd = ""
+//		makeCmd = ""
 	}
-	cmd := exec.Command("/usr/bin/bash", "make.sh", makeCmd, "./spec/trees/" + *vspecDir+rootVspecFileName)
+	var cmd *exec.Cmd
+	if *overlayDisable {
+		cmd = exec.Command("/usr/bin/bash", "vspecExec.sh", makeCmd, *vspecDir+rootVspecFileName, "")
+	} else {
+		cmd = exec.Command("/usr/bin/bash", "vspecExec.sh", makeCmd, *vspecDir+rootVspecFileName, overlayToolsParameter)
+	}
 	err = cmd.Run()
 	if err != nil {
 		fmt.Printf("Executing make failed with error=%s. Terminating.\n", err)
@@ -1378,7 +1291,7 @@ func main() {
 	// file clean up  
 	filepath.WalkDir(*vspecDir, walkPostmake)
 	if err == nil {
-		fmt.Printf("\nMake command output from configured vspec file in %s is available in the root directory.\n", *vspecDir)
+		fmt.Printf("\nMake command output from configured vspec file in %s is available in the exporterData directory.\n", *vspecDir)
 	}
 	if saveConf {
 		fmt.Printf("Configured vspec files are not deleted\n")
