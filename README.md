@@ -63,3 +63,8 @@ After this installment the make file needs to be called to make sure that all pa
 sudo make install
 
 This command involves access to files that requires super user priviledges, hence the sudo prefix.
+
+## Contributors
+CVIS is an open standard and we invite anybody to contribute. Currently CVIS contains - among others - significant  contributions from
+
+ - [Ford Motor Company](https://www.ford.com/)

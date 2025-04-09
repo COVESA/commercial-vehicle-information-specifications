@@ -1,0 +1,18 @@
+# Change from km/h to m/s
+Vehicle.Speed:
+  unit: m/s
+
+# Delete RoofLoad
+Vehicle.RoofLoad:
+  delete: true
+
+# Add NewBranch.NewSensor
+Vehicle.NewBranch:
+  type: branch
+  description: Branch for NewSensor (and other sensors).
+
+Vehicle.NewBranch.NewSensor:
+  datatype: float
+  type: sensor
+  description: A new sensor.
+

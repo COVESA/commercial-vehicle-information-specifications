@@ -1,0 +1,12 @@
+vspec export yaml -u ../units.yaml -q ../quantities.yaml -l Vehicle/VSS-core/overlay/overlay1.vspec -l Vehicle/VSS-core/overlay/overlay2.vspec -s Vehicle/VSS-core/VssCoreSignalSpecification.vspec -e validate -o exporterData/cvis.yaml
+[13:33:50] INFO     User defined extra attributes: ('validate',)     main.py:203
+           INFO     Loaded 'VSSQuantity',                 units_quantities.py:34
+                    file=/home/ubjorken/Proj/covesa/cvis/                       
+                    spec/trees/../quantities.yaml,                              
+                    elements=30                                                 
+           INFO     Loaded 'VSSUnit',                     units_quantities.py:34
+                    file=/home/ubjorken/Proj/covesa/cvis/                       
+                    spec/trees/../units.yaml, elements=64                       
+[13:33:51] INFO     VSpecs loaded, amount=74                        vspec.py:130
+[13:33:52] INFO     Nodes deleted, given=1, overall=1                tree.py:266
+           INFO     Generating YAML output...                         yaml.py:94

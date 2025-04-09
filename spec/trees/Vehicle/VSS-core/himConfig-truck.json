@@ -40,5 +40,9 @@
                 ]
             ]
         ]
-    }
+    },
+    "overlays": [
+        "overlay/overlay1.vspec",
+        "overlay/overlay2.vspec"
+    ]
 }

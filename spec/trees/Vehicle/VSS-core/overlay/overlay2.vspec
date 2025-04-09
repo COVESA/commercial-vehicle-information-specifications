@@ -1,0 +1,10 @@
+# Add NewBranch.NewSensor2
+Vehicle.NewBranch:
+  type: branch
+  description: Branch for NewSensor (and other sensors).
+
+Vehicle.NewBranch.NewSensor2:
+  datatype: float
+  type: sensor
+  description: Another new sensor.
+

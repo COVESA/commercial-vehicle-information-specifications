@@ -22,9 +22,10 @@ TOOLSDIR?=./vss-tools
 VSS_VERSION ?= 0.0
 #COMMON_ARGS=-u ./spec/units.yaml -q ./spec/quantities.yaml  --strict
 COMMON_ARGS=-u ./spec/units.yaml -q ./spec/quantities.yaml
-# Default vspec root file  and validate extension if not overridden by command line input.
+# Default vspec root file, validate, and overlay extension if not overridden by command line input.
 VSPECROOT=
 VALIDATE=
+OVERLAY=
 
 json:
 	vspec export json ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.json
@@ -39,7 +40,7 @@ franca:
 	vspec export franca --franca-vss-version $(VSS_VERSION) ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.fidl
 
 yaml:
-	vspec export yaml ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.yaml
+	vspec export yaml ${COMMON_ARGS} ${OVERLAY} -s ${VSPECROOT} $(VALIDATE) -o cvis.yaml > makelog.txt
 
 csv:
 	vspec export csv ${COMMON_ARGS} -s ${VSPECROOT} $(VALIDATE) -o cvis.csv
