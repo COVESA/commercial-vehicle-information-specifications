@@ -3,7 +3,7 @@ Steps to build and run HimConfigurator in Windows.
 
 Pre-requisites in Windows:
 * Latest Python version to be installed 
-* Golang 
+* Golang to be installed
 * Update system environment variables with PATH for Python and Golang.
 * Git is available
 * Run the commands from cmd window or VS-Code.
@@ -34,9 +34,9 @@ Clone CVIS from github using
 
 2. To run HimConfigurator on VSS-Core tree
 
-Copy go.mod and go.sum  from commercial-vehicle-information-specifications\Win-setup directory to commercial-vehicle-information-specifications\spec\trees directory 
+Copy go.mod and go.sum  from commercial-vehicle-information-specifications\Win-setup\Setup-alt-1 directory to commercial-vehicle-information-specifications\spec\trees directory 
 
-Build HimConfigurator code with 
+Build HimConfigurator code with below command
 
     g. go build himConfigurator.go
 
@@ -46,22 +46,42 @@ Run the generated himConfigurator executable to generate vspec file based on req
 
 By default himConfig-truck.json will be selected.
 
-Ex : If we need to use himConfig-Car
+But if we need to use himConfig-Car, himConfigurator can be run with below command
 
     i. .\himConfigurator.exe -p  -m yaml -c himConfig-car.json
 
-3. To generate yaml with vspec in VSS-Core tree . Run the command from within commercial-vehicle-information-specifications\spec\trees\Vehicle\VSS-core directory 
+3. To generate yaml with vspec in VSS-Core tree. 
+
+Run the command below from within commercial-vehicle-information-specifications\spec\trees\Vehicle\VSS-core directory 
 
     j. vspec export yaml  --vspec VssCoreSignalSpecification.vspec  --output cvis_car.yaml -u ../../../units.yaml -q ../../../quantities.yaml
          
-4. To run himConfigurator in other trees  for example commercial-vehicle-information-specifications\spec\trees\Vehicle\Truck  directory ,  HIM Configurator needs Datatypes.yaml), create it manually by running in the spec/objects/Datatype directory
+4. To run himConfigurator in other trees  for example Vehicle\Truck  tree, steps in Win-setup\Setup-alt-1 can be followed as it is. 
+
+In short,
+
+Create the symlinks by running cv-truck-symlinks.ps1 script from the commercial-vehicle-information-specifications\spec\trees\Vehicle\Truck directory
+cv-truck-symlinks.ps1can be found in commercial-vehicle-information-specifications\ Win-setup\Setup-alt-1 directory
+
+ HIM Configurator needs Datatypes.yaml, create it manually by running below command in the spec/objects/Datatype directory
 
     k. vspec export yaml -s ./Datatype.vspec -o Datatypes.yaml
 
 Copy the DataTypes.yaml to the commercial-vehicle-information-specifications\spec\trees\Vehicle\Truck directory
 
+Build HimConfigurator code with below command
+
+    l. go build himConfigurator.go
+    
  Run the generated himConfigurator executable to generate vspec file based on required  himConfiguration.
  
 Provide the tree folder in -r option
 
-    l. .\himConfigurator.exe -p -m yaml -r  .\Vehicle\Truck\  -c himConfiguration.json
+    m. .\himConfigurator.exe -p -m yaml -r  .\Vehicle\Truck\  -c himConfiguration.json
+
+
+5. To generate yaml with vspec in Vehicle\Truck tree.
+ 
+Run below command from within commercial-vehicle-information-specifications\spec\trees\Vehicle\Truck directory 
+
+    n. vspec export yaml  --vspec TruckSignalSpecification.vspec  --output cvis_car.yaml -u ../../../units.yaml -q ../../../quantities.yaml
