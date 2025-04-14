@@ -1216,12 +1216,12 @@ func main() {
 	configFileName = *confFName
 	if !*enumSubst {
 		if !fileExists(*vspecDir + "Datatypes.yaml") {
-			cmd := exec.Command("/usr/bin/bash", "make.sh", "yaml", "./spec/objects/Datatype/Datatype.vspec")
+			cmd := exec.Command("/usr/bin/bash", "vspecExec.sh", "yaml", "../objects/Datatype/Datatype.vspec", "")
 			err = cmd.Run()
 			if err != nil {
 				fmt.Printf("Executing make failed with error=%s\n", err)
 			} else {
-				err = os.Rename("../../cvis.yaml", *vspecDir+"Datatypes.yaml")
+				err = os.Rename("exporterData/cvis.yaml", *vspecDir+"Datatypes.yaml")
 				if err != nil {
 					fmt.Printf("Failed to rename and move %s error=%s\n", *vspecDir+"Datatypes.yaml", err)
 				}
