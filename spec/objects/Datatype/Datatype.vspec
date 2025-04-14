@@ -13,21 +13,21 @@
 #
 # The root branch for CVIS datatype definitions.
 #
-Datatype:
+Types:
   type: branch
   description: Datatype definitions.
 
-#include Vehicle/VehicleDatatype.vspec Datatype
+#include Vehicle/VehicleDatatype.vspec Types
 
-#include Powertrain/PowertrainDatatype.vspec Datatype
+#include Powertrain/PowertrainDatatype.vspec Types
 
-#include Body/BodyDatatype.vspec Datatype
+#include Body/BodyDatatype.vspec Types
 
-##include Chassis/ChassisDatatype.vspec Datatype
+##include Chassis/ChassisDatatype.vspec Types
 
-#include Cabin/CabinDatatype.vspec Datatype
+#include Cabin/CabinDatatype.vspec Types
 
-#include ADAS/ADASDatatype.vspec Datatype
+#include ADAS/ADASDatatype.vspec Types
 
-##include Exterior/ExteriorDatatype.vspec Datatype
+##include Exterior/ExteriorDatatype.vspec Types
 

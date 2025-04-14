@@ -240,7 +240,7 @@ This structure might later be changed to a more generic structuring to yield ref
 
 An external datatype reference to an enum (allowed) shall have a syntax as shown below.
 ```
-  datatype: Datatype.x.y.zValues
+  datatype: Types.x.y.zValues
 ```
 where x, y, z may be names providing an understanding of the defined enum (allowed) that conform to the node HIM node name syntax.
 The name z must be postfixed with the tag Values.
