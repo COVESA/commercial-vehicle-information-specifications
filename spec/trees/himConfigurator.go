@@ -11,6 +11,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"runtime"
 	"os/exec"
 	"sort"
 	"strings"
@@ -26,6 +27,8 @@ var  saveConf bool
 var makeCmd string
 var configFileName string
 var enumSubstitute bool
+var scriptPath string
+var script string
 
 type VariationPoint struct {
 	VariantName string
@@ -1197,6 +1200,28 @@ func clearPropertyNode(nextNodeName string) PropertyData {
 	return propertyNode
 }
 
+func configureOs() {
+	var scriptExecutable string
+	var err error
+	osRuntime := runtime.GOOS
+	if osRuntime == "linux" {
+		scriptExecutable = "bash"
+		script = "vspecExec.sh"
+	} else if osRuntime == "windows" {
+		scriptExecutable = "powershell.exe"
+		script = "vspecExec.ps1"
+	} else {
+		fmt.Printf("Unknown os=%s. Terminating.\n", osRuntime)
+		os.Exit(1)
+	}
+	scriptPath, err = exec.LookPath(scriptExecutable)
+	if err != nil {
+		fmt.Printf("search for path to %s failed with error=%s\n", scriptExecutable, err)
+		scriptPath = ""
+	}
+
+}
+
 func main() {
 	parser := argparse.NewParser("print", "HIM configurator")
 	makeCommand := parser.Selector("m", "makecommand", []string{"all", "yaml", "json", "csv", "binary"}, &argparse.Options{Required: false,
@@ -1214,9 +1239,10 @@ func main() {
 	saveConf = *sConf
 	makeCmd = *makeCommand
 	configFileName = *confFName
+	configureOs()
 	if !*enumSubst {
 		if !fileExists(*vspecDir + "Datatypes.yaml") {
-			cmd := exec.Command("/usr/bin/bash", "vspecExec.sh", "yaml", "../objects/Datatype/Datatype.vspec", "")
+			cmd := exec.Command(scriptPath, script, "yaml", "../objects/Datatype/Datatype.vspec", "")
 			err = cmd.Run()
 			if err != nil {
 				fmt.Printf("Executing make failed with error=%s\n", err)
@@ -1278,9 +1304,9 @@ func main() {
 	}
 	var cmd *exec.Cmd
 	if *overlayDisable {
-		cmd = exec.Command("/usr/bin/bash", "vspecExec.sh", makeCmd, *vspecDir+rootVspecFileName, "")
+		cmd = exec.Command(scriptPath, script, makeCmd, *vspecDir+rootVspecFileName, "")
 	} else {
-		cmd = exec.Command("/usr/bin/bash", "vspecExec.sh", makeCmd, *vspecDir+rootVspecFileName, overlayToolsParameter)
+		cmd = exec.Command(scriptPath, script, makeCmd, *vspecDir+rootVspecFileName, overlayToolsParameter)
 	}
 	err = cmd.Run()
 	if err != nil {
