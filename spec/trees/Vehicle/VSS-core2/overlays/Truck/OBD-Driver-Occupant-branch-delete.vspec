@@ -1,0 +1,11 @@
+# Delete the OBD branch
+Vehicle.OBD:
+  delete: true
+
+# Delete the Driver branch
+Vehicle.Driver:
+  delete: true
+
+# Delete the Occupant branch
+Vehicle.Occupant:
+  delete: true

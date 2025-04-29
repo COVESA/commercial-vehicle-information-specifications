@@ -1,0 +1,101 @@
+{
+    "variants": {
+    },
+    "instances": {
+        "Seat": [
+            "Row[1,2]",
+            [
+                [
+                    "DriverSide",
+                    "PassengerSide"
+                ],
+                [
+                    "DriverSide",
+                    "Middle",
+                    "PassengerSide"
+                ]
+            ]
+        ],
+        "Door": [
+            "Row[1,2]",
+            [
+                [
+                    "DriverSide",
+                    "PassengerSide"
+                ],
+                [
+                    "DriverSide",
+                    "PassengerSide"
+                ]
+            ]
+        ],
+        "Spotlight": [
+            "Row[1,4]",
+            [
+                [
+                    "DriverSide",
+                    "PassengerSide"
+                ],
+                [
+                    "DriverSide",
+                    "PassengerSide"
+                ],
+                [
+                    "DriverSide",
+                    "PassengerSide"
+                ],
+                [
+                    "DriverSide",
+                    "PassengerSide"
+                ]
+            ]
+        ],
+        "AmbientLight": [
+            "Row[1,2]",
+            [
+                [
+                    "DriverSide",
+                    "PassengerSide"
+                ],
+                [
+                    "DriverSide",
+                    "PassengerSide"
+                ]
+            ]
+        ],
+        "HVAC": [
+            "Row[1,4]",
+            [
+                [
+                    "Driver",
+                    "Passenger"
+                ],
+                [
+                    "Driver",
+                    "Passenger"
+                ],
+                [
+                    "Driver",
+                    "Passenger"
+                ],
+                [
+                    "Driver",
+                    "Passenger"
+                ]
+            ]
+        ],
+        "Axle": [
+            "Row[1,2]",
+            [
+                [
+                    "Left",
+                    "Right"
+                ],
+                [
+                    "Left",
+                    "Right"
+                ]
+            ]
+        ]
+    }
+}
