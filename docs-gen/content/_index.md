@@ -27,33 +27,13 @@ directory have a pre-configure vehicle type specific structure.
 
 A tree, whether it is vehicle type specific or not, shall be located on the spec/trees directory structure.
 These trees may then link to common objects which shall be located on the spec/objects directory structure.
+Vehicle specific trees can be derived from vehicle agnostic trees like the VSS-core tree without using the symlink mechanism.
 
-The linking to common objects use the symbolic linking file system feature, which have differen syntax in Linux and Windows,
-see more in the Symlink chapter below.
-
-### Symbolic linking
-The directory structure for a single tree follows the VSS pattern with "#include" links in the vspec files that logically links to other files of the tree. However, to link to a file in the common objects structure the corresponding file in the trees structure is realized as a symbolic link file. This means that when the content of the file is accessed the underlying file system follows the symbolic link to the file in the objects structure for the actual content of the file. This is transparent to the entity accessing the file, so e. g. the exporter tools from VSS-tools will when used for a transformation of a specific tree access file content from the common objects files transparently.
-
-The symbolic links used in a tree structure definition shall be declared in a script file that can be run to refresh the symlinks if a link is broken.
-The syntax of these script files differ between Linux and Windows, see the chapter below.
-
-### Linux / Windows specific parts
-
-#### Symlink script files
-The symlink cript files used in Linux are standard bash script files, see e. g.
-[cv-truck-symlinks.sh](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Vehicle/Truck/cv-truck-symlinks.sh).
-
-For Windows a [Powershell](https://en.wikipedia.org/wiki/PowerShell) script is used, see e. g.
-cv-truck-symlink.ps1 script in the [Win-setup](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Win-setup/) directory.
-
-#### VSS-tools activation
-The HIM configurator activates the VSS-tools exporter via a [Makefile](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Makefile).
-
-In Windows the setup for VSS-tools activation is done by following the instructions found in the
-[Win-setup](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Win-setup/) directory.
+The vision for this project is that vehicle specific trees will eventually be developed in separate Github projects that
+then will include the HIM configurator tool and a common vehicle agnostic tree as Github submodules or via other mechanisms,
+ths creating separate independent vehicle specific projects that are derived from a common signal source tree.
 
 ## HIM configurator
-
 The framework also contains a new tool, the HIM configurator.
 This tool is pre-processes vspec2 files to generate vspec files that are then used as input to the VSS-tools exporters.
 In its current version it provides support for the types of tree configuration that is described in the HIM extensions chapter below.
@@ -68,47 +48,7 @@ The rules for when the file extension "vspec2" shall be used instead of "vspec" 
 * If a vspec2 file is referenced from within another file then this reference shall use the extension vspec if this file is located in the "trees" directory strucure.
 * If a vspec2 file is referenced from within another file then this reference shall use the extension vspec2 if this file is located in the "objects" directory strucure.
 
-### Extension 1: Variability configuration
-The tree in vspec format may contain multiple variations of objects that in a deployment typically are not included.
-An example are the [Combustion engine](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/objects/Powertrain/CombustionEngine.yaml)
-and the [Electric engine](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Powertrain/ElectricEngine.vspec).
-in an ICE vehicle the former should be included, but not the latter. For an EV vehicle it is vice versa.
-To enable one or the other of these objects to be included the following syntax is used,
- example taken from the [Engine.vspec](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Powertrain/Engine.vspec).
-```
-VariationPoint: #EngineType
-  - ICE #include CombustionEngine.yaml Engine
-  - EV  #include ElectricEngine.vspec Engine
-```
-The keyword is VariationPoint, which on the same line must be followed by a hash sign (#) directly followe by a unique variation point tag (in this case EngineType.
-The value part of this key-value expression is an array of 'variability object expressions',
-where such an expression contains a 'variability name' followed by an '#include expression'.
-This expression must be compliant with the syntax rules for HIM #include expressions.
-The array size is not restricted.
-
-The input to the HIM configurator for it to resolve which variations to select is found in two files.
-* The [Variability.json](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Variability.json) file,
-* and the [himConfiguration.json](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/himConfiguration.json) file.
-
-The Variability.json file defines the available variations, and which include statements that should be selected for the variation.
-As can be seen in th PHEV variation example below it is possible to select multiple include statements.
-```
-    "EngineType": [
-        {
-            "PHEV": [
-                "ICE",
-                "EV"
-            ]
-        }
-```
-The himConfiguration.json file contains the variation that that should be included in the tree that is generated by the himConfigurator (using a VSS-tools exporter),
-expressed by the rows below in this example:
-```
-    "variants": {
-        "EngineType": "PHEV"
-```
-
-### Extension 2: Instantiation configuration
+### Extension 1: Instantiation configuration
 The HIM rule set supports the instantiation syntax inherited from [VSS instantiation](https://covesa.github.io/vehicle_signal_specification/rule_set/instances/) 
 that can be used to request the VSS-tools to generate multiple instances of a branch/set of signals.
 This syntax has two options exemplified below
@@ -165,6 +105,46 @@ The number of 'second-order' expressions must match the number of instantiaions 
 The expressions can use any of the two syntax options mentioned above.
 
 Currently this syntax can only be used for two-dimensional instantiations.
+
+### Extension 2: Variability configuration
+The tree in vspec format may contain multiple variations of objects that in a deployment typically are not included.
+An example are the [Combustion engine](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/objects/Powertrain/CombustionEngine.yaml)
+and the [Electric engine](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Powertrain/ElectricEngine.vspec).
+in an ICE vehicle the former should be included, but not the latter. For an EV vehicle it is vice versa.
+To enable one or the other of these objects to be included the following syntax is used,
+ example taken from the [Engine.vspec](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Powertrain/Engine.vspec).
+```
+VariationPoint: #EngineType
+  - ICE #include CombustionEngine.yaml Engine
+  - EV  #include ElectricEngine.vspec Engine
+```
+The keyword is VariationPoint, which on the same line must be followed by a hash sign (#) directly followe by a unique variation point tag (in this case EngineType.
+The value part of this key-value expression is an array of 'variability object expressions',
+where such an expression contains a 'variability name' followed by an '#include expression'.
+This expression must be compliant with the syntax rules for HIM #include expressions.
+The array size is not restricted.
+
+The input to the HIM configurator for it to resolve which variations to select is found in two files.
+* The [Variability.json](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Variability.json) file,
+* and the [himConfiguration.json](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/himConfiguration.json) file.
+
+The Variability.json file defines the available variations, and which include statements that should be selected for the variation.
+As can be seen in th PHEV variation example below it is possible to select multiple include statements.
+```
+    "EngineType": [
+        {
+            "PHEV": [
+                "ICE",
+                "EV"
+            ]
+        }
+```
+The himConfiguration.json file contains the variation that that should be included in the tree that is generated by the himConfigurator (using a VSS-tools exporter),
+expressed by the rows below in this example:
+```
+    "variants": {
+        "EngineType": "PHEV"
+```
 
 ### Extension 3: Local variation point
 If an instantiation configuration has a need of including a variation point with different variants for the different intances
@@ -353,11 +333,40 @@ Currently the following trees are under development:
 * [Bus tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Bus)
 * [Driver tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Driver)
 * [VSS-core tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/VSS-core)
+* [VSS-core2 tree](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/VSS-core2)
 
 The VSS-core tree is a vehicle type agnostic tree that is configured by the HIM configurator to become vehicle type specific.
 Configuration templates for the vehicle types Car and Truck are available, and can be used as starting poin to create templates for other vehicle types.
+This tree uses the variation point and local variation point extensions to realize vehicle specific trees.
+
+The VSS-core2 tree is also  a vehicle type agnostic tree that is configured by the HIM configurator to become vehicle type specific.
+However, the usage of the variation point and local variation point extensions is here replaced by usage of overlays.
+This alternative leads to less modifications of the VSS tree to create the VSS core tree.
 
 The other trees are vehicle type specific from the start, or for Driver a supplementary tree to be used together with e. g. the Truck tree.
+
+### Symbolic linking
+The directory structure for a single tree follows the VSS pattern with "#include" links in the vspec files that logically links to other files of the tree. However, to link to a file in the common objects structure the corresponding file in the trees structure is realized as a symbolic link file. This means that when the content of the file is accessed the underlying file system follows the symbolic link to the file in the objects structure for the actual content of the file. This is transparent to the entity accessing the file, so e. g. the exporter tools from VSS-tools will when used for a transformation of a specific tree access file content from the common objects files transparently.
+
+The symbolic links used in a tree structure definition shall be declared in a script file that can be run to refresh the symlinks if a link is broken.
+The syntax of these script files differ between Linux and Windows, see the chapter below.
+
+### Linux / Windows specific parts
+
+#### Symlink script files
+The symlink cript files used in Linux are standard bash script files, see e. g.
+[cv-truck-symlinks.sh](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Vehicle/Truck/cv-truck-symlinks.sh).
+
+For Windows a [Powershell](https://en.wikipedia.org/wiki/PowerShell) script is used, see e. g.
+cv-truck-symlink.ps1 script in the [Win-setup](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Win-setup/) directory.
+
+#### VSS-tools activation
+The HIM configurator activates the VSS-tools exporter via a shell script.
+In Linux this is a [Bash script](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/vspecExec.sh),
+in Windows it is ealized by a [Powershell script](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/vspecExec.ps1).
+
+Information on how to install VSS-tools in Windows is found in the
+[Win-setup](https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Win-setup/) directory.
 
 ## Alignment with other standards
 The terminology used in these HIM based specifications should try to align with terminology and principles from other standards.
