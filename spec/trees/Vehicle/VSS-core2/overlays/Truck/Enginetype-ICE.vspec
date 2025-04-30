@@ -1,0 +1,5 @@
+# EngineType ICE
+#Remove ElectricMotor
+
+Vehicle.Powertrain.ElectricMotor:
+  delete: true

@@ -242,7 +242,7 @@ func instanceProcess(sourceFile string) error {
 	var nodeName string
 	var thisNode []string
 	var subTree []string
-	var nextNode []string
+	nextNode := ""
 	continueScan := true
 	var savedLines []string
 	isConfigDone := false
@@ -250,6 +250,12 @@ func instanceProcess(sourceFile string) error {
 		continueScan = scanner.Scan()
 		text = scanner.Text()
 		getNodeName(text, &nodeName)
+		if len(nextNode) > 0 {
+			nodeName = nextNode
+			savedLines = append(savedLines, "")
+			savedLines = append(savedLines, nextNode + ":")
+			nextNode = ""
+		}
 		isConfigInstance, instanceTag := checkConfigInstance(text, 0)
 		if isConfigInstance {
 			isConfigDone = true
@@ -270,7 +276,7 @@ func instanceProcess(sourceFile string) error {
 					savedLines = addInstanceBranch(savedLines, nodeName, i, instanceTag, instanceExpression)
 					for j := 0; j < len(subTree); j++ {  // followed by subtree
 						if strings.Contains(subTree[j], "#include") {
-							nodeNameIndex := strings.Index(subTree[j], nodeName) + len(nodeName)
+							nodeNameIndex := strings.LastIndex(subTree[j], nodeName) + len(nodeName)
 							savedLines = append(savedLines, subTree[j][:nodeNameIndex] + "." + getRowInstance(instanceTag,i) + subTree[j][nodeNameIndex:])
 						} else if strings.Contains(subTree[j], "LocalVP:") {
 							sharpIndex := strings.Index(subTree[j], "#")
@@ -281,9 +287,6 @@ func instanceProcess(sourceFile string) error {
 						}
 					}
 				}
-				for i := 0; i < len(nextNode); i++ {  // and next node
-					savedLines = append(savedLines,nextNode[i])
-				}	
 			} else {  // finish this node, create row branch nodes, followed by subtree with configured instance, and next node
 				for i := 0; i < len(thisNode); i++ {// finish this node
 					savedLines = append(savedLines,thisNode[i])
@@ -307,9 +310,6 @@ func instanceProcess(sourceFile string) error {
 						}
 					}
 				}
-				for i := 0; i < len(nextNode); i++ {  // and next node
-					savedLines = append(savedLines,nextNode[i])
-				}	
 			}
 		} else {
 			savedLines = append(savedLines,text)
@@ -507,25 +507,25 @@ func instanceRows(instanceConfigName string) int {
 	return -1
 }
 
-func readSubtree(scanner *bufio.Scanner, rootNodeName string) ([]string, []string, []string, *bufio.Scanner) {
+func readSubtree(scanner *bufio.Scanner, rootNodeName string) ([]string, []string, string, *bufio.Scanner) {
 	var tree []string  // will contain parts of root node, subtree, and the following node
 	var text string
-	newNodeName := ""
+	nextNodeName := ""
 	continueScan := true
 	for continueScan {  // read lines until a new node that is not part of the subtree
 		continueScan = scanner.Scan()
 		text = scanner.Text()
-		getNodeName(text, &newNodeName)
-		if len(newNodeName) > 0 && !strings.Contains(newNodeName, rootNodeName) {
+		getNodeName(text, &nextNodeName)
+		if len(nextNodeName) > 0 && !strings.Contains(nextNodeName, rootNodeName) {
 			continueScan = false
+		} else {
+			tree = append(tree, text)
 		}
-		tree = append(tree, text)
 	}
 	//find boundary between root node and subtree
-	splitIndex1 := 0
-	newNodeName = ""
+	splitIndex1 := len(tree) - 1
+	newNodeName := ""
 	for i := 0; i < len(tree); i++ {
-//fmt.Printf("1stpass:line[%d]=%s\n", i, tree[i])
 		getNodeName(tree[i], &newNodeName)
 		if len(tree[i]) > 0 && (strings.Contains(tree[i], "#include") || strings.Contains(tree[i], "LocalVP") || len(newNodeName) > 0) {
 			splitIndex1 = i
@@ -535,14 +535,14 @@ func readSubtree(scanner *bufio.Scanner, rootNodeName string) ([]string, []strin
 	//find boundary between subtree and following node
 	splitIndex2 := len(tree)-2
 	for i := len(tree)-2; i > splitIndex1-1; i-- {
-		if len(tree[i]) > 0 && ((strings.Contains(tree[i], "#include") && strings.Contains(tree[i], rootNodeName)) || (tree[i][0] != '#' && len(strings.TrimSpace(tree[i])) > 0)) {
-//fmt.Printf("2ndpass:line[%d]=%s\n", i, tree[i])
+		if len(tree[i]) > 0 && ((strings.Contains(tree[i], "#include") && strings.Contains(tree[i], rootNodeName)) ||
+		(tree[i][0] != '#' && len(strings.TrimSpace(tree[i])) > 0)) {
 			splitIndex2 = i + 1
 			break
 		}
 	}
 //fmt.Printf("readSubtree:splitIndex1=%d, splitIndex2=%d\n", splitIndex1, splitIndex2)
-	return tree[:splitIndex1], tree[splitIndex1:splitIndex2], tree[splitIndex2:], scanner
+	return tree[:splitIndex1], tree[splitIndex1:splitIndex2], nextNodeName, scanner
 }
 
 func walkVariantPass(s string, d fs.DirEntry, err error) error {
@@ -1242,7 +1242,7 @@ func main() {
 	configureOs()
 	if !*enumSubst {
 		if !fileExists(*vspecDir + "Datatypes.yaml") {
-			cmd := exec.Command(scriptPath, script, "yaml", "../objects/Datatype/Datatype.vspec", "")
+			cmd := exec.Command(scriptPath, "-file", script, "yaml", "../objects/Datatype/Datatype.vspec", "")
 			err = cmd.Run()
 			if err != nil {
 				fmt.Printf("Executing make failed with error=%s\n", err)
@@ -1304,9 +1304,9 @@ func main() {
 	}
 	var cmd *exec.Cmd
 	if *overlayDisable {
-		cmd = exec.Command(scriptPath, script, makeCmd, *vspecDir+rootVspecFileName, "")
+		cmd = exec.Command(scriptPath, "-file", script, makeCmd, *vspecDir+rootVspecFileName, "")
 	} else {
-		cmd = exec.Command(scriptPath, script, makeCmd, *vspecDir+rootVspecFileName, overlayToolsParameter)
+		cmd = exec.Command(scriptPath, "-file", script, makeCmd, *vspecDir+rootVspecFileName, overlayToolsParameter)
 	}
 	err = cmd.Run()
 	if err != nil {
