@@ -12,21 +12,21 @@
     <title>Commercial Vehicle Information Specifications :: Commercial Vehicle Information Specifications (CVIS)</title>
 
     
-    <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1745763420" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/fontawesome-all.min.css?1745763420" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/hybrid.css?1745763420" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/featherlight.min.css?1745763420" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/perfect-scrollbar.min.css?1745763420" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/auto-complete.css?1745763420" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/atom-one-dark-reasonable.css?1745763420" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/theme.css?1745763420" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/hugo-theme.css?1745763420" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1746004190" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/fontawesome-all.min.css?1746004190" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/hybrid.css?1746004190" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/featherlight.min.css?1746004190" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/perfect-scrollbar.min.css?1746004190" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/auto-complete.css?1746004190" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/atom-one-dark-reasonable.css?1746004190" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/theme.css?1746004190" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/hugo-theme.css?1746004190" rel="stylesheet">
     
-    <link href="/commercial-vehicle-information-specifications/css/theme-blue.css?1745763420" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/theme-blue.css?1746004190" rel="stylesheet">
     
     
 
-    <script src="/commercial-vehicle-information-specifications/js/jquery-3.3.1.min.js?1745763420"></script>
+    <script src="/commercial-vehicle-information-specifications/js/jquery-3.3.1.min.js?1746004190"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/lunr.min.js?1745763420"></script>
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/auto-complete.js?1745763420"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/lunr.min.js?1746004190"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/auto-complete.js?1746004190"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/covesa.github.io\/commercial-vehicle-information-specifications\/";
     
 </script>
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/search.js?1745763420"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/search.js?1746004190"></script>
 
     
   </div>
@@ -325,23 +325,11 @@ The <a href="https://github.com/COVESA/commercial-vehicle-information-specificat
 while the other trees in the <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle">Vehicle</a>
 directory have a pre-configure vehicle type specific structure.</p>
 <p>A tree, whether it is vehicle type specific or not, shall be located on the spec/trees directory structure.
-These trees may then link to common objects which shall be located on the spec/objects directory structure.</p>
-<p>The linking to common objects use the symbolic linking file system feature, which have differen syntax in Linux and Windows,
-see more in the Symlink chapter below.</p>
-<h3 id="symbolic-linking">Symbolic linking</h3>
-<p>The directory structure for a single tree follows the VSS pattern with &ldquo;#include&rdquo; links in the vspec files that logically links to other files of the tree. However, to link to a file in the common objects structure the corresponding file in the trees structure is realized as a symbolic link file. This means that when the content of the file is accessed the underlying file system follows the symbolic link to the file in the objects structure for the actual content of the file. This is transparent to the entity accessing the file, so e. g. the exporter tools from VSS-tools will when used for a transformation of a specific tree access file content from the common objects files transparently.</p>
-<p>The symbolic links used in a tree structure definition shall be declared in a script file that can be run to refresh the symlinks if a link is broken.
-The syntax of these script files differ between Linux and Windows, see the chapter below.</p>
-<h3 id="linux--windows-specific-parts">Linux / Windows specific parts</h3>
-<h4 id="symlink-script-files">Symlink script files</h4>
-<p>The symlink cript files used in Linux are standard bash script files, see e. g.
-<a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Vehicle/Truck/cv-truck-symlinks.sh">cv-truck-symlinks.sh</a>.</p>
-<p>For Windows a <a href="https://en.wikipedia.org/wiki/PowerShell">Powershell</a> script is used, see e. g.
-cv-truck-symlink.ps1 script in the <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Win-setup/">Win-setup</a> directory.</p>
-<h4 id="vss-tools-activation">VSS-tools activation</h4>
-<p>The HIM configurator activates the VSS-tools exporter via a <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Makefile">Makefile</a>.</p>
-<p>In Windows the setup for VSS-tools activation is done by following the instructions found in the
-<a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Win-setup/">Win-setup</a> directory.</p>
+These trees may then link to common objects which shall be located on the spec/objects directory structure.
+Vehicle specific trees can be derived from vehicle agnostic trees like the VSS-core tree without using the symlink mechanism.</p>
+<p>The vision for this project is that vehicle specific trees will eventually be developed in separate Github projects that
+then will include the HIM configurator tool and a common vehicle agnostic tree as Github submodules or via other mechanisms,
+ths creating separate independent vehicle specific projects that are derived from a common signal source tree.</p>
 <h2 id="him-configurator">HIM configurator</h2>
 <p>The framework also contains a new tool, the HIM configurator.
 This tool is pre-processes vspec2 files to generate vspec files that are then used as input to the VSS-tools exporters.
@@ -357,40 +345,7 @@ The rules for when the file extension &ldquo;vspec2&rdquo; shall be used instead
 <li>If a vspec2 file is referenced from within another file then this reference shall use the extension vspec if this file is located in the &ldquo;trees&rdquo; directory strucure.</li>
 <li>If a vspec2 file is referenced from within another file then this reference shall use the extension vspec2 if this file is located in the &ldquo;objects&rdquo; directory strucure.</li>
 </ul>
-<h3 id="extension-1-variability-configuration">Extension 1: Variability configuration</h3>
-<p>The tree in vspec format may contain multiple variations of objects that in a deployment typically are not included.
-An example are the <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/objects/Powertrain/CombustionEngine.yaml">Combustion engine</a>
-and the <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Powertrain/ElectricEngine.vspec">Electric engine</a>.
-in an ICE vehicle the former should be included, but not the latter. For an EV vehicle it is vice versa.
-To enable one or the other of these objects to be included the following syntax is used,
-example taken from the <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Powertrain/Engine.vspec">Engine.vspec</a>.</p>
-<pre tabindex="0"><code>VariationPoint: #EngineType
-  - ICE #include CombustionEngine.yaml Engine
-  - EV  #include ElectricEngine.vspec Engine
-</code></pre><p>The keyword is VariationPoint, which on the same line must be followed by a hash sign (#) directly followe by a unique variation point tag (in this case EngineType.
-The value part of this key-value expression is an array of &lsquo;variability object expressions&rsquo;,
-where such an expression contains a &lsquo;variability name&rsquo; followed by an &lsquo;#include expression&rsquo;.
-This expression must be compliant with the syntax rules for HIM #include expressions.
-The array size is not restricted.</p>
-<p>The input to the HIM configurator for it to resolve which variations to select is found in two files.</p>
-<ul>
-<li>The <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Variability.json">Variability.json</a> file,</li>
-<li>and the <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/himConfiguration.json">himConfiguration.json</a> file.</li>
-</ul>
-<p>The Variability.json file defines the available variations, and which include statements that should be selected for the variation.
-As can be seen in th PHEV variation example below it is possible to select multiple include statements.</p>
-<pre tabindex="0"><code>    &#34;EngineType&#34;: [
-        {
-            &#34;PHEV&#34;: [
-                &#34;ICE&#34;,
-                &#34;EV&#34;
-            ]
-        }
-</code></pre><p>The himConfiguration.json file contains the variation that that should be included in the tree that is generated by the himConfigurator (using a VSS-tools exporter),
-expressed by the rows below in this example:</p>
-<pre tabindex="0"><code>    &#34;variants&#34;: {
-        &#34;EngineType&#34;: &#34;PHEV&#34;
-</code></pre><h3 id="extension-2-instantiation-configuration">Extension 2: Instantiation configuration</h3>
+<h3 id="extension-1-instantiation-configuration">Extension 1: Instantiation configuration</h3>
 <p>The HIM rule set supports the instantiation syntax inherited from <a href="https://covesa.github.io/vehicle_signal_specification/rule_set/instances/">VSS instantiation</a>
 that can be used to request the VSS-tools to generate multiple instances of a branch/set of signals.
 This syntax has two options exemplified below</p>
@@ -437,7 +392,40 @@ The instance configuration input to the HIM configurator has a syntax as exempli
 <p>The number of &lsquo;second-order&rsquo; expressions must match the number of instantiaions that the &lsquo;first-order&rsquo; expression will expand to.</p>
 <p>The expressions can use any of the two syntax options mentioned above.</p>
 <p>Currently this syntax can only be used for two-dimensional instantiations.</p>
-<h3 id="extension-3-local-variation-point">Extension 3: Local variation point</h3>
+<h3 id="extension-2-variability-configuration">Extension 2: Variability configuration</h3>
+<p>The tree in vspec format may contain multiple variations of objects that in a deployment typically are not included.
+An example are the <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/objects/Powertrain/CombustionEngine.yaml">Combustion engine</a>
+and the <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Powertrain/ElectricEngine.vspec">Electric engine</a>.
+in an ICE vehicle the former should be included, but not the latter. For an EV vehicle it is vice versa.
+To enable one or the other of these objects to be included the following syntax is used,
+example taken from the <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Powertrain/Engine.vspec">Engine.vspec</a>.</p>
+<pre tabindex="0"><code>VariationPoint: #EngineType
+  - ICE #include CombustionEngine.yaml Engine
+  - EV  #include ElectricEngine.vspec Engine
+</code></pre><p>The keyword is VariationPoint, which on the same line must be followed by a hash sign (#) directly followe by a unique variation point tag (in this case EngineType.
+The value part of this key-value expression is an array of &lsquo;variability object expressions&rsquo;,
+where such an expression contains a &lsquo;variability name&rsquo; followed by an &lsquo;#include expression&rsquo;.
+This expression must be compliant with the syntax rules for HIM #include expressions.
+The array size is not restricted.</p>
+<p>The input to the HIM configurator for it to resolve which variations to select is found in two files.</p>
+<ul>
+<li>The <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/Variability.json">Variability.json</a> file,</li>
+<li>and the <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Heavyduty/Tractor/himConfiguration.json">himConfiguration.json</a> file.</li>
+</ul>
+<p>The Variability.json file defines the available variations, and which include statements that should be selected for the variation.
+As can be seen in th PHEV variation example below it is possible to select multiple include statements.</p>
+<pre tabindex="0"><code>    &#34;EngineType&#34;: [
+        {
+            &#34;PHEV&#34;: [
+                &#34;ICE&#34;,
+                &#34;EV&#34;
+            ]
+        }
+</code></pre><p>The himConfiguration.json file contains the variation that that should be included in the tree that is generated by the himConfigurator (using a VSS-tools exporter),
+expressed by the rows below in this example:</p>
+<pre tabindex="0"><code>    &#34;variants&#34;: {
+        &#34;EngineType&#34;: &#34;PHEV&#34;
+</code></pre><h3 id="extension-3-local-variation-point">Extension 3: Local variation point</h3>
 <p>If an instantiation configuration has a need of including a variation point with different variants for the different intances
 then the Variation point feature described above cannot be used as it would apply the same variant to all instances.
 To meet this need the Local Variation point (LocalVP) is available.
@@ -593,10 +581,31 @@ This syntax can be directly used as input to any of the exporter tools provided 
 <li><a href="https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Bus">Bus tree</a></li>
 <li><a href="https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Driver">Driver tree</a></li>
 <li><a href="https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/VSS-core">VSS-core tree</a></li>
+<li><a href="https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/VSS-core2">VSS-core2 tree</a></li>
 </ul>
 <p>The VSS-core tree is a vehicle type agnostic tree that is configured by the HIM configurator to become vehicle type specific.
-Configuration templates for the vehicle types Car and Truck are available, and can be used as starting poin to create templates for other vehicle types.</p>
+Configuration templates for the vehicle types Car and Truck are available, and can be used as starting poin to create templates for other vehicle types.
+This tree uses the variation point and local variation point extensions to realize vehicle specific trees.</p>
+<p>The VSS-core2 tree is also  a vehicle type agnostic tree that is configured by the HIM configurator to become vehicle type specific.
+However, the usage of the variation point and local variation point extensions is here replaced by usage of overlays.
+This alternative leads to less modifications of the VSS tree to create the VSS core tree.</p>
 <p>The other trees are vehicle type specific from the start, or for Driver a supplementary tree to be used together with e. g. the Truck tree.</p>
+<h3 id="symbolic-linking">Symbolic linking</h3>
+<p>The directory structure for a single tree follows the VSS pattern with &ldquo;#include&rdquo; links in the vspec files that logically links to other files of the tree. However, to link to a file in the common objects structure the corresponding file in the trees structure is realized as a symbolic link file. This means that when the content of the file is accessed the underlying file system follows the symbolic link to the file in the objects structure for the actual content of the file. This is transparent to the entity accessing the file, so e. g. the exporter tools from VSS-tools will when used for a transformation of a specific tree access file content from the common objects files transparently.</p>
+<p>The symbolic links used in a tree structure definition shall be declared in a script file that can be run to refresh the symlinks if a link is broken.
+The syntax of these script files differ between Linux and Windows, see the chapter below.</p>
+<h3 id="linux--windows-specific-parts">Linux / Windows specific parts</h3>
+<h4 id="symlink-script-files">Symlink script files</h4>
+<p>The symlink cript files used in Linux are standard bash script files, see e. g.
+<a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/Vehicle/Truck/cv-truck-symlinks.sh">cv-truck-symlinks.sh</a>.</p>
+<p>For Windows a <a href="https://en.wikipedia.org/wiki/PowerShell">Powershell</a> script is used, see e. g.
+cv-truck-symlink.ps1 script in the <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Win-setup/">Win-setup</a> directory.</p>
+<h4 id="vss-tools-activation">VSS-tools activation</h4>
+<p>The HIM configurator activates the VSS-tools exporter via a shell script.
+In Linux this is a <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/vspecExec.sh">Bash script</a>,
+in Windows it is ealized by a <a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/spec/trees/vspecExec.ps1">Powershell script</a>.</p>
+<p>Information on how to install VSS-tools in Windows is found in the
+<a href="https://github.com/COVESA/commercial-vehicle-information-specifications/blob/main/Win-setup/">Win-setup</a> directory.</p>
 <h2 id="alignment-with-other-standards">Alignment with other standards</h2>
 <p>The terminology used in these HIM based specifications should try to align with terminology and principles from other standards.
 The cases that has been identified are described below.</p>
@@ -782,19 +791,19 @@ and inserting the &ldquo;instances0/1&rdquo; directives in the related vspec fil
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/commercial-vehicle-information-specifications/js/clipboard.min.js?1745763420"></script>
-    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.min.js?1745763420"></script>
-    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.jquery.min.js?1745763420"></script>
-    <script src="/commercial-vehicle-information-specifications/js/jquery.sticky.js?1745763420"></script>
-    <script src="/commercial-vehicle-information-specifications/js/featherlight.min.js?1745763420"></script>
-    <script src="/commercial-vehicle-information-specifications/js/highlight.pack.js?1745763420"></script>
+    <script src="/commercial-vehicle-information-specifications/js/clipboard.min.js?1746004190"></script>
+    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.min.js?1746004190"></script>
+    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.jquery.min.js?1746004190"></script>
+    <script src="/commercial-vehicle-information-specifications/js/jquery.sticky.js?1746004190"></script>
+    <script src="/commercial-vehicle-information-specifications/js/featherlight.min.js?1746004190"></script>
+    <script src="/commercial-vehicle-information-specifications/js/highlight.pack.js?1746004190"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/commercial-vehicle-information-specifications/js/modernizr.custom-3.6.0.js?1745763420"></script>
-    <script src="/commercial-vehicle-information-specifications/js/learn.js?1745763420"></script>
-    <script src="/commercial-vehicle-information-specifications/js/hugo-learn.js?1745763420"></script>
+    <script src="/commercial-vehicle-information-specifications/js/modernizr.custom-3.6.0.js?1746004190"></script>
+    <script src="/commercial-vehicle-information-specifications/js/learn.js?1746004190"></script>
+    <script src="/commercial-vehicle-information-specifications/js/hugo-learn.js?1746004190"></script>
     
         
-            <script src="/commercial-vehicle-information-specifications/mermaid/mermaid.js?1745763420"></script>
+            <script src="/commercial-vehicle-information-specifications/mermaid/mermaid.js?1746004190"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
