@@ -55,39 +55,21 @@ But if we need to use himConfig-car, himConfigurator can be run with below comma
 
     i. .\himConfigurator.exe  -m yaml -c himConfig-car.json
 
-3. To generate yaml with vspec in VSS-Core tree. 
-
-Run the command below from within commercial-vehicle-information-specifications\spec\trees\Vehicle\VSS-core directory 
-
-    j. vspec export yaml  --vspec VssCoreSignalSpecification.vspec  --output cvis_car.yaml -u ../../../units.yaml -q ../../../quantities.yaml
          
-4. To run himConfigurator in other trees  for example Vehicle\Truck  tree, steps in Win-setup\Setup-alt-1 can be followed as it is. 
+3. To run himConfigurator in other trees  for example Vehicle\Truck  tree, steps in Win-setup\Setup-alt-1 can be followed as it is. 
 
 In short,
 
 Create the symlinks by running cv-truck-symlinks.ps1 script from the commercial-vehicle-information-specifications\spec\trees\Vehicle\Truck directory
-cv-truck-symlinks.ps1can be found in commercial-vehicle-information-specifications\ Win-setup\Setup-alt-1 directory
+cv-truck-symlinks.ps1 can be found in commercial-vehicle-information-specifications\ Win-setup\Setup-alt-1 directory
 
- HIM Configurator needs Datatypes.yaml, create it manually by running below command in the spec/objects/Datatype directory
+ Build HimConfigurator code with below command
 
-    k. vspec export yaml -s ./Datatype.vspec -o Datatypes.yaml
-
-Copy the DataTypes.yaml to the commercial-vehicle-information-specifications\spec\trees\Vehicle\Truck directory
-
-Build HimConfigurator code with below command
-
-    l. go build himConfigurator.go
+    j. go build himConfigurator.go
     
  Run the generated himConfigurator executable to generate vspec file based on required  himConfiguration.
  This also exports the vspec file to yaml file considering vspecExec.ps1 file available at spec/trees folder by taking into account of necessary overlay files.
  
 Provide the tree folder in -r option
 
-    m. .\himConfigurator.exe -m yaml -r  .\Vehicle\Truck\  -c himConfiguration.json
-
-
-5. To generate yaml with vspec in Vehicle\Truck tree.
- 
-Run below command from within commercial-vehicle-information-specifications\spec\trees\Vehicle\Truck directory 
-
-    n. vspec export yaml  --vspec TruckSignalSpecification.vspec  --output cvis_car.yaml -u ../../../units.yaml -q ../../../quantities.yaml
+    k. .\himConfigurator.exe -m yaml -r  .\Vehicle\Truck\  -c himConfiguration.json
