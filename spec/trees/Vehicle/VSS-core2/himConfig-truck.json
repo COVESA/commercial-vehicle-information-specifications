@@ -102,7 +102,11 @@
     },
     "overlays": [
         "overlays/Truck/OBD-Driver-Occupant-branch-delete.vspec",
-        "overlays/Truck/Enginetype-ICE.vspec",
-        "overlays/Truck/Vehicle.Chassis.Axle.Row2-Liftable.vspec"
-    ]
+        "overlays/Truck/Enginetype-ICE.vspec"
+    ],
+    "instance-overlays": {
+        "Vehicle.Chassis.Axle.Row1": "overlays/Truck/Steerable.vspec",
+        "Vehicle.Chassis.Axle.Row2": "overlays/Truck/Liftable.vspec",
+        "Vehicle.Chassis.Axle.Row3": "overlays/Truck/Steerable.vspec+overlays/Truck/Driving.vspec"
+    }
 }
