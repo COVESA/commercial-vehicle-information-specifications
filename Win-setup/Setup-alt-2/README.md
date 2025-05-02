@@ -34,21 +34,26 @@ Clone CVIS from github using
 
 2. To run HimConfigurator on VSS-Core tree
 
-Copy go.mod and go.sum  from commercial-vehicle-information-specifications\Win-setup\Setup-alt-1 directory to commercial-vehicle-information-specifications\spec\trees directory 
+  go.mod and go.sum files should be available to build a .go file. These files can be downloaded using below commands.
+
+   go mod init cvis
+
+   go mod tidy
 
 Build HimConfigurator code with below command
 
     g. go build himConfigurator.go
 
 Run the generated himConfigurator executable to generate vspec file based on required himConfiguration.
+This also exports the vspec file to yaml file considering vspecExec.ps1 file available at spec/trees folder by taking into account of necessary overlay files.
 
-    h. .\himConfigurator.exe -p  -m yaml
+    h. .\himConfigurator.exe  -m yaml
 
 By default himConfig-truck.json will be selected.
 
-But if we need to use himConfig-Car, himConfigurator can be run with below command
+But if we need to use himConfig-car, himConfigurator can be run with below command
 
-    i. .\himConfigurator.exe -p  -m yaml -c himConfig-car.json
+    i. .\himConfigurator.exe  -m yaml -c himConfig-car.json
 
 3. To generate yaml with vspec in VSS-Core tree. 
 
@@ -74,10 +79,11 @@ Build HimConfigurator code with below command
     l. go build himConfigurator.go
     
  Run the generated himConfigurator executable to generate vspec file based on required  himConfiguration.
+ This also exports the vspec file to yaml file considering vspecExec.ps1 file available at spec/trees folder by taking into account of necessary overlay files.
  
 Provide the tree folder in -r option
 
-    m. .\himConfigurator.exe -p -m yaml -r  .\Vehicle\Truck\  -c himConfiguration.json
+    m. .\himConfigurator.exe -m yaml -r  .\Vehicle\Truck\  -c himConfiguration.json
 
 
 5. To generate yaml with vspec in Vehicle\Truck tree.

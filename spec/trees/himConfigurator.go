@@ -69,6 +69,14 @@ type Instance struct {
 
 var instanceList []Instance
 
+type InstanceOverlays struct {
+	InstancePath string
+	OverlaysFile string
+}
+
+var instanceOverlaysList []InstanceOverlays
+var instanceOverlaysFileList []string
+
 type PropertyData struct {
 	Name string
 	NodeType string
@@ -718,9 +726,82 @@ func decodeOverlayConfigs(overlayConfigs string, vspecDir string) string {
 	}
 	toolsParameter := ""
 	for i := 0; i < len(overlays); i++ {
-		toolsParameter = toolsParameter + "-l " + vspecDir + overlays[i] + " "
+		toolsParameter += "-l " + vspecDir + overlays[i] + " "
 	}
 	return toolsParameter
+}
+
+func decodeInstanceOverlayConfigs(instanceOverlayConfigs string, vspecDir string) []InstanceOverlays {
+	var instanceOverlays []InstanceOverlays
+	var instanceOverlaysMap map[string]interface{}
+	err := json.Unmarshal([]byte(instanceOverlayConfigs), &instanceOverlaysMap)
+	if err != nil {
+		fmt.Printf("decodeInstanceOverlayConfigs():unmarshal %s, error=%s\n", instanceOverlayConfigs, err)
+		return nil
+	}
+	index := 0
+	instanceOverlays = make([]InstanceOverlays, len(instanceOverlaysMap))
+	for k, v := range instanceOverlaysMap {
+		instanceOverlays[index].InstancePath = k
+		instanceOverlays[index].OverlaysFile = v.(string)
+		index++
+	}
+	return instanceOverlays
+}
+
+func createInstanceOverlays(vspecDir string) error {
+	overlaysPath := vspecDir + extractPath(instanceOverlaysList) + "/"
+//fmt.Printf("overlaysPath=%s\n", overlaysPath)
+	for i := 0; i < len(instanceOverlaysList); i++ {
+		includeOverlayFiles := getincludeOverlayFiles(instanceOverlaysList[i].OverlaysFile)
+		overlaysFName := createInstanceOverlaysFileName(instanceOverlaysList[i].InstancePath, includeOverlayFiles)
+		overlaysFp, err := os.Create(overlaysPath + overlaysFName)
+//fmt.Printf("len(includeOverlayFiles)=%d\n", len(includeOverlayFiles))
+		if err != nil {
+			fmt.Printf("Could not create %s\n", overlaysPath + overlaysFName)
+			return err
+		}
+		for j := 0; j < len(includeOverlayFiles); j++ {
+fmt.Printf("write to file=%s\n", "#include " + includeOverlayFiles[j] + " " + instanceOverlaysList[i].InstancePath)
+			overlaysFp.Write([]byte("#include " + includeOverlayFiles[j] + " " + instanceOverlaysList[i].InstancePath + "\n"))
+		}
+		overlaysFp.Close()
+		instanceOverlaysFileList = append (instanceOverlaysFileList, overlaysPath + overlaysFName)
+	}
+	return nil
+}
+
+func getincludeOverlayFiles(OverlaysFileExpression string) []string {
+	includeOverlayFiles := strings.FieldsFunc(OverlaysFileExpression, isPlus)
+	for i := 0; i < len(includeOverlayFiles); i++ {
+		includeOverlayFiles[i] = filepath.Base(includeOverlayFiles[i])
+	}
+	return includeOverlayFiles
+}
+
+func isPlus(c rune) bool {
+	return c == '+'
+}
+
+func createInstanceOverlaysFileName(instancePath string, includeOverlayFiles []string) string {
+	fName := instancePath + "-"
+	for i := 0; i < len(includeOverlayFiles); i++ {
+		dotIndex := strings.Index(includeOverlayFiles[i], ".vspec")
+		if dotIndex == -1 {
+			fmt.Printf("createInstanceOverlaysFileName():unknown file format  %s\n", includeOverlayFiles[i])
+		} else {
+			fName += includeOverlayFiles[i][:dotIndex] + "-"
+		}
+	}
+	return fName[:len(fName)-1] + ".vspec"
+}
+
+func extractPath(instanceOverlays []InstanceOverlays) string {
+	if len(instanceOverlays) == 0 {
+		return ""
+	}
+	path := filepath.Dir(instanceOverlays[0].OverlaysFile)
+	return path
 }
 
 func decodeVariantConfigs(variantConfigs string) []Variant { //JSON object:{"var-type1":"var-name1", ., "var-typeN":"var-nameN"}
@@ -997,9 +1078,13 @@ func readConfigFile(vspecDir string) []string {
 	if overlaysIndex == -1 {
 		fmt.Printf("readConfigFile: Could not find 'overlays' key in %s\n", configFileName)
 	}
-	keyIndex := []int{variantsIndex, instancesIndex, overlaysIndex}
+	instanceOverlaysIndex := strings.Index(string(data), `"instance-overlays":`)
+	if instanceOverlaysIndex == -1 {
+		fmt.Printf("readConfigFile: Could not find 'instance-overlays' key in %s\n", configFileName)
+	}
+	keyIndex := []int{variantsIndex, instancesIndex, overlaysIndex, instanceOverlaysIndex}
 	sort.Ints(keyIndex)
-	returnString := []string{"", "", ""}
+	returnString := []string{"", "", "", ""}
 	for i := 0; i < len(keyIndex); i++ {
 		if keyIndex[i] != -1 {
 			if i+1 < len(keyIndex) {
@@ -1245,7 +1330,7 @@ func main() {
 			cmd := exec.Command(scriptPath, "-file", script, "yaml", "../objects/Datatype/Datatype.vspec", "")
 			err = cmd.Run()
 			if err != nil {
-				fmt.Printf("Executing make failed with error=%s\n", err)
+				fmt.Printf("Executing shell script failed with error=%s\n", err)
 			} else {
 				err = os.Rename("exporterData/cvis.yaml", *vspecDir+"Datatypes.yaml")
 				if err != nil {
@@ -1264,6 +1349,8 @@ func main() {
 			variantList = decodeVariantConfigs(configurations[i][11:])
 		} else if strings.Contains(configurations[i], `"overlays":`) {
 			overlayToolsParameter = decodeOverlayConfigs(configurations[i][11:], *vspecDir)
+		} else if strings.Contains(configurations[i], `"instance-overlays":`) {
+			instanceOverlaysList = decodeInstanceOverlayConfigs(configurations[i][20:], *vspecDir)
 		}
 	}
 
@@ -1280,6 +1367,13 @@ func main() {
 	err = filepath.WalkDir(*vspecDir, walkVariantPass)
 	if err != nil {
 		fmt.Printf("Global variant preprocessing failed. Terminating.\n")
+		os.Exit(1)
+	}
+
+	// configure instance overlays
+	err = createInstanceOverlays(*vspecDir)
+	if err != nil {
+		fmt.Printf("Instance overlays preprocessing failed. Terminating.\n")
 		os.Exit(1)
 	}
 
@@ -1306,11 +1400,16 @@ func main() {
 	if *overlayDisable {
 		cmd = exec.Command(scriptPath, "-file", script, makeCmd, *vspecDir+rootVspecFileName, "")
 	} else {
+		if len(instanceOverlaysFileList) > 0 {
+			for i := 0; i < len(instanceOverlaysFileList); i++ {
+				overlayToolsParameter += " -l " + instanceOverlaysFileList[i]
+			}
+		}
 		cmd = exec.Command(scriptPath, "-file", script, makeCmd, *vspecDir+rootVspecFileName, overlayToolsParameter)
 	}
 	err = cmd.Run()
 	if err != nil {
-		fmt.Printf("Executing make failed with error=%s. Terminating.\n", err)
+		fmt.Printf("Executing shell script failed with error=%s. Terminating.\n", err)
 		os.Exit(1)
 	}
 
@@ -1321,5 +1420,13 @@ func main() {
 	}
 	if saveConf {
 		fmt.Printf("Configured vspec files are not deleted\n")
+	}
+	if len(instanceOverlaysFileList) > 0 {
+		for i := 0; i < len(instanceOverlaysFileList); i++ {
+			err := os.Remove(instanceOverlaysFileList[i])
+			if err != nil {
+				fmt.Printf("Deleting %s failed. Err=%s\n", instanceOverlaysFileList[i], err)
+			}
+		}
 	}
 }
