@@ -541,3 +541,19 @@ IsDecreaseMassageLevelSwitchEngaged:
   type: actuator
   description: Decrease massage level switch engaged.
   comment: Affects the property (SingleSeat.MassageLevel).
+
+# ----- VAPI additions -----
+Switch.Massage.IsOn:
+  datatype: boolean
+  description: Indicates if mssage is on or off. True = On. False = Off.
+  type: actuator
+
+Switch.Massage.Intensity:
+  datatype: float
+  description: The intensity of the massage that will be activated. Min intensity = 0. Max intensity = 100.
+  type: actuator
+
+Switch.Massage.MassageType:
+  datatype: string
+  description: The type of massage that will be activated.
+  type: actuator
