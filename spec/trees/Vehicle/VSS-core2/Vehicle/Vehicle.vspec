@@ -14,6 +14,16 @@
 # VSS Versioning information
 #
 
+DownloadFile:
+  type: actuator
+  datatype: Types.Struct.FileDescriptor
+  description: Download file configuration.
+
+UploadFile:
+  type: sensor
+  datatype: Types.Struct.FileDescriptor
+  description: Upload file configuration.
+
 VersionVSS:
   type: branch
   description: Supported Version of VSS.

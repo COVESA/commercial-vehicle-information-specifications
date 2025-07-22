@@ -1317,6 +1317,7 @@ func main() {
 	preProcessOnly := parser.Flag("p", "preprocess", &argparse.Options{Required: false, Help: "Pre-process only, save configured vspec files. Do not run VSS-tools."})
 	enumSubst := parser.Flag("n", "noEnumSubst", &argparse.Options{Required: false, Help: "No substitution of enum links to Datatype tree with actual datatypes"})
 	overlayDisable := parser.Flag("d", "disableOverlays", &argparse.Options{Required: false, Help: "Disables VSS-tools overlay configurations"})
+	typeFile := parser.String("t", "typefile", &argparse.Options{Required: false, Help: "type definition file name"})
 	err := parser.Parse(os.Args)
 	if err != nil {
 		fmt.Print(parser.Usage(err))
@@ -1396,16 +1397,20 @@ func main() {
 	if makeCmd == "all" {
 //		makeCmd = ""
 	}
+	typeTreeParam := ""
+	if typeFile != nil {
+		typeTreeParam = "-t " + *typeFile
+	}
 	var cmd *exec.Cmd
 	if *overlayDisable {
-		cmd = exec.Command(scriptPath, "-file", script, makeCmd, *vspecDir+rootVspecFileName, "")
+		cmd = exec.Command(scriptPath, "-file", script, makeCmd, *vspecDir+rootVspecFileName, typeTreeParam)
 	} else {
 		if len(instanceOverlaysFileList) > 0 {
 			for i := 0; i < len(instanceOverlaysFileList); i++ {
 				overlayToolsParameter += " -l " + instanceOverlaysFileList[i]
 			}
 		}
-		cmd = exec.Command(scriptPath, "-file", script, makeCmd, *vspecDir+rootVspecFileName, overlayToolsParameter)
+		cmd = exec.Command(scriptPath, "-file", script, makeCmd, *vspecDir+rootVspecFileName, overlayToolsParameter  + typeTreeParam)
 	}
 	err = cmd.Run()
 	if err != nil {
