@@ -75,7 +75,7 @@ will show the command line options that is possible to apply at startup.
 usage: print [-h|--help] [-m|--makecommand (all|yaml|json|csv|binary)]
              [-c|--configfile "<value>"] [-r|--rootdir "<value>"]
              [-s|--vspecsave] [-p|--preprocess] [-n|--noEnumSubst]
-             [-d|--disableOverlays]
+             [-d|--disableOverlays] [-t|--typefile "<value>"]
 
              HIM configurator
 
@@ -94,6 +94,7 @@ Arguments:
   -n  --noEnumSubst      No substitution of enum links to Datatype tree with
                          actual datatypes
   -d  --disableOverlays  Disables VSS-tools overlay configurations
+  -t  --typefile         type definition file name
 ```
 The -m command line option is used to set which VSS-tools exporter the configured tree should have.
 The value 'all' leads to that all the exporters that are compatible with the HIM configurator are executed.
@@ -121,6 +122,10 @@ The -n command line option is used if substitution is not desired of the externa
 from the common Datatypes tree in the generated tree(s). However, VSS-tools currently does not accept the syntax using a reference.
 
 The -d command line option is used to disable the overlays to be invoked to the VSS-tools exporter.
+
+The -t command line option is used to include a type definition tree in the CLI to theVSS-tools.
+If the main tree includes a struct then its datatype shall be a path pointing to the struct in the type definition tree.
+VSS-tools then require that the type definition tree is available to verify the path.
 
 ## VSS-tools debug
 'in the development of the trees it might happen that errors are introduced in the vspec2/vspec files.
