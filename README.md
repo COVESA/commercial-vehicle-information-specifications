@@ -7,7 +7,7 @@ Ulf Björkengren - Ford Motor Company
 ### Working group meetings
 The CVIS working group meets every other Monday at 16.00 CET.
 The schedule and link to meeting can be found [here](https://wiki.covesa.global/display/WIK4/COVESA+Common+Meeting+Schedule).<br>
-Minutes of meetings is found [here](https://wiki.covesa.global/display/WIK4/CVIS+Meeting+Topics+and+Meeting+Notes).
+Minutes of meetings is found [here](https://covesa.atlassian.net/wiki/spaces/WIK4/pages/39068025/CVIS+Meeting+Topics+and+Meeting+Notes).
 
 ## Overview
 The Commercial Vehicle Information Specifications (CVIS) project is aiming at developing signal and service catalogues for commercial vehicles using the 
