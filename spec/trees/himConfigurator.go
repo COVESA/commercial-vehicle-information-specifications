@@ -1398,7 +1398,8 @@ func main() {
 //		makeCmd = ""
 	}
 	typeTreeParam := ""
-	if typeFile != nil {
+//	if typeFile != nil {
+	if len(*typeFile) > 0 {
 		typeTreeParam = "-t " + *typeFile
 	}
 	var cmd *exec.Cmd
