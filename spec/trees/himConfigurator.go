@@ -756,6 +756,7 @@ func createInstanceOverlays(vspecDir string) error {
 		includeOverlayFiles := getincludeOverlayFiles(instanceOverlaysList[i].OverlaysFile)
 		overlaysFName := createInstanceOverlaysFileName(instanceOverlaysList[i].InstancePath, includeOverlayFiles)
 		overlaysFp, err := os.Create(overlaysPath + overlaysFName)
+//fmt.Printf("overlaysFName=%s\n", overlaysFName)
 //fmt.Printf("len(includeOverlayFiles)=%d\n", len(includeOverlayFiles))
 		if err != nil {
 			fmt.Printf("Could not create %s\n", overlaysPath + overlaysFName)
@@ -1398,7 +1399,6 @@ func main() {
 //		makeCmd = ""
 	}
 	typeTreeParam := ""
-//	if typeFile != nil {
 	if len(*typeFile) > 0 {
 		typeTreeParam = "-t " + *typeFile
 	}
