@@ -25,7 +25,8 @@ Venv can when not needed anymore be deactivated by the command:\
 
 The existing vspec trees that are found in the CVIS/spec/trees/Vehicle/VSS-core2 and CVIS/spec/trees/Vehicle/Trailer1 directories will be used.
 These trees are not yet complete signal reprensentations for trucks and trailers but as it is what we have available at this point let us use them.
-The HIM configurator tool will generate binary format representations of the two trees by invoking it as shown below.\
+The HIM configurator tool will generate binary format representations of the two trees by invoking it as shown below.
+If a human readable YAML version is desired, remove the '-m binary' from the commands.\
 To generate the trailer tree:\
 $ ./himConfigurator -c himConfiguration.json -r Vehicle/Trailer1/ -m binary\
 The binary tree is then found in CVIS/spec/trees/exporterData with the file name cvis.binary.
