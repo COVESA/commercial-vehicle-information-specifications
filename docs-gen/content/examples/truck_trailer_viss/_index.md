@@ -9,7 +9,9 @@ The following describes how a demo can be set up in which a client can read and 
 The two repos that are needed for this are the [CVIS](https://github.com/COVESA/commercial-vehicle-information-specifications)
 and the [VISSR](https://github.com/COVESA/vissr) repos, so start with cloning these if not done earlier.\
 $ git clone https://github.com/COVESA/commercial-vehicle-information-specifications.git\
-$ git clone https://github.com/COVESA/vissr.git
+$ git clone https://github.com/COVESA/vissr.git\
+The database that VISSR is configured to use must be installed on the computer. Redis is the default configuration.\
+Please see the docmentation of respective database for how to install if that is needed.
 
 Next step is to use the HIM configurator to create the truck and trailer trees.
 The HIM configurator must then first be built which the following command ,issued in the CVIS/spec/trees directory.\
@@ -26,7 +28,7 @@ Venv can when not needed anymore be deactivated by the command:\
 The existing vspec trees that are found in the CVIS/spec/trees/Vehicle/VSS-core2 and CVIS/spec/trees/Vehicle/Trailer1 directories will be used.
 These trees are not yet complete signal reprensentations for trucks and trailers but as it is what we have available at this point let us use them.
 The HIM configurator tool will generate binary format representations of the two trees by invoking it as shown below.
-If a human readable YAML version is desired, remove the '-m binary' from the commands.\
+If a human readable YAML version is desired, remove the '-m binary' from the commands or replace it with '-m yaml'.\
 To generate the trailer tree:\
 $ ./himConfigurator -c himConfiguration.json -r Vehicle/Trailer1/ -m binary\
 The binary tree is then found in CVIS/spec/trees/exporterData with the file name cvis.binary.
