@@ -25,23 +25,23 @@ $ source venv.sh startme\
 Venv can when not needed anymore be deactivated by the command:\
 (.venv)$ deactivate
 
-The existing vspec trees that are found in the CVIS/spec/trees/Vehicle/VSS-core2 and CVIS/spec/trees/Vehicle/Trailer1 directories will be used.
+The existing vspec trees that are found in the CVIS/spec/trees/Vehicle/VSS-core2 and CVIS/spec/trees/Vehicle/Trailer directories will be used.
 These trees are not yet complete signal reprensentations for trucks and trailers but as it is what we have available at this point let us use them.
 The HIM configurator tool will generate binary format representations of the two trees by invoking it as shown below.
 If a human readable YAML version is desired, remove the '-m binary' from the commands or replace it with '-m yaml'.\
 To generate the trailer tree:\
-$ ./himConfigurator -c himConfiguration.json -r Vehicle/Trailer1/ -m binary\
+$ ./himConfigurator -c himConfiguration.json -r Vehicle/Trailer/ -m binary\
 The binary tree is then found in CVIS/spec/trees/exporterData with the file name cvis.binary.
-Rename this file to Trailer1.binary.\
+Rename this file to Trailer.binary.\
 To generate the truck tree:\
 $ ./himConfigurator -c himConfig-truck.json -r Vehicle/VSS-core2/ -m binary\
 The binary tree is then found in CVIS/spec/trees/exporterData with the file name cvis.binary.
 Rename this file to Truck.binary.
 
 The binary format is the format that the VISSR server expects the trees to have.
-The directory VISSR/server/vissv2server/forest is the local repository for trees so copy the two files Truck.binary and Trailer1.binary there.
+The directory VISSR/server/vissv2server/forest is the local repository for trees so copy the two files Truck.binary and Trailer.binary there.
 $ cp  <your-local-path>/CVIS/spec/trees/exporterData/Truck.binary <your-local-path>/VISSR/server/vissv2server/forest/Truck.binary\
-$ cp  <your-local-path>/CVIS/spec/trees/exporterData/Trailer1.binary <your-local-path>/VISSR/server/vissv2server/forest/Trailer1.binary\
+$ cp  <your-local-path>/CVIS/spec/trees/exporterData/Trailer.binary <your-local-path>/VISSR/server/vissv2server/forest/Trailer.binary\
 <your-local-path> is to be replaced with the path on your device to the VISSR and CVIS root directories.
 
 If you for some reason failed in creating the binary trees using the HIM configurator there are copies available in the CVIS/demodata directory.
@@ -92,7 +92,7 @@ HIM.Trailer2:
   domain: Automotive.Trailer.Data
   version: 0.1.0
   local: forest/Trailer.binary
-  public: https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Trailer1
+  public: https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Trailer
   description: A tree for the second trailer in the train.
 ```
 The snippet above can be inserted at the top or at the bottom, or in between any two tree declarations.\
