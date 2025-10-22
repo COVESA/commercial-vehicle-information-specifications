@@ -16,7 +16,7 @@ HIM.Trailer1:
   domain: Automotive.Trailer.Data
   version: 0.1.0
   local: forest/Trailer.binary
-  public: https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Trailer1
+  public: https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Trailer
   description: A tree for the first trailer in the train.
 
 HIM.Server:
