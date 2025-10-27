@@ -364,8 +364,7 @@ func expandSubTree(subTree []string, path string, rootNodeName string, index int
 	var expandedTree []string
 	for i := 0; i < len(subTree); i++ {
 		if strings.Contains(subTree[i], "#include") && strings.Contains(subTree[i], rootNodeName) {
-			nodeNameIndex := strings.Index(subTree[i], rootNodeName) + len(rootNodeName)
-//fmt.Printf("rootNodeName: %s line=%s\n", rootNodeName, subTree[i])
+			nodeNameIndex := strings.LastIndex(subTree[i], rootNodeName) + len(rootNodeName)
 			updatedIncludeExpression := subTree[i][:nodeNameIndex] + "." + getRowInstance(instanceTag,index) + subTree[i][nodeNameIndex:]
 			includeExpansion := readIncludefile(updatedIncludeExpression, path, index, instanceTag)
 			for j := 0; j < len(includeExpansion); j++ {
@@ -386,20 +385,20 @@ func expandSubTree(subTree []string, path string, rootNodeName string, index int
 }
 
 func readIncludefile(includeDirective string, path string, index int, instanceTag string) []string { 
-// if config instance directive found, update it with config data, update node names and #include directives with rootnode data
 	vspecFile, nodeNamePrefix, doInclude := decodeIncludeDirective(includeDirective)
 	var includeLines []string
 	if !doInclude {
 		includeLines = append(includeLines, includeDirective)
-//		includeLines = append(includeLines, includeDirective + "." + getRowInstance(instanceTag,index))  //Fixas???
 		return includeLines
 	}
 	file, err := os.Open(path + vspecFile)
 	if err != nil {
-		fmt.Printf("readIncludefile:Error reading %s: %s\n", path + vspecFile, err)
-		return nil
+		file, err = os.Open(path + vspecFile + "2") // try with vspec2
+		if err != nil {
+			fmt.Printf("readIncludefile:Error reading %s or %s\n", path + vspecFile,path + vspecFile + "2")
+			return nil
+		}
 	}
-//fmt.Printf("vspecfile: %s\n", path + vspecFile)
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
 	var line string
@@ -527,7 +526,32 @@ func readSubtree(scanner *bufio.Scanner, rootNodeName string) ([]string, []strin
 		if len(nextNodeName) > 0 && !strings.Contains(nextNodeName, rootNodeName) {
 			continueScan = false
 		} else {
-			tree = append(tree, text)
+			if strings.Contains(text, "#include") && text[0] != '#' { // #include <fname> <prefix path segment(s)>
+				//replace #include line with entire include file with prefix path segments inserted
+				fields := strings.Fields(text)
+				var fname, prefix string
+				if len(fields) == 3 { // #include <fname> <prefix path segment(s)>
+					fname = fields[1]
+					prefix = fields[2]
+				} else { // - <tag> #include <fname> <prefix path segment(s)>
+					tree = append(tree, text)
+					continue
+				}
+				file, err := os.Open(fname)
+				if err != nil {
+					fmt.Printf("readSubtree:Error reading %s: %s\n", fname, err)
+					return nil, nil, "", nil
+				}
+				scanner := bufio.NewScanner(file)
+				scanner.Split(bufio.ScanLines)
+				includeScan := true
+				for includeScan {
+					includeScan = scanner.Scan()
+					tree = append(tree, addPathPrefix(scanner.Text(), prefix))
+				}
+			} else {
+				tree = append(tree, text)
+			}
 		}
 	}
 	//find boundary between root node and subtree
@@ -551,6 +575,13 @@ func readSubtree(scanner *bufio.Scanner, rootNodeName string) ([]string, []strin
 	}
 //fmt.Printf("readSubtree:splitIndex1=%d, splitIndex2=%d\n", splitIndex1, splitIndex2)
 	return tree[:splitIndex1], tree[splitIndex1:splitIndex2], nextNodeName, scanner
+}
+
+func addPathPrefix(line string, prefix string) string {
+	if len(line) > 0 && line[0] != ' ' && line[0] != '#' && line[len(line)-1] == ':' {
+		return prefix + "." + line
+	}
+	return line
 }
 
 func walkVariantPass(s string, d fs.DirEntry, err error) error {
@@ -763,7 +794,7 @@ func createInstanceOverlays(vspecDir string) error {
 			return err
 		}
 		for j := 0; j < len(includeOverlayFiles); j++ {
-fmt.Printf("write to file=%s\n", "#include " + includeOverlayFiles[j] + " " + instanceOverlaysList[i].InstancePath)
+//fmt.Printf("write to file=%s\n", "#include " + includeOverlayFiles[j] + " " + instanceOverlaysList[i].InstancePath)
 			overlaysFp.Write([]byte("#include " + includeOverlayFiles[j] + " " + instanceOverlaysList[i].InstancePath + "\n"))
 		}
 		overlaysFp.Close()
