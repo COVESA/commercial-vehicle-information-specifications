@@ -1,0 +1,141 @@
+{
+    "config-scope": [
+        {
+            "instance-scope": [
+                {
+                    "Seat": [
+                        "Vehicle.Cabin.Seat",
+                        ""
+                    ]
+                },
+                {
+                    "Axle": [
+                        "Vehicle.Chassis.Axle",
+                        ".Wheel"
+                    ]
+                }
+            ]
+        },
+        {
+            "variant-scope": [
+                {
+                    "EngineType": {
+                        "EV": [
+                            {
+                                "Path": "Vehicle.Powertrain.CombustionEngine",
+                                "Directive": "  delete: yes",
+                                "Description": "Configures the tree for an EV vehicle. The combustion engine branch is deleted"
+                            },
+                            {
+                                "Path": "Vehicle.Powertrain.ElectricMotor",
+                                "Directive": "  delete: no"
+                            },
+                            {
+                                "Path": "Vehicle.Powertrain.Type",
+                                "Directive": "  default: 'ELECTRIC'"
+                            }
+                        ],
+                        "ICE": [
+                            {
+                                "Path": "Vehicle.Powertrain.CombustionEngine",
+                                "Directive": "  delete: no",
+                                "Description": "Configures the tree for an ICE vehicle. The electric motor branch is deleted"
+                            },
+                            {
+                                "Path": "Vehicle.Powertrain.ElectricMotor",
+                                "Directive": "  delete: yes"
+                            },
+                            {
+                                "Path": "Vehicle.Powertrain.Type",
+                                "Directive": "  default: 'COMBUSTION'"
+                            }
+                        ],
+                        "PHEV": [
+                            {
+                                "Path": "Vehicle.Powertrain.CombustionEngine",
+                                "Directive": "  delete: no",
+                                "Description": "Configures the tree for a PEV vehicle. Both engine branches are kept"
+                            },
+                            {
+                                "Path": "Vehicle.Powertrain.ElectricMotor",
+                                "Directive": "  delete: no"
+                            },
+                            {
+                                "Path": "Vehicle.Powertrain.Type",
+                                "Directive": "  default: 'HYBRID'"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "instance-variant-scope": [
+                {
+                    "AxleFeature": {
+                        "STEER": [
+                            {
+                                "Path": "Vehicle.Chassis.Axle.X2.Steerable",
+                                "Directive": "  delete: no",
+                                "Description": "Configures the axle feature for a specific instance to STEER."
+                            },
+                            {
+                                "Path": "Vehicle.Chassis.Axle.X2.Liftable",
+                                "Directive": "  delete: yes"
+                            },
+                            {
+                                "Path": "Vehicle.Chassis.Axle.X2.Driving",
+                                "Directive": "  delete: yes"
+                            }
+                        ],
+                        "LIFT": [
+                            {
+                                "Path": "Vehicle.Chassis.Axle.X2.Steerable",
+                                "Directive": "  delete: yes",
+                                "Description": "Configures the axle feature for a specific instance to LIFT."
+                            },
+                            {
+                                "Path": "Vehicle.Chassis.Axle.X2.Liftable",
+                                "Directive": "  delete: no"
+                            },
+                            {
+                                "Path": "Vehicle.Chassis.Axle.X2.Driving",
+                                "Directive": "  delete: yes"
+                            }
+                        ],
+                        "DRIVE": [
+                            {
+                                "Path": "Vehicle.Chassis.Axle.X2.Steerable",
+                                "Directive": "  delete: yes",
+                                "Description": "Configures the axle feature for a specific instance to DRIVE."
+                            },
+                            {
+                                "Path": "Vehicle.Chassis.Axle.X2.Liftable",
+                                "Directive": "  delete: yes"
+                            },
+                            {
+                                "Path": "Vehicle.Chassis.Axle.X2.Driving",
+                                "Directive": "  delete: no"
+                            }
+                        ],
+                        "STEER+LIFT": [
+                            {
+                                "Path": "Vehicle.Chassis.Axle.X2.Steerable",
+                                "Directive": "  delete: no",
+                                "Description": "Configures the axle feature for a specific instance to DRIVE."
+                            },
+                            {
+                                "Path": "Vehicle.Chassis.Axle.X2.Liftable",
+                                "Directive": "  delete: no"
+                            },
+                            {
+                                "Path": "Vehicle.Chassis.Axle.X2.Driving",
+                                "Directive": "  delete: yes"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

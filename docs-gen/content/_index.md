@@ -14,6 +14,20 @@ The CVIS project uses the Resource profile of the
 [Hierarchical Information Model](https://github.com/COVESA/hierarchical_information_model) [HIM), which is fully compatible with the
 [VSS rule set](https://covesa.github.io/vehicle_signal_specification/rule_set/index.html).
 
+Trees for many vehicle types, such as passenger cars, trucks, vans, pickups, etc. can be based on the same "base tree"
+and for this the [VSS](https://github.com/COVESA/vehicle_signal_specification/tree/master/spec) vspec tree is used.
+
+To enable the different modifications that are needed to "reshape" the VSS-tree from its passenger car centric structure to a tree that
+represents other vehicle types a tool is developed.
+
+This tool i now on its third generation, the two first generations can be found on the
+[himConfigurator](https://github.com/COVESA/commercial-vehicle-information-specifications/tree/himConfigurator) branch of this repo.
+
+The current version of the tool is named the vspecPreprocessor.
+It supports the same features for tree modifications as the previous generation but now without requiring usage of the extended vspec format (vspec2).
+It is written in python, the himConfigurator was written in golang which often required separate installation of the build system.
+
+
 The basis of the framework that can be used to define signal trees for different vehicle types is the HIM configurator.
 It works as a pre-processor that reads the extended vspec format, vspec2,
 and processes the extended instruction set described below from which it generates vspec formatted files which are applied as input to the

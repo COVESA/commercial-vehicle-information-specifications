@@ -15,10 +15,4 @@
 # the tools available in https://github.com/COVESA/vss-tools.
 #
 
-#
-# The root branch for highlevel Driver in EU legislation signals and attributes.
-#
-EUDriver:
-  type: branch
-  description: High-level driver in EU legislation data.
 

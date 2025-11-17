@@ -1,0 +1,53 @@
+# Copyright (c) 2016 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+#
+Trailers:
+  instances: 
+    - Trailer[1,5]
+  type: branch
+  description: High-level Trailer data.
+#include Trailer/Trailer.vspec Trailers
+
+#
+# TSS Versioning information
+#
+Trailers.VersionTSS:
+  type: branch
+  description: Supported Version of TSS.
+  instantiate: false
+
+Trailers.VersionTSS.Major:
+  datatype: uint32
+  type: attribute
+  default: 1
+  description: Supported Version of TSS - Major version.
+
+Trailers.VersionTSS.Minor:
+  datatype: uint32
+  type: attribute
+  default: 0
+  description: Supported Version of TSS - Minor version.
+
+Trailers.VersionTSS.Patch:
+  datatype: uint32
+  type: attribute
+  default: 0
+  description: Supported Version of TSS - Patch version.
+
+Trailers.VersionTSS.Label:
+  datatype: string
+  type: attribute
+  default: 'dev'
+  description: Label to further describe the version.
+  comment: COVESA TSS project typically use dev for latest master, and empty string for released versions.
+
+Trailers.TrailerCount:
+  datatype: uint8
+  type: attribute
+  instantiate: false
+  description: Number of connected trailers.

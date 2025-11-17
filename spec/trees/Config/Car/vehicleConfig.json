@@ -1,0 +1,52 @@
+{
+    "configurations": [
+        {
+            "instances": [
+                {
+                    "Seat": [
+                        [
+                            "Row1",
+                            "Row2"
+                        ],
+                        [
+                            [
+                                "DriverSide",
+                                "PassengerSide"
+                            ],
+                            [
+                                "DriverSide",
+                                "Middle",
+                                "PassengerSide"
+                            ]
+                        ]
+                    ]
+                },
+                {
+                    "Axle": [
+                        [
+                            "Row1",
+                            "Row2"
+                        ],
+                        [
+                            [
+                                "Left",
+                                "Right"
+                            ],
+                            [
+                                "Left",
+                                "Right"
+                            ]
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "variants": [
+                {
+                    "EngineType": "EV"
+                }
+            ]
+        }
+    ]
+}

@@ -5,7 +5,7 @@
 Ulf Björkengren - Ford Motor Company
 
 ### Working group meetings
-The CVIS working group meets every other Monday at 16.00 CET.
+The CVIS working group meets every other Monday at 15.00 CET.
 The schedule and link to meeting can be found [here](https://wiki.covesa.global/display/WIK4/COVESA+Common+Meeting+Schedule).<br>
 Minutes of meetings is found [here](https://covesa.atlassian.net/wiki/spaces/WIK4/pages/39068025/CVIS+Meeting+Topics+and+Meeting+Notes).
 
@@ -23,29 +23,15 @@ Catalogues will be developed for different commercial vehicle types, e. g. truck
 The HIM rule set for signals (the resource profile) is identical to the [VSS rule set](https://covesa.github.io/vehicle_signal_specification/rule_set/), 
 and this project will for the signal parts try to align and reuse as much as possible with the VSS project.
 
-One attempt to realize this ambition is to use a structure where the parts of the tree that is domain specific
-is represented in "private" directories, while the parts that can be shared with other trees are stored in "common" directories.
-The use of symbolic links allow the private tree to access the common parts as if they were part of the private tree.
-This design is compatible with the [VSS-tools](https://github.com/COVESA/vss-tools) exporter tool,
-so it can be used to transform data in the vspec file structure to the different other formats supported by that tool.
+A tool that makes it possible to modify vspec trees is being developed. It is currently on its third generation, starting of with using symlinks to assemble a vspec tree from smaller "vspec objects".
 
-Another attempt being tried out is to create a common tree for "all" vehicle types and then use the HIM configurator to configure this
-tree to become vehicle type specific.
+This was followed by the HIM configurator tool where an extension of the vspec format, called vspec2, was developed to provide features such as generation of ragged matrices (e. g. needed when axles have different number of wheels).
 
+Building on a proposal from Volvo Group, a third generation of the tool has been developed, now named the vspecPreprocessor.
+It supports the same features as the HIM configurator but now without requiring usage of the vspec2 format.
+
+### Documentation
 The CVIS documentation is [here](https://covesa.github.io/commercial-vehicle-information-specifications/).
-
-## HIM configurator tool
-
-To build the HIM configurator you need to have the Golang build system installed on your computer.
-Then you go to the directory where the himConfigurator.go file is located, and issues the command:
-
-go build -o himConfigurator
-
-To see the command line options it can be started with, issue the command:
-
-./himConfigurator -h
-
-Please see the [documentation](https://covesa.github.io/commercial-vehicle-information-specifications/) for more details.
 
 ## Installing the repo
 The reo can be cloned by issung the command
@@ -68,3 +54,4 @@ This command involves access to files that requires super user priviledges, henc
 CVIS is an open standard and we invite anybody to contribute. Currently CVIS contains - among others - significant  contributions from
 
  - [Ford Motor Company](https://www.ford.com/)
+ - [Volvo Group](https://www.volvogroup.com/en/)

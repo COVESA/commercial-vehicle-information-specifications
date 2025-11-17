@@ -1,5 +1,0 @@
-# EngineType EV
-#Remove CombustionEngine
-
-Vehicle.Powertrain.CombustionEngine:
-  delete: true

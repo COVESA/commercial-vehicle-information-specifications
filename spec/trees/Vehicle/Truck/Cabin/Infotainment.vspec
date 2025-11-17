@@ -29,6 +29,11 @@ Media.Played.Source:
   allowed: ['UNKNOWN', 'SIRIUS_XM', 'AM', 'FM', 'DAB', 'TV', 'CD', 'DVD', 'AUX', 'USB', 'DISK', 'BLUETOOTH', 'INTERNET', 'VOICE', 'BEEP']
   description: Media selected for playback
 
+Media.Played.Genre:
+  datatype: string
+  type: sensor
+  description: Name of genre being played
+
 Media.Played.Artist:
   datatype: string
   type: sensor
@@ -247,6 +252,7 @@ HMI.DisplayOffDuration:
 SmartphoneProjection:
   type: branch
   description: All smartphone projection actions.
+  comment: Smartphone projection exposes or controls specific applications on the Smartphone on the vehicle infotainment system.
 
 SmartphoneProjection.Active:
   datatype: string
@@ -260,6 +266,7 @@ SmartphoneProjection.Source:
   type: actuator
   allowed: ['USB', 'BLUETOOTH', 'WIFI']
   description: Connectivity source selected for projection.
+  comment: Smartphone projection exposes or controls specific applications on the Smartphone on the vehicle infotainment system.
 
 SmartphoneProjection.SupportedMode:
   datatype: string[]
@@ -267,4 +274,22 @@ SmartphoneProjection.SupportedMode:
   allowed: [ 'ANDROID_AUTO', 'APPLE_CARPLAY', 'MIRROR_LINK', 'OTHER' ]
   description: Supportable list for projection.
 
-#include ../include/PowerOptimize.vspec
+SmartphoneScreenMirroring:
+  type: branch
+  description: All smartphone screen mirroring actions.
+  comment: Smartphone screen mirroring mirrors the whole screen of the Smartphone on the vehicle infotainment system.
+
+SmartphoneScreenMirroring.Active:
+  datatype: string
+  type: actuator
+  allowed: [ 'NONE', 'ACTIVE', 'INACTIVE' ]
+  description: Mirroring activation info.
+  comment: NONE indicates that mirroring is not supported.
+
+SmartphoneScreenMirroring.Source:
+  datatype: string
+  type: actuator
+  allowed: ['USB', 'BLUETOOTH', 'WIFI']
+  description: Connectivity source selected for mirroring.
+
+#include include/PowerOptimize.vspec

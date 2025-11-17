@@ -1,6 +1,0 @@
-# Add NewBranch.NewSensor3
-Vehicle.NewBranch.NewSensor3:
-  datatype: float
-  type: sensor
-  description: Yet another new sensor.
-

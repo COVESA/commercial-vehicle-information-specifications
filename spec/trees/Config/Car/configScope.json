@@ -1,0 +1,73 @@
+{
+    "config-scope": [
+        {
+            "instance-scope": [
+                {
+                    "Seat": [
+                        "Vehicle.Cabin.Seat",
+                        ""
+                    ]
+                },
+                {
+                    "Axle": [
+                        "Vehicle.Chassis.Axle",
+                        ".Wheel"
+                    ]
+                }
+            ]
+        },
+        {
+            "variant-scope": [
+                {
+                    "EngineType": {
+                        "EV": [
+                            {
+                                "Path": "Vehicle.Powertrain.CombustionEngine",
+                                "Directive": "  delete: yes",
+                                "Description": "Configures the tree for an EV vehicle. The combustion engine branch is deleted"
+                            },
+                            {
+                                "Path": "Vehicle.Powertrain.ElectricMotor",
+                                "Directive": "  delete: no"
+                            },
+                            {
+                                "Path": "Vehicle.Powertrain.Type",
+                                "Directive": "  default: 'ELECTRIC'"
+                            }
+                        ],
+                        "ICE": [
+                            {
+                                "Path": "Vehicle.Powertrain.CombustionEngine",
+                                "Directive": "  delete: no",
+                                "Description": "Configures the tree for an ICE vehicle. The electric motor branch is deleted"
+                            },
+                            {
+                                "Path": "Vehicle.Powertrain.ElectricMotor",
+                                "Directive": "  delete: yes"
+                            },
+                            {
+                                "Path": "Vehicle.Powertrain.Type",
+                                "Directive": "  default: 'COMBUSTION'"
+                            }
+                        ],
+                        "PHEV": [
+                            {
+                                "Path": "Vehicle.Powertrain.CombustionEngine",
+                                "Directive": "  delete: no",
+                                "Description": "Configures the tree for a PEV vehicle. Both engine branches are kept"
+                            },
+                            {
+                                "Path": "Vehicle.Powertrain.ElectricMotor",
+                                "Directive": "  delete: no"
+                            },
+                            {
+                                "Path": "Vehicle.Powertrain.Type",
+                                "Directive": "  default: 'HYBRID'"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

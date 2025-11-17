@@ -1,0 +1,140 @@
+# Copyright (c) 2016 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# Chassis signals and attributes
+#
+
+AxleCount:
+  datatype: uint8
+  type: attribute
+  description: Number of Axles on the trailer 
+
+AxlesConfig:
+  datatype: string[]
+  allowed: ['Axle1', 'Axle2', 'Axle3', 'Axle4', 'Axle5', 'Axle6', 'Axle7', 'Axle8', 'Axle9', 'Axle10', 'Axle11', 'Axle12', 'Axle13', 'Axle14', 'Axle15']
+  type: attribute
+  description: The current axles configuration for the trailer 
+
+#
+# Axle definition
+#
+Axle:
+  instances: Axle[1,15]
+  type: branch
+  description: Axle signals
+
+#include Axle.vspec Axle
+
+#
+# Liftable
+#
+Axle.Liftable:
+  type: branch
+  description: Axle liftable features
+
+#include AxleFeature/Liftable.vspec Axle.Liftable
+
+#
+# Steerable
+#
+Axle.Steerable:
+  type: branch
+  description: Axle steerable features
+
+#include AxleFeature/Steerable.vspec Axle.Steerable
+
+#
+# Driving
+#
+Axle.Driving:
+  type: branch
+  description: Axle driving features
+
+#include AxleFeature/Driving.vspec Axle.Driving
+
+#
+# Parking Brake
+#
+ParkingBrake:
+  type: branch
+  description: Parking brake signals
+
+ParkingBrake.IsEngaged:
+  datatype: boolean
+  type: actuator
+  description: Parking brake status. True = Parking Brake is Engaged. False = Parking Brake is not Engaged.
+
+ParkingBrake.IsAutoApplyEnabled:
+  datatype: boolean
+  type: actuator
+  description: Indicates if parking brake will be automatically engaged when the vehicle engine is turned off.
+#
+# Steering Wheel
+#
+SteeringWheel:
+  type: branch
+  description: Steering wheel signals
+
+SteeringWheel.Angle:
+  datatype: int16
+  type: sensor
+  unit: degrees
+  description: Steering wheel angle. Positive = degrees to the left. Negative = degrees to the right.
+
+SteeringWheel.Tilt:
+  datatype: uint8
+  type: actuator
+  min: 0
+  max: 100
+  unit: percent
+  description: Steering wheel column tilt. 0 = Lowest position. 100 = Highest position.
+
+SteeringWheel.Extension:
+  datatype: uint8
+  type: actuator
+  min: 0
+  max: 100
+  unit: percent
+  description: Steering wheel column extension from dashboard. 0 = Closest to dashboard. 100 = Furthest from dashboard.
+#
+# Accelerator
+#
+Accelerator:
+  type: branch
+  description: Accelerator signals
+
+Accelerator.PedalPosition:
+  datatype: uint8
+  type: sensor
+  min: 0
+  max: 100
+  unit: percent
+  description: Accelerator pedal position as percent. 0 = Not depressed. 100 = Fully depressed.
+
+#
+# Brake
+#
+Brake:
+  type: branch
+  description: Brake system signals
+
+Brake.PedalPosition:
+  datatype: uint8
+  type: sensor
+  min: 0
+  max: 100
+  unit: percent
+  description: Brake pedal position as percent. 0 = Not depressed. 100 = Fully depressed.
+
+Brake.IsDriverEmergencyBrakingDetected:
+  datatype: boolean
+  type: sensor
+  description: Indicates if emergency braking initiated by driver is detected.
+               True = Emergency braking detected. False = Emergency braking not detected.
+  comment: Detection of emergency braking can trigger Emergency Brake Assist (EBA) to engage.
