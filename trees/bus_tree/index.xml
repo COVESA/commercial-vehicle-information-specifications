@@ -2,9 +2,9 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Bus tree on Commercial Vehicle Information Specifications (CVIS)</title>
-    <link>https://covesa.github.io/commercial-vehicle-information-specifications/bus_tree/</link>
+    <link>https://covesa.github.io/commercial-vehicle-information-specifications/trees/bus_tree/</link>
     <description>Recent content in Bus tree on Commercial Vehicle Information Specifications (CVIS)</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://covesa.github.io/commercial-vehicle-information-specifications/bus_tree/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="https://covesa.github.io/commercial-vehicle-information-specifications/trees/bus_tree/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

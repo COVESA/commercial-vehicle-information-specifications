@@ -2,27 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/bus_tree/</loc>
+    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/trees/bus_tree/</loc>
   </url><url>
-    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/driver_tree/</loc>
+    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/trees/driver_tree/</loc>
   </url><url>
-    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/truck_tree/driver_tree/</loc>
+    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/trees/truck_tree/driver_tree/</loc>
   </url><url>
     <loc>https://covesa.github.io/commercial-vehicle-information-specifications/examples/</loc>
   </url><url>
-    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/him_configurator/</loc>
+    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/tools/him_configurator/</loc>
   </url><url>
-    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/trailer_tree/</loc>
+    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/trees/trailer_tree/</loc>
   </url><url>
     <loc>https://covesa.github.io/commercial-vehicle-information-specifications/examples/truck_trailer_viss/</loc>
   </url><url>
-    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/truck_tree/</loc>
+    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/trees/truck_tree/</loc>
   </url><url>
-    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/vss-core_tree/</loc>
+    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/tools/vspecpreprocessor/</loc>
+  </url><url>
+    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/trees/vss-core_tree/</loc>
   </url><url>
     <loc>https://covesa.github.io/commercial-vehicle-information-specifications/categories/</loc>
   </url><url>
     <loc>https://covesa.github.io/commercial-vehicle-information-specifications/</loc>
+  </url><url>
+    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/tools/</loc>
+  </url><url>
+    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/trees/</loc>
   </url><url>
     <loc>https://covesa.github.io/commercial-vehicle-information-specifications/tags/</loc>
   </url>

@@ -9,7 +9,7 @@
 
     <link rel="shortcut icon" href="/hierarchical_information_model/images/fav.png" type="image/x-icon" />
 
-    <title>Categories :: Commercial Vehicle Information Specifications (CVIS)</title>
+    <title>CVIS vspec trees :: Commercial Vehicle Information Specifications (CVIS)</title>
 
     
     <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1763377442" rel="stylesheet">
@@ -40,7 +40,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/commercial-vehicle-information-specifications/categories/">
+  <body class="" data-url="/commercial-vehicle-information-specifications/trees/">
     <nav id="sidebar" class="">
 
 
@@ -237,7 +237,7 @@
     
     <li data-nav-id="/commercial-vehicle-information-specifications/trees/" title="CVIS vspec trees" class="dd-item
         
-        
+        active
         
         ">
       <a href="/commercial-vehicle-information-specifications/trees/">
@@ -466,6 +466,17 @@
               <div>
                 <div id="top-bar">
                 
+                  
+                  
+                  
+                  <div id="top-github-link">
+                    <a class="github-link" title='Edit this page' href="https://github.com/covesa/commercial-vehicle-information-specifications/edit/master/docs/docs-gen/content/trees/_index.md" target="blank">
+                      <i class="fas fa-code-branch"></i>
+                      <span id="top-github-link-text">Edit this page</span>
+                    </a>
+                  </div>
+                  
+                
                 
                 <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
                     <span id="sidebar-toggle-span">
@@ -486,7 +497,7 @@
             
           
           
-            <a href='/commercial-vehicle-information-specifications/'>Commercial Vehicle Information Specifications</a> > Categories
+            <a href='/commercial-vehicle-information-specifications/'>Commercial Vehicle Information Specifications</a> > CVIS vspec trees
           
         
           
@@ -497,7 +508,19 @@
                 
                     <div class="progress">
     <div class="wrapper">
-
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#tree-development">Tree development</a>
+      <ul>
+        <li><a href="#truck-tree">Truck tree</a></li>
+        <li><a href="#trailer-tree">Trailer tree</a></li>
+        <li><a href="#car-tree">Car tree</a></li>
+        <li><a href="#bus-tree">Bus tree</a></li>
+        <li><a href="#driver-tree">Driver tree</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
     </div>
 </div>
 
@@ -513,9 +536,7 @@
           
             <h1>
               
-                category ::
-              
-              Categories
+              CVIS vspec trees
             </h1>
           
 
@@ -523,11 +544,37 @@
 
 
 
-
-
+	<h2 id="tree-development">Tree development</h2>
+<p>The <a href="https://covesa.github.io/hierarchical_information_model/data_rule_set/">HIM data rule set</a> is used to define signals in a tree.
+This syntax can be directly used as input to any of the exporter tools provided by <a href="https://github.com/COVESA/vss-tools">VSS-tools</a>.</p>
+<p>Vspec trees for different vehicle types, and also for other domains such e. g. Driver, are being developed.
+The root vspec file and other files needed as input to the VSS-tools exporters are for the different vehicle types found in respective directory under the spec/trees/Vehicle directory.
+Currently tree data for the following domains are represented:</p>
 <ul>
-	
+<li><a href="https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Truck">Truck tree</a></li>
+<li><a href="https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Trailer">Trailer tree</a></li>
+<li><a href="https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Car">Car tree</a></li>
+<li><a href="https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Bus">Bus tree</a></li>
+<li><a href="https://github.com/COVESA/commercial-vehicle-information-specifications/tree/main/spec/trees/Vehicle/Driver">Driver tree</a></li>
 </ul>
+<h3 id="truck-tree">Truck tree</h3>
+<p>The truck tree is identical to the Car tree except for the Chassis.vspec file that is extended to include AxleFeature branches.</p>
+<h3 id="trailer-tree">Trailer tree</h3>
+<p>The trailer tree directory includes two trees, one that represents a separate, standalone trailer tree, and another that represents a tree containing multiple trailers.
+The latter makes it possible to have one tree representing a train of one or more trailers.<br>
+The difference is found in the root vspec file of respective tree, the other vspec files in the subdirectories are the same.</p>
+<h3 id="car-tree">Car tree</h3>
+<p>The car tree is identical to the <a href="https://github.com/COVESA/vehicle_signal_specification/tree/master/spec">VSS</a> tree.
+It is included here to show how the vspecPreprocessor can be used to e. g. generate a ragged matrix
+for the configuration of seats with e. g. two seats in the first row and three in the second row.</p>
+<h3 id="bus-tree">Bus tree</h3>
+<p>The bus tree is identical to the <a href="https://github.com/COVESA/vehicle_signal_specification/tree/master/spec">VSS</a> tree.
+The vspecPreprocessor can e. g. be used to generate a bus specific seat layout.</p>
+<h3 id="driver-tree">Driver tree</h3>
+<p>The driver tree is yet to be populated. Currently is only contains empty branches to enable different data for EU and US legislation, respectively.</p>
+
+
+
 
 
 <footer class=" footline" >
@@ -652,6 +699,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -666,6 +714,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -772,8 +823,10 @@
 	 
 	 
 		
+			<a class="nav nav-prev" href="/commercial-vehicle-information-specifications/tools/vspecpreprocessor/" title="vspecPreprocessor"> <i class="fa fa-chevron-left"></i></a>
 		
-			<a class="nav nav-next" href="/commercial-vehicle-information-specifications/examples/" title="Examples" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+			<a class="nav nav-next" href="/commercial-vehicle-information-specifications/trees/bus_tree/" title="Bus tree" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
