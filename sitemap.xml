@@ -4,9 +4,9 @@
   <url>
     <loc>https://covesa.github.io/commercial-vehicle-information-specifications/trees/bus_tree/</loc>
   </url><url>
-    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/trees/driver_tree/</loc>
+    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/trees/car_tree/</loc>
   </url><url>
-    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/trees/truck_tree/driver_tree/</loc>
+    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/trees/driver_tree/</loc>
   </url><url>
     <loc>https://covesa.github.io/commercial-vehicle-information-specifications/examples/</loc>
   </url><url>
@@ -19,8 +19,6 @@
     <loc>https://covesa.github.io/commercial-vehicle-information-specifications/trees/truck_tree/</loc>
   </url><url>
     <loc>https://covesa.github.io/commercial-vehicle-information-specifications/tools/vspecpreprocessor/</loc>
-  </url><url>
-    <loc>https://covesa.github.io/commercial-vehicle-information-specifications/trees/vss-core_tree/</loc>
   </url><url>
     <loc>https://covesa.github.io/commercial-vehicle-information-specifications/categories/</loc>
   </url><url>
