@@ -1,0 +1,72 @@
+{
+    "configurations": [
+        {
+            "instances": [
+                {
+                    "Seat": [
+                        [
+                            "Row1",
+                            "Row2"
+                        ],
+                        [
+                            [
+                                "DriverSide",
+                                "PassengerSide"
+                            ],
+                            [
+                                "Couch"
+                            ]
+                        ]
+                    ]
+                },
+                {
+                    "Axle": [
+                        [
+                            "Axle1",
+                            "Axle2",
+                            "Axle3"
+                        ],
+                        [
+                            [
+                                "Pos6",
+                                "Pos10"
+                            ],
+                            [
+                                "Pos5",
+                                "Pos6",
+                                "Pos10",
+                                "Pos11"
+                            ],
+                            [
+                                "Pos5",
+                                "Pos6",
+                                "Pos10",
+                                "Pos11"
+                            ]
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "variants": [
+                {
+                    "EngineType": "EV"
+                }
+            ]
+        },
+        {
+            "instance-variants": [
+                {
+                    "AxleFeature": ["STEER", "Axle1"]
+                },
+                {
+                    "AxleFeature": ["LIFT", "Axle2"]
+                },
+                {
+                    "AxleFeature": ["STEER", "Axle3"]
+                }
+            ]
+        }
+    ]
+}

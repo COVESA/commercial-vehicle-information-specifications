@@ -6,19 +6,30 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-#
-# The power train branch used to host the signals and attributes.
-#
+AccumulatedBrakingEnergy:
+  datatype: float
+  type: sensor
+  unit: kWh
+  description: The accumulated energy from regenerative braking over lifetime.
 
-Powertrain:
-  type: branch
-  description: Powertrain data for battery management, etc.
+Range:
+  datatype: uint32
+  type: sensor
+  unit: m
+  description: Remaining range in meters using all energy sources available in the vehicle.
 
-#include EnergyManagement.vspec Powertrain
+TimeRemaining:
+  datatype: uint32
+  type: sensor
+  unit: s
+  description: Time remaining in seconds before all energy sources available in the vehicle are empty.
 
-#include Engine.vspec Powertrain
+Type:
+  datatype: string
+  type: attribute
+  allowed: ['COMBUSTION', 'HYBRID', 'ELECTRIC']
+  description: Defines the powertrain type of the vehicle.
+  comment: For vehicles with a combustion engine (including hybrids) more detailed information on fuels supported can
+           be found in FuelSystem.SupportedFuelTypes and FuelSystem.SupportedFuels.
 
-#include Transmission.vspec Powertrain
-
-
-
+#include include/PowerOptimize.vspec

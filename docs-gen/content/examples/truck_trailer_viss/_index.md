@@ -13,35 +13,40 @@ $ git clone https://github.com/COVESA/vissr.git\
 The database that VISSR is configured to use must be installed on the computer. Redis is the default configuration.\
 Please see the docmentation of respective database for how to install if that is needed.
 
-Next step is to use the HIM configurator to create the truck and trailer trees.
-The HIM configurator must then first be built which the following command ,issued in the CVIS/spec/trees directory.\
-$ go build -o himConfigurator\
-For the above to succeed the Golang build system must have been installed, which is described [here](https://go.dev/doc/install).
-
-The HIM configurator calls the VSS-tools exporter after its initial preprocessing of vspec2 files.
+The vspecPreprocessor creates an overlay file that is then used together with a suitable vspec domain tree in a call to the VSS-tools exporter.
 To set up the environment required by the VSS-tools exporter the Python virtual environment, venv, must be activated.
-This is done by the following command.\
+Assuming that venv is installed, if not please check [here](/commercial-vehicle-information-specifications/tools/vspecpreprocessor/#initializing-the-python-virtual-environment),
+the following command can be applied.\
 $ source venv.sh startme\
 Venv can when not needed anymore be deactivated by the command:\
 (.venv)$ deactivate
 
-The existing vspec trees that are found in the CVIS/spec/trees/Vehicle/VSS-core2 and CVIS/spec/trees/Vehicle/Trailer directories will be used.
+The vspec tree for trucks in the CVIS/spec/trees/Vehicle/Truck directory,
+and the vspec tree for separate trailer trees in the CVIS/spec/trees/Vehicle/Trailer directory will be used.
 These trees are not yet complete signal reprensentations for trucks and trailers but as it is what we have available at this point let us use them.
-The HIM configurator tool will generate binary format representations of the two trees by invoking it as shown below.
-If a human readable YAML version is desired, remove the '-m binary' from the commands or replace it with '-m yaml'.\
-To generate the trailer tree:\
-$ ./himConfigurator -c himConfiguration.json -r Vehicle/Trailer/ -m binary\
-The binary tree is then found in CVIS/spec/trees/exporterData with the file name cvis.binary.
-Rename this file to Trailer.binary.\
-To generate the truck tree:\
-$ ./himConfigurator -c himConfig-truck.json -r Vehicle/VSS-core2/ -m binary\
-The binary tree is then found in CVIS/spec/trees/exporterData with the file name cvis.binary.
-Rename this file to Truck.binary.
+The vspecPreprocessor and the VSS-tools exporter will be used to generate binary format representations of the two trees as shown below.
+To generate the trailer overlay file apply the command:
+
+$ python3 vspecPreprocessor.py -i Config/Trailer/vehicleConfig-separateTrailer.json -o Config/Trailer/separateTrailer.vspec -s Config/Trailer/configScope-separateTrailer.json -v Vehicle/Trailer/SeparateTrailerSignalSpecification.vspec
+
+Then to generate the trailer binary file apply the command:
+
+$ vspec export binary -u Vehicle/Trailer/units.yaml -q Vehicle/Trailer/quantities.yaml -l Config/Trailer/separateTrailer.vspec -s Vehicle/Trailer/SeparateTrailerSignalSpecification.vspec -o Trailer.binary
+
+The binary tree is then found in CVIS/spec/trees with the file name Trailer.binary.\
+To generate the truck binary tree apply the two commands below:\
+
+$ python3 vspecPreprocessor.py -i Config/Truck/vehicleConfig-truck.json -o Config/Truck/truck.vspec -s Config/Truck/configScope.json -v Vehicle/Truck/TruckSignalSpecification.vspec
+
+vspec export binary -u Vehicle/Truck/units.yaml -q Vehicle/Truck/quantities.yaml -l Config/Truck/truck.vspec -s Vehicle/Truck/TruckSignalSpecification.vspec -o Truck.binary
+
+The binary tree is then found in CVIS/spec/trees with the file name Truck.binary.\
+If human readable YAML trees are desired for inspection, exchange 'binary' in the vspec commands above to 'yaml' (in both exporter format and output file extension).\
 
 The binary format is the format that the VISSR server expects the trees to have.
 The directory VISSR/server/vissv2server/forest is the local repository for trees so copy the two files Truck.binary and Trailer.binary there.
-$ cp  <your-local-path>/CVIS/spec/trees/exporterData/Truck.binary <your-local-path>/VISSR/server/vissv2server/forest/Truck.binary\
-$ cp  <your-local-path>/CVIS/spec/trees/exporterData/Trailer.binary <your-local-path>/VISSR/server/vissv2server/forest/Trailer.binary\
+$ cp  <your-local-path>/CVIS/spec/trees/Truck.binary <your-local-path>/VISSR/server/vissv2server/forest/Truck.binary\
+$ cp  <your-local-path>/CVIS/spec/trees/Trailer.binary <your-local-path>/VISSR/server/vissv2server/forest/Trailer.binary\
 <your-local-path> is to be replaced with the path on your device to the VISSR and CVIS root directories.
 
 If you for some reason failed in creating the binary trees using the HIM configurator there are copies available in the CVIS/demodata directory.

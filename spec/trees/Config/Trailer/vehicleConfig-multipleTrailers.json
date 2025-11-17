@@ -1,0 +1,85 @@
+{
+    "configurations": [
+        {
+            "instances": [
+                {
+                    "Trailers": [
+                        {
+                            "Trailer1": {
+                                "Axle": [
+                                    [
+                                        "Axle1",
+                                        "Axle14",
+                                        "Axle15"
+                                    ],
+                                    [
+                                        [
+                                            "Pos7",
+                                            "Pos9"
+                                        ],
+                                        [
+                                            "Pos6",
+                                            "Pos7",
+                                            "Pos9",
+                                            "Pos10"
+                                        ],
+                                        [
+                                            "Pos6",
+                                            "Pos7",
+                                            "Pos9",
+                                            "Pos10"
+                                        ]
+                                    ]
+                                ]
+                            }
+                        },
+                        {
+                            "Trailer2": {
+                                "Axle": [
+                                    [
+                                        "Axle1",
+                                        "Axle15"
+                                    ],
+                                    [
+                                        [
+                                            "Pos6",
+                                            "Pos7",
+                                            "Pos9",
+                                            "Pos10"
+                                        ],
+                                        [
+                                            "Pos6",
+                                            "Pos7",
+                                            "Pos9",
+                                            "Pos10"
+                                        ]
+                                    ]
+                                ]
+                            }
+                        },
+                        {
+                            "Trailer3": {
+                                "Axle": [
+                                    [
+                                        "Axle5",
+                                        "Axle7"
+                                    ],
+                                    [
+                                        [
+                                            "Pos11",
+                                            "Pos14"
+                                        ],
+                                        [
+                                            "Pos1",
+                                            "Pos8"
+                                        ]
+                                    ]
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

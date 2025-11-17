@@ -1,0 +1,154 @@
+{
+    "config-scope": [
+        {
+            "instance-scope": [
+                {
+                    "Trailers": [
+                        "Trailers",
+                        ".Chassis.Axle",
+                        ".Wheel"
+                    ]
+                }
+            ]
+        },
+        {
+            "variant-scope": [
+                {
+                    "TrailerType": {
+                        "SEMI_TRAILER": [
+                            {
+                                "Path": "Trailer.TrailerType",
+                                "Directive": "  default: 'SEMI_TRAILER'",
+                                "Description": "Configures the trailer tree as a SEMI_TRAILER"
+                            }
+                        ],
+                        "CENTER_AXLE_TRAILER": [
+                            {
+                                "Path": "Trailer.TrailerType",
+                                "Directive": "  default: 'CENTER_AXLE_TRAILER'",
+                                "Description": "Configures the trailer tree as a CENTER_AXLE_TRAILER"
+                            }
+                        ],
+                        "FULL_TRAILER": [
+                            {
+                                "Path": "Trailer.TrailerType",
+                                "Directive": "  default: 'FULL_TRAILER'",
+                                "Description": "Configures the trailer tree as a FULL_TRAILER"
+                            }
+                        ],
+                        "CONVERTER_DOLLY": [
+                            {
+                                "Path": "Trailer.TrailerType",
+                                "Directive": "  default: 'CONVERTER_DOLLY'",
+                                "Description": "Configures the trailer tree as a CONVERTER_DOLLY"
+                            }
+                        ],
+                        "LINK_TRAILER": [
+                            {
+                                "Path": "Trailer.TrailerType",
+                                "Directive": "  default: 'LINK_TRAILER'",
+                                "Description": "Configures the trailer tree as a LINK_TRAILER"
+                            }
+                        ],
+                        "TOWING_SEMI_TRAILER": [
+                            {
+                                "Path": "Trailer.TrailerType",
+                                "Directive": "  default: 'TOWING_SEMI_TRAILER'",
+                                "Description": "Configures the trailer tree as a TOWING_SEMI_TRAILER"
+                            }
+                        ],
+                        "TOWING_CENTRE_AXLE_TRAILER": [
+                            {
+                                "Path": "Trailer.TrailerType",
+                                "Directive": "  default: 'TOWING_CENTRE_AXLE_TRAILER'",
+                                "Description": "Configures the trailer tree as a TOWING_CENTRE_AXLE_TRAILER"
+                            }
+                        ],
+                        "TOWING_FULL_TRAILER": [
+                            {
+                                "Path": "Trailer.TrailerType",
+                                "Directive": "  default: 'TOWING_FULL_TRAILER'",
+                                "Description": "Configures the trailer tree as a TOWING_FULL_TRAILER"
+                            }
+                        ],
+                        "UNDEFINED": [
+                            {
+                                "Path": "Trailer.TrailerType",
+                                "Directive": "  default: 'UNDEFINED'",
+                                "Description": "Configures the trailer tree as a UNDEFINED"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "instance-variant-scope": [
+                {
+                    "AxleFeature": {
+                        "STEER": [
+                            {
+                                "Path": "Trailers.X1.Chassis.Axle.X2.Steerable",
+                                "Directive": "  delete: no",
+                                "Description": "Configures the axle feature for a specific instance to STEER."
+                            },
+                            {
+                                "Path": "Trailers.X1.Chassis.Axle.X2.Liftable",
+                                "Directive": "  delete: yes"
+                            },
+                            {
+                                "Path": "Trailers.X1.Chassis.Axle.X2.Driving",
+                                "Directive": "  delete: yes"
+                            }
+                        ],
+                        "LIFT": [
+                            {
+                                "Path": "Trailers.X1.Chassis.Axle.X2.Steerable",
+                                "Directive": "  delete: yes",
+                                "Description": "Configures the axle feature for a specific instance to LIFT."
+                            },
+                            {
+                                "Path": "Trailers.X1.Chassis.Axle.X2.Liftable",
+                                "Directive": "  delete: no"
+                            },
+                            {
+                                "Path": "Trailers.X1.Chassis.Axle.X2.Driving",
+                                "Directive": "  delete: yes"
+                            }
+                        ],
+                        "DRIVE": [
+                            {
+                                "Path": "Trailers.X1.Chassis.Axle.X2.Steerable",
+                                "Directive": "  delete: yes",
+                                "Description": "Configures the axle feature for a specific instance to DRIVE."
+                            },
+                            {
+                                "Path": "Trailers.X1.Chassis.Axle.X2.Liftable",
+                                "Directive": "  delete: yes"
+                            },
+                            {
+                                "Path": "Trailers.X1.Chassis.Axle.X2.Driving",
+                                "Directive": "  delete: no"
+                            }
+                        ],
+                        "STEER+LIFT": [
+                            {
+                                "Path": "Trailers.X1.Chassis.Axle.X2.Steerable",
+                                "Directive": "  delete: no",
+                                "Description": "Configures the axle feature for a specific instance to DRIVE."
+                            },
+                            {
+                                "Path": "Trailers.X1.Chassis.Axle.X2.Liftable",
+                                "Directive": "  delete: no"
+                            },
+                            {
+                                "Path": "Trailers.X1.Chassis.Axle.X2.Driving",
+                                "Directive": "  delete: yes"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

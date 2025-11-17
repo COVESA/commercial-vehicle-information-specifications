@@ -1,0 +1,43 @@
+{
+    "configurations": [
+        {
+            "instances": [
+                {
+                    "Axle": [
+                        [
+                            "Axle10",
+                            "Axle12"
+                        ],
+                        [
+                            [
+                                "Pos3",
+                                "Pos13"
+                            ],
+                            [
+                                "Pos4",
+                                "Pos12"
+                            ]
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "variants": [
+                {
+                    "TrailerType": "SEMI_TRAILER"
+                }
+            ]
+        },
+        {
+            "instance-variants": [
+                {
+                    "AxleFeature": ["LIFT", "Axle10"]
+                },
+                {
+                    "AxleFeature": ["STEER", "Axle12"]
+                }
+            ]
+        }
+    ]
+}
