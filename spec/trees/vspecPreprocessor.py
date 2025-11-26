@@ -11,7 +11,7 @@ def generate_2dim_overlay(inst_matrix, instance_name, prefix_data, output):
     for dim1member in inst_matrix[0]:
         dim2_names.append(dim1member)
     output.append(f"  instances: {list(dim2_names)}")
-    output.append("") 
+    output.append("")
 
     # Dim2 for each dim1 member
     for dim1_index, dim1member_name in enumerate(inst_matrix[0]):
@@ -29,9 +29,9 @@ def generate_3dim_overlay(inst_matrix, prefix_data, output):
     output.append(prefix_data[0] + ":")
     dim2_names = []
     for dim1member in inst_matrix:
-        dim2_names.append(list(dim1member.keys())[0])        	
+        dim2_names.append(list(dim1member.keys())[0])
     output.append(f"  instances: {list(dim2_names)}")
-    output.append("") 
+    output.append("")
 
     # Iterate over dim1 members
     for dim1member in inst_matrix:
@@ -65,7 +65,7 @@ def get_instance_prefix_data(instance_name1, scope_data):
                 instance_name2 = list(instance.keys())[0]
                 if instance_name2 == instance_name1:
                     prefix = instance[instance_name2]
-        
+
     return prefix
 
 def generate_variant_overlay(variant_type_name, variant_name, scope_data, output):
@@ -78,8 +78,8 @@ def generate_variant_overlay(variant_type_name, variant_name, scope_data, output
                     for variant_data in variant_type[variant_type_name]:
                         if variant_data == variant_name:
                             for overlay_data in variant_type[variant_type_name][variant_data]:
-                                output.append(f"{overlay_data["Path"]}:")
-                                output.append(f"{overlay_data["Directive"]}")
+                                output.append(f'{overlay_data["Path"]}:')
+                                output.append(f'{overlay_data["Directive"]}')
                                 output.append("")
     return output
 
@@ -105,8 +105,8 @@ def generate_instance_variant_overlay(instance_variant_type_name, instance_varia
                         if instance_variant_data == instance_variant_config_name:
                             for x1 in instance_variant_config_x1:
                                 for overlay_data in instance_variant_type[instance_variant_type_name][instance_variant_config_name]:
-                                    output.append(f"{overlay_data["Path"].replace(".X1.", "." + x1 + ".").replace(".X2.", "." + instance_variant_config_x2 + ".")}:")
-                                    output.append(f"{overlay_data["Directive"]}")
+                                    output.append(f'{overlay_data["Path"].replace(".X1.", "." + x1 + ".").replace(".X2.", "." + instance_variant_config_x2 + ".")}:')
+                                    output.append(f'{overlay_data["Directive"]}')
                                     output.append("")
     return output
 
