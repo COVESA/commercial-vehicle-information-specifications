@@ -1,0 +1,35 @@
+# Copyright (c) 2016 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# Chassis signals and attributes for profile truck
+#
+
+Vehicle.Chassis.Axle.Liftable:
+  type: branch
+  description: Axle liftable features
+
+#include AxleFeature/Liftable.vspec Vehicle.Chassis.Axle.Liftable
+
+#
+# Steerable
+#
+Vehicle.Chassis.Axle.Steerable:
+  type: branch
+  description: Axle steerable features
+
+#include AxleFeature/Steerable.vspec Vehicle.Chassis.Axle.Steerable
+
+#
+# Driving
+#
+Vehicle.Chassis.Axle.Driving:
+  type: branch
+  description: Axle driving features
+
+#include AxleFeature/Driving.vspec Vehicle.Chassis.Axle.Driving
