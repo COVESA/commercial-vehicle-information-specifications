@@ -9,7 +9,7 @@
 TorqueElectricMinimum:
   type: actuator
   datatype: int16
-  max: 0.0
+  max: 0
   unit: Nm
   description: Limit for regenerative brake torque at given axle. Brake Torque < 0Nm.
 
