@@ -12,21 +12,21 @@
     <title>Trailer tree :: Commercial Vehicle Information Specifications (CVIS)</title>
 
     
-    <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1782739698" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/fontawesome-all.min.css?1782739698" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/hybrid.css?1782739698" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/featherlight.min.css?1782739698" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/perfect-scrollbar.min.css?1782739698" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/auto-complete.css?1782739698" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/atom-one-dark-reasonable.css?1782739698" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/theme.css?1782739698" rel="stylesheet">
-    <link href="/commercial-vehicle-information-specifications/css/hugo-theme.css?1782739698" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/nucleus.css?1782815217" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/fontawesome-all.min.css?1782815217" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/hybrid.css?1782815217" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/featherlight.min.css?1782815217" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/perfect-scrollbar.min.css?1782815217" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/auto-complete.css?1782815217" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/atom-one-dark-reasonable.css?1782815217" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/theme.css?1782815217" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/hugo-theme.css?1782815217" rel="stylesheet">
     
-    <link href="/commercial-vehicle-information-specifications/css/theme-blue.css?1782739698" rel="stylesheet">
+    <link href="/commercial-vehicle-information-specifications/css/theme-blue.css?1782815217" rel="stylesheet">
     
     
 
-    <script src="/commercial-vehicle-information-specifications/js/jquery-3.3.1.min.js?1782739698"></script>
+    <script src="/commercial-vehicle-information-specifications/js/jquery-3.3.1.min.js?1782815217"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -59,14 +59,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/lunr.min.js?1782739698"></script>
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/auto-complete.js?1782739698"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/lunr.min.js?1782815217"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/auto-complete.js?1782815217"></script>
 <script type="text/javascript">
     
         var baseurl = "https:\/\/covesa.github.io\/commercial-vehicle-information-specifications\/";
     
 </script>
-<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/search.js?1782739698"></script>
+<script type="text/javascript" src="/commercial-vehicle-information-specifications/js/search.js?1782815217"></script>
 
     
   </div>
@@ -489,16 +489,25 @@
 
 
 	<h1 id="the-trailer-tree">The trailer tree</h1>
-<p>The vspec trailer tree is a super tree that contains signal definitions for a large set of different trailer models.
-The HIM configurator is then used to create a signal tee for a specific trailer variant.</p>
-<p>The different variants that are present in the vspec files are:</p>
+<p>Two variants of trailer trees are available.<br>
+One variant where a scenario with a truck pulling multiple trailers is represented by one tree containing all the trailers,
+with each trailer on a separate branch of the tree.<br>
+The other variant where the same scenario is represented by multiple trees, one tree per trailer.</p>
+<h2 id="trailer-types">Trailer types</h2>
+<p>The vspec trailer tree is a super tree that contains signal definitions for a large set of different trailer types.
+The vspecPreprocessor can then be used to configure it for a specific trailer type and model.</p>
+<p>An initial list of trailer types that are planned to be supported by the vspec files are:</p>
 <ul>
-<li>Flatbed trailer: This trailer type has an open flat bed cargo unit.</li>
-<li>Box trailer: This trailer type has a cargo unit that is covered by walls and a roof.</li>
-<li>Tanker trailer: This trailer type has a cargo unit that is specicialized for carrying liquid cargos.</li>
-<li>Freezer trailer: This trailer type has a cargo unit that is specicialized for carrying cargos that require cooling.</li>
-<li>Specialized trailer: This trailer type has a cargo unit that does not match with any of the other types&hellip;</li>
+<li>SEMI_TRAILER</li>
+<li>CENTER_AXLE_TRAILER</li>
+<li>FULL_TRAILER</li>
+<li>CONVERTER_DOLLY</li>
+<li>LINK_TRAILER</li>
+<li>TOWING_SEMI_TRAILER</li>
+<li>TOWING_CENTRE_AXLE_TRAILER</li>
+<li>TOWING_FULL_TRAILER</li>
 </ul>
+<p>Further trailer types are planned to be added to the list.</p>
 
 
 
@@ -751,19 +760,19 @@ The HIM configurator is then used to create a signal tee for a specific trailer 
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/commercial-vehicle-information-specifications/js/clipboard.min.js?1782739698"></script>
-    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.min.js?1782739698"></script>
-    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.jquery.min.js?1782739698"></script>
-    <script src="/commercial-vehicle-information-specifications/js/jquery.sticky.js?1782739698"></script>
-    <script src="/commercial-vehicle-information-specifications/js/featherlight.min.js?1782739698"></script>
-    <script src="/commercial-vehicle-information-specifications/js/highlight.pack.js?1782739698"></script>
+    <script src="/commercial-vehicle-information-specifications/js/clipboard.min.js?1782815217"></script>
+    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.min.js?1782815217"></script>
+    <script src="/commercial-vehicle-information-specifications/js/perfect-scrollbar.jquery.min.js?1782815217"></script>
+    <script src="/commercial-vehicle-information-specifications/js/jquery.sticky.js?1782815217"></script>
+    <script src="/commercial-vehicle-information-specifications/js/featherlight.min.js?1782815217"></script>
+    <script src="/commercial-vehicle-information-specifications/js/highlight.pack.js?1782815217"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/commercial-vehicle-information-specifications/js/modernizr.custom-3.6.0.js?1782739698"></script>
-    <script src="/commercial-vehicle-information-specifications/js/learn.js?1782739698"></script>
-    <script src="/commercial-vehicle-information-specifications/js/hugo-learn.js?1782739698"></script>
+    <script src="/commercial-vehicle-information-specifications/js/modernizr.custom-3.6.0.js?1782815217"></script>
+    <script src="/commercial-vehicle-information-specifications/js/learn.js?1782815217"></script>
+    <script src="/commercial-vehicle-information-specifications/js/hugo-learn.js?1782815217"></script>
     
         
-            <script src="/commercial-vehicle-information-specifications/mermaid/mermaid.js?1782739698"></script>
+            <script src="/commercial-vehicle-information-specifications/mermaid/mermaid.js?1782815217"></script>
         
         <script>
             mermaid.initialize({ startOnLoad: true });
