@@ -147,6 +147,19 @@ def generate_overlay(config_data, scope_data):
 
     return "\n".join(output)
 
+def read_overlays(config_data):
+    output = []
+
+    configs = config_data["configurations"]
+    for cfg in configs:
+        if list(cfg.keys())[0] == "overlays":
+            overlays = cfg["overlays"]
+            # Iterate over each variant configuration
+            for overlay in overlays:
+                output += " -l " + overlay
+
+    return "".join(output)
+
 # ------------------ Load JSON config ------------------
 parser = ArgumentParser(prog='python3 vspecPreprocessor.py',
                     description='The VspecPreprocessor tool configures the vspec files by creating overlays to be submitted with the vspec files to VSS-tools')
@@ -168,7 +181,7 @@ with open(scope_file, "r") as f2:
 
 overlay_text = generate_overlay(config_data, scope_data)
 
-#print(overlay_text)
+overlay_cli_params = read_overlays(config_data)
 
 output_file = args.outputfile
 with open(output_file, "w") as f:
@@ -178,6 +191,6 @@ print(f"\nOverlay configuration saved to {output_file}")
 if args.vspecfile :
     path = os.path.dirname(args.vspecfile)
     if len(path) == 0:
-        print(f"\nExporter command: vspec export {args.format} -u {path}units.yaml -q {path}quantities.yaml -l {output_file} -s {args.vspecfile} -o cvis.{args.format}")
+        print(f"\nExporter command: vspec export {args.format} -u {path}units.yaml -q {path}quantities.yaml -l {output_file} {overlay_cli_params} -s {args.vspecfile} -o cvis.{args.format}")
     else:
-        print(f"\nExporter command: vspec export {args.format} -u {path}/units.yaml -q {path}/quantities.yaml -l {output_file} -s {args.vspecfile} -o cvis.{args.format}")
+        print(f"\nExporter command: vspec export {args.format} -u {path}/units.yaml -q {path}/quantities.yaml -l {output_file} {overlay_cli_params} -s {args.vspecfile} -o cvis.{args.format}")

@@ -67,6 +67,12 @@
                     "AxleFeature": ["DRIVE", "Row3"]
                 }
             ]
+        },
+        {
+            "overlays": [
+                "Config/Truck/Overlays/Chassis.vspec",
+                "Config/Truck/Overlays/Default.vspec"
+            ]
         }
     ]
 }
