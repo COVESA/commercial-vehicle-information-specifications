@@ -1,0 +1,96 @@
+# Copyright (c) 2026 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# Reefer signals and attributes
+#
+
+Voltage:
+  datatype: float
+  type: sensor
+  unit: volt
+  min: 0
+  max: 642
+  description: The voltage of the reefer battery.
+
+FuelLevel:
+  datatype: float
+  type: sensor
+  unit: percent
+  min: 0
+  max: 125
+  description: The reefer fuel tank level.
+
+AlarmStatus:
+  datatype: string
+  type: attribute
+  allowed: ['WARNING_OFF', 'WARNING_ON', 'SHUTDOWN_ALARM_ON']
+  description: The alarm status of the reefer.
+
+DefrostStatus:
+  datatype: string
+  type: attribute
+  allowed: ['OFF', 'ON']
+  description: The on/off status of the reefer defrost cycle.
+
+Status:
+  datatype: string
+  type: attribute
+  allowed: ['OFF', 'ON']
+  description: The on/off status of the reefer.
+
+Evaporator:
+  type: branch
+  instances: [1, 2, 3]
+  description: Evaporator signals.
+
+Evaporator.Status:
+  datatype: string
+  type: attribute
+  allowed: ['STANDBY', 'HEATING', 'DEFROST', 'COOLING']
+  description: The status of the reefer evaporator.
+
+Service:
+  type: branch
+  description: The reefer service signals.
+
+Service.OperatingHours:
+  type: branch
+  description: The reefer service operating hour signals
+
+Service.OperatingHours.StartStop:
+  datatype: float
+  type: sensor
+  unit: hour
+  max: 16449535 
+  description: The reefer service start/stop operating hours.
+
+Service.OperatingHours.Engine:
+  datatype: float
+  type: sensor
+  unit: hour
+  max: 16449535 
+  description: The reefer diesel engine operating hours.
+
+OperatingHours:
+  type: branch
+  description: The reefer operating hour signals
+
+OperatingHours.LineSupply:
+  datatype: float
+  type: sensor
+  unit: hour
+  max: 16449535 
+  description: The reefer line supply operating hours.
+
+Service.OperatingHours.Generator:
+  datatype: float
+  type: sensor
+  unit: hour
+  max: 16449535 
+  description: The reefer generator operating hours.

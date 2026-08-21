@@ -17,14 +17,57 @@ Trailer.TrailerCount:
   instantiate: false
   description: Number of connected Trailer.
 
-
 #
 # Chassis signals and attributes.
 # Includes steering, suspension, wheels, brakes, etc
+#
 Trailer.Chassis:
   type: branch
   description: All data concerning steering, suspension, wheels, and brakes.
 #include Chassis/Chassis.vspec Trailer.Chassis
+
+#
+# Cargo signals and attributes.
+#
+Trailer.Cargo:
+  type: branch
+  description: Cargo data.
+#include Cargo/Cargo.vspec Trailer.Cargo
+
+#
+# Reefer signals and attributes.
+#
+Trailer.Reefer:
+  type: branch
+  description: Reefer data.
+#include Reefer/Reefer.vspec Trailer.Reefer
+
+Trailer.ElectricalSupply:
+  type: branch
+  description: Electrical supply signals.
+
+Trailer.ElectricalSupply.Status:
+  datatype: string
+  type: attribute
+  allowed: ['OFF', 'ON', 'ERROR', 'NOT_AVAILABLE']
+  description: The electrical supply status of non-braking systems.
+
+Trailer.Exterior:
+  type: branch
+  description: The trailer exterior signals.
+
+Trailer.Exterior.AmbiantTemperature:
+  datatype: float
+  type: sensor
+  unit: celsius
+  min: -273
+  max: 1734.96875
+  description: The ambiant temperature.
+
+# Signals from trailer spreadsheet that are not realized:
+#   Trailer.Acceleration.Lateral
+#   Trailer.MotionManagement.Suspension.TractionHelp.Status
+#   Trailer.Powertrain.DriveSystem.Warning.Red.Status
 
 #
 # TSS Versioning information

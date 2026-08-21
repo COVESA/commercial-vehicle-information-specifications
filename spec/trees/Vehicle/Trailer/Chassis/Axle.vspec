@@ -8,6 +8,23 @@
 #
 # Axle attributes
 #
+Speed:
+  datatype: float
+  type: sensor
+  unit: km/h
+  min: 0
+  max: 250
+  description: The absolute value of the actual speed of the vehicle.
+  comment: Calculated as the average of the wheel speeds of the axle influenced by slip and filtered by a frequency range of 5 Hz to 20 Hz.
+
+SpeedDiff:
+  datatype: float
+  type: sensor
+  unit: km/h
+  min: -125
+  max: 125
+  description: the difference between the wheel speed on the right side and on the left side of the axle.
+
 TreadWidth:
   datatype: uint16
   type: attribute
@@ -17,12 +34,13 @@ TreadWidth:
   comment: Corresponds to SAE J1100-2009 W101.
 
 TrackWidth:
-  datatype: uint16
+  datatype: float
   type: attribute
-  unit: mm
+  unit: m
+  min: 0
+  max: 2.5
   description: The lateral distance between the centers of the wheels, measured along the spindle, or axle axis.
-               If there are dual rear wheels, measure from the midway points between the inner and outer tires.
-  comment: Corresponds to SAE J1100-2009 W102.
+  comment: Corresponds to SAE J1100-2009 W102. If there are dual rear wheels, measure from the midway points between the inner and outer tires.
 
 AxleWidth:
   datatype: uint16
@@ -30,6 +48,44 @@ AxleWidth:
   unit: mm
   description: The lateral distance between the wheel mounting faces, measured along the spindle axis.
   comment: Corresponds to SAE J1100-2009 W113.
+
+AxleLoad:
+  datatype: float
+  type: sensor
+  unit: kg
+  min: 0
+  max: 32127.5
+  description: The static vertical load of the vehicle axle.
+
+UncalibratedLoad:
+  datatype: float
+  type: sensor
+  unit: kg
+  min: 0
+  max: 64255
+  description: The static vertical load measured by the towed vehicle at the time of the axle load calibration.
+
+ScaleLoad:
+  datatype: float
+  type: sensor
+  unit: kg
+  min: 0
+  max: 64255
+  description: The static vertical load measured by an external scale at the time of the axle load calibration.
+
+LoadLevel:
+  datatype: string
+  type: sensor
+  allowed: ['LOW_LOAD', 'HEAVY_LOAD', 'MEDIUM_LOAD', 'ERROR', 'NOT_AVAILABLE']
+  description: The load case the calibration data belongs to.
+
+NextDistance:
+  datatype: float
+  type: attribute
+  unit: m
+  min: 0
+  max: 25
+  description: The distance of the wheel base of axle position x to the next axle position  x+1 .
 
 WheelDiameter:
   datatype: float

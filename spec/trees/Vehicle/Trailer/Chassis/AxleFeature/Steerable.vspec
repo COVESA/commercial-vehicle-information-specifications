@@ -6,10 +6,15 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+LockStatus:
+  datatype: string
+  type: sensor
+  allowed: ['UNLOCKED', 'LOCKED', 'ERROR', 'NOT_AVAILABLE']
+  description: The current steering axle locking status.
+
 SteeringAngle:
   datatype: float
   type: sensor
   unit: degrees
-  description: Single track two-axle model steering angle.
-               Angle according to ISO 8855. Positive = degrees to the left. Negative = degrees to the right.
+  description: Single track two-axle model steering angle. According to ISO 8855. Positive = degrees to the left. Negative = degrees to the right.
   comment: Single track two-axle model steering angle refers to the angle that a centrally mounted wheel would have.

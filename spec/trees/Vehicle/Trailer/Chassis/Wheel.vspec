@@ -7,11 +7,44 @@
 # SPDX-License-Identifier: MPL-2.0
 
 #
+# Wheel signals
+#
+
+Speed:
+  datatype: float
+  type: sensor
+  unit: km/h
+  description: Linear speed of the wheel.
+
+AngularSpeed:
+  datatype: float
+  type: sensor
+  unit: degrees/s
+  description: Angular (Rotational) speed of a vehicle's wheel.
+  comment: Positive if wheel is trying to drive vehicle forward. Negative if wheel is trying to drive vehicle backward.
+
+#
 # Brake
 #
 Brake:
   type: branch
   description: Brake signals for wheel
+
+Brake.Lining:
+  datatype: float
+  type: sensor
+  unit: percent
+  min: 0
+  max: 100
+  description: relative value of the brake lining of a specific brake.
+  comment: High values indicate new linings, small values indicate worn linings.
+
+Brake.LiningStatus:
+  datatype: string
+  type: sensor
+  allowed: ['INSUFFICIENT', 'SUFFICIENT', 'ERROR', 'NOT_AVAILABLE']
+  description: The current status of the brake linings.
+  comment: An insufficient brake lining status is indicated if the linings are worn out.
 
 Brake.FluidLevel:
   datatype: uint8
@@ -42,7 +75,14 @@ Brake.Temperature:
   type: sensor
   unit: celsius
   max: 2500
-  description: Brake temperature in Celsius.
+  description: Brake temperature.
+
+Brake.TemperatureStatus:
+  datatype: string
+  type: sensor
+  allowed: ['OUT_OF_RANGE', 'NORMAL_RANGE', 'ERROR', 'NOT_AVAILABLE']
+  description: The current status of the temperature of the brakes.
+  comment: A brake temperature out of range value is indicated if the brake temperature is higher than a specific level for proper operation.
 
 Brake.IsTemperatureHigh:
   datatype: boolean
@@ -63,7 +103,13 @@ Tire.Pressure:
   type: sensor
   unit: kPa
   max: 2500
-  description: Tire pressure in kilo-Pascal.
+  description: Tire pressure.
+
+Tire.PressureStatus:
+  datatype: string
+  type: sensor
+  allowed: ['INSUFFICIENT', 'SUFFICIENT', 'ERROR', 'NOT_AVAILABLE']
+  description: The current status of the tire pressure.
 
 Tire.IsPressureLow:
   datatype: boolean
@@ -71,11 +117,27 @@ Tire.IsPressureLow:
   comment: If true the pressure is outside of a range recommended by the tire or vehicle manufacturer.
   description: Tire pressure status. True = Low tire pressure. False = Good tire pressure.
 
+Tire.PressureThreshold:
+  datatype: string
+  type: sensor
+  allowed: ['EXTREME_OVER_PRESSURE', 'OVER_PRESSURE', 'NO_WARNING', 'UNDER_PRESSURE', 'EXTREME_UNDER_PRESSURE', 'SUFFICIENT', 'ERROR', 'NOT_AVAILABLE']
+  description: Tire pressure threshold detection.
+
+Tire.Leakage:
+  datatype: float
+  type: sensor
+  unit: Pa
+  min: 0
+  max: 6425.5
+  description: The current air leakage (pressure loss) of a tyre per second.
+
 Tire.Temperature:
   datatype: float
   type: sensor
   unit: celsius
-  description: Tire temperature in Celsius.
+  min: -273
+  max: 1735
+  description: Tire temperature.
 
 Tire.IsTemperatureHigh:
   datatype: boolean
@@ -83,27 +145,15 @@ Tire.IsTemperatureHigh:
   comment: If true the temperature is outside of a range recommended by the tire or vehicle manufacturer.
   description: Tire temperature status. True = High tire temperature. False = Good tire temperature.
 
+Tire.PowerStatus:
+  datatype: string
+  type: sensor
+  allowed: ['INSUFFICIENT', 'SUFFICIENT', 'ERROR', 'NOT_AVAILABLE']
+  description: The current status of the power supply of the tire.
+  comment: Indicates whether it is sufficient to achieve the specified performance of the tire.
+
 Tire.IsPowerSufficient:
   datatype: boolean
   type: sensor
   comment: If true the module power is sufficient to achieve the specified performance of the module.
   description: Tire module power status. True = Sufficient power. False = Insufficient power.
-
-
-#
-# Wheel signals
-#
-
-Speed:
-  datatype: float
-  type: sensor
-  unit: km/h
-  description: Linear speed of a vehicle's wheel.
-
-AngularSpeed:
-  datatype: float
-  type: sensor
-  unit: degrees/s
-  description: Angular (Rotational) speed of a vehicle's wheel.
-  comment: Positive if wheel is trying to drive vehicle forward.
-           Negative if wheel is trying to drive vehicle backward.

@@ -1,4 +1,4 @@
-# Copyright (c) 2016 Contributors to COVESA
+# Copyright (c) 2026 Contributors to COVESA
 #
 # This program and the accompanying materials are made available under the
 # terms of the Mozilla Public License 2.0 which is available at
@@ -9,6 +9,42 @@
 #
 # Chassis signals and attributes
 #
+
+FrontAxleCount:
+  datatype: uint8
+  type: sensor
+  max: 250
+  description: Total number of axles attached to the drawbar.
+
+LoadSum:
+  datatype: uint32
+  type: sensor
+  unit: kg
+  max: 128510
+  description: The sum of the static vertical loads of the vehicle axles.
+
+LevelChange:
+  type: branch
+  instances: [Front, Rear]
+  description: Level control.
+
+LevelChange.Status:
+  datatype: string
+  type: sensor
+  allowed: ['DISABLED', 'ENABLED', 'ERROR', 'NOT_AVAILABLE']
+  description: The current status of the level control function.
+
+FifthWheel:
+  type: branch
+  description: Trailer fifth wheel.
+
+FifthWheel.Load:
+  datatype: float
+  type: sensor
+  unit: kg
+  min: 0
+  max: 128510
+  description: Trailer fifth wheel load.
 
 AxleCount:
   datatype: uint8
@@ -79,6 +115,7 @@ ParkingBrake.IsAutoApplyEnabled:
   datatype: boolean
   type: actuator
   description: Indicates if parking brake will be automatically engaged when the vehicle engine is turned off.
+
 #
 # Steering Wheel
 #
@@ -107,6 +144,7 @@ SteeringWheel.Extension:
   max: 100
   unit: percent
   description: Steering wheel column extension from dashboard. 0 = Closest to dashboard. 100 = Furthest from dashboard.
+
 #
 # Accelerator
 #
@@ -129,17 +167,56 @@ Brake:
   type: branch
   description: Brake system signals
 
-Brake.PedalPosition:
-  datatype: uint8
-  type: sensor
-  min: 0
-  max: 100
-  unit: percent
-  description: Brake pedal position as percent. 0 = Not depressed. 100 = Fully depressed.
+#include Brake.vspec Brake
 
-Brake.IsDriverEmergencyBrakingDetected:
-  datatype: boolean
+#
+# Retarder
+#
+Retarder:
+  type: branch
+  description: Retarder signals
+
+Retarder.Torque:
+  datatype: float
   type: sensor
-  description: Indicates if emergency braking initiated by driver is detected.
-               True = Emergency braking detected. False = Emergency braking not detected.
-  comment: Detection of emergency braking can trigger Emergency Brake Assist (EBA) to engage.
+  unit: percent
+  min: -125
+  max: 125
+  description: The torque of the retarder as a percentage of the retarder wheel torque reference.
+
+Retarder.Status:
+  datatype: string
+  type: attribute
+  allowed: ['PASSIVE', 'ACTIVE', 'ERROR', 'NOT_AVAILABLE']
+  description: The current status in all cases the retarder functionality is applied by the driver's demand or by other systems (e.g. brakes).
+
+#
+# Coupling point
+#
+CouplingPoint:
+  type: branch
+  description: Retarder signals
+
+CouplingPoint.FrontDistance:
+  datatype: float
+  type: sensor
+  unit: m
+  min: 0
+  max: 25
+  description: The distance between the coupling point and the middle of the first axle.
+
+CouplingPoint.FrontHeight:
+  datatype: float
+  type: sensor
+  unit: m
+  min: 0
+  max: 5
+  description: The nominal coupling height over ground for the first coupling point.
+
+CouplingPoint.RearHeight:
+  datatype: float
+  type: sensor
+  unit: m
+  min: 0
+  max: 5
+  description: The nominal coupling height over ground for the second coupling point for an unloaded vehicle.

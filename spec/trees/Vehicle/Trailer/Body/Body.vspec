@@ -1,0 +1,40 @@
+# Copyright (c) 2026 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# Body signals and attributes
+#
+
+FrontHeight:
+  datatype: uint16
+  type: sensor
+  unit: mm
+  max: 64255
+  description: The current nominal vehicle body height.
+  comment: In cases when controlled by level change request front axle, this value represents the current vehicle body height at the front axle referred to ground level.
+
+RearHeight:
+  datatype: uint16
+  type: sensor
+  unit: mm
+  max: 64255
+  description: The current nominal vehicle body height.
+  comment: In cases when controlled by level change request rear axle, this value represents the current vehicle body height at the rear axle referred to ground level.
+
+#
+# Normal level
+#
+NormalLevel:
+  type: branch
+  description: Normal level signals
+
+NormalLevel.Status:
+  datatype: string
+  type: sensor
+  allowed: ['NORMAL_LEVEL_1', 'NORMAL_LEVEL_2', 'ERROR', 'NOT_AVAILABLE']
+  description: The current state of the body height normal positions independent of a specific level request.

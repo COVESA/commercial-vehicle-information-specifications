@@ -45,3 +45,12 @@ TrailerType:
   type: attribute
   allowed: ['UNDEFINED','SEMI_TRAILER','CENTER_AXLE_TRAILER', 'FULL_TRAILER','CONVERTER_DOLLY','LINK_TRAILER','TOWING_SEMI_TRAILER','TOWING_CENTRE_AXLE_TRAILER','TOWING_FULL_TRAILER']
   description: Type of trailer as defined in ISO 11992-2
+
+#
+# Trailer specification attributes.
+#
+Specification:
+  type: branch
+  description: Cargo data.
+#include Specification/Specification.vspec Specification
+
