@@ -1,0 +1,128 @@
+# Copyright (c) 2026 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# HRU signals and attributes
+#
+
+Count:
+  datatype: uint8
+  type: sensor
+  max: 15
+  description: The HRU compartment number.
+
+Compartments:
+  datatype: uint8
+  type: sensor
+  max: 8
+  description: The number of available HRU compartments.
+
+Configuration:
+  datatype: string
+  type: attribute
+  allowed: ['GENERIC', 'CARGO_SPACE_SINGLE_TEMPERATURE', 'CARGO_SPACE_MULTI_TEMPERATURE', 'CONTAINER_SPACE_SINGLE_TEMPERATURE', 'CONTAINER_SPACE_MULTI_TEMPERATURE']
+  description: Heating and refrigerating unit  classes.
+
+Status:
+  datatype: string
+  type: attribute
+  allowed: ['OFF', 'COOLING', 'HEATING', 'DEFROSTING', 'WAITING', 'ERROR', 'NOT_AVAILABLE']
+  description: The status of the HRU.
+
+Voltage:
+  datatype: float
+  type: sensor
+  unit: volt
+  min: 0.1
+  max: 6553.5
+  description: The voltage of the HRU battery.
+
+PowerSource:
+  datatype: string
+  type: attribute
+  allowed: ['DIESEL_ENGINE_POWERED', 'POWER_GRID_POWERED', 'BATTERY_POWERED', 'ERROR', 'NOT_AVAILABLE']
+  description: The power supply mode status of the HRU.
+
+EconomyMode:
+  datatype: string
+  type: attribute
+  allowed: ['OFF', 'ON', 'ERROR', 'NOT_AVAILABLE']
+  description: The economy mode status of the HRU.
+
+OperatingMode:
+  datatype: string
+  type: attribute
+  allowed: ['OFF', 'ON', 'ERROR', 'NOT_AVAILABLE']
+  description: The start/stop mode status of the HRU.
+
+ReturnAirTemperature:
+  datatype: float
+  type: sensor
+  unit: celsius
+  min: -273
+  max: 1734.96875
+  description: The HRU return air temperature at evaporator input.
+
+SupplyTemperature:
+  datatype: float
+  type: sensor
+  unit: celsius
+  min: -273
+  max: 1734.96875
+  description: The HRU return air temperature at evaporator output.
+
+EvaporatorTemperature:
+  datatype: float
+  type: sensor
+  unit: celsius
+  min: -273
+  max: 1734.96875
+  description: The HRU evaporator temperature.
+
+AmbientTemperature:
+  datatype: float
+  type: sensor
+  unit: celsius
+  min: -273
+  max: 1734.96875
+  description: The HRU ambient temperature.
+
+OperatingHours:
+  type: branch
+  description: HRU operating hour signals
+
+OperatingHours.Engine:
+  datatype: uint32
+  type: sensor
+  unit: hour
+  description: The HRU diesel engine operating hours.
+
+OperatingHours.Electricity:
+  datatype: uint32
+  type: sensor
+  unit: hour
+  description: The HRU electricity operating hours.
+
+OperatingHours.Total:
+  datatype: uint32
+  type: sensor
+  unit: hour
+  description: The HRU total operating hours.
+
+Compartment:
+  type: branch
+  instances: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  description: Compartment signals.
+
+Compartment.SetPointTemperature:
+  datatype: float
+  type: sensor
+  unit: celsius
+  min: -273
+  max: 1734.96875
+  description: The HRU compartment setpoint temperature.

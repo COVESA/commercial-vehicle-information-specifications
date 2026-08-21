@@ -1,0 +1,169 @@
+# Copyright (c) 2026 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# Brake system signals
+#
+
+Pressure:
+  datatype: float
+  type: sensor
+  unit: kPa
+  min: 0
+  max: 2000
+  description: The pneumatic pressure in the circuit or reservoir.
+
+DetectionStatus:
+  datatype: string
+  type: attribute
+  allowed: ['NO_BRAKE_SYSTEM', 'ABS_DETECTED', 'EBS_DETECTED', 'ERROR', 'NOT_AVAILABLE']
+  description: Towed vehicle detection status.
+  comment: Indicates whether the vehicle is able to detect an additional towed vehicle (towed vehicle detection support);if an additional towed vehicle is detected; and which type of brake system is detected in that vehicle.
+
+AmberWarning:
+  datatype: string
+  type: sensor
+  allowed: ['NO_BRAKE_SYSTEM', 'ABS_DETECTED', 'EBS_DETECTED', 'ERROR', 'NOT_AVAILABLE']
+  description: Used to signal from a towed vehicle to the commercial vehicle to activate the amber warning signal, which indicates certain specified events within the braking equipment of the towed vehicle.
+  comment: A flashing warning signal can be used to signal fault conditions that are related to nonbraking systems, e.g. auxiliary equipment. It shall not be used to signal braking system-relevant faults or status.
+
+AutomaticBrakeStatus:
+  datatype: string
+  type: sensor
+  allowed: ['INACTIVE', 'ACTIVE', 'ERROR', 'NOT_AVAILABLE']
+  description: The current status of the automatic towed vehicle braking.
+  comment: This function is active when the pneumatic supply is insufficient or not connected. This parameter should be used for driver information.
+
+#
+# Service brake
+#
+ServiceBrake:
+  type: branch
+  instances: [1, 2]
+  description: Service brake signals
+
+ServiceBrake.Pressure:
+  datatype: float
+  type: sensor
+  unit: kPa
+  min: 0
+  max: 1255
+  description: The pneumatic pressure in the circuit or reservoir.
+
+ServiceBrake.Status:
+  datatype: string
+  type: sensor
+  allowed: ['PASSIVE', 'ACTIVE', 'ERROR', 'NOT_AVAILABLE']
+  description: The current status of the vehicle's service brake by observing the brake pressure.
+
+#
+# Parking brake
+#
+ParkingBrake:
+  type: branch
+  description: Parking brake signals
+
+ParkingBrake.Pressure:
+  datatype: float
+  type: sensor
+  unit: kPa
+  min: 0
+  max: 1255
+  description: The pneumatic pressure in the circuit or reservoir.
+
+ParkingBrake.Status:
+  datatype: string
+  type: sensor
+  allowed: ['PASSIVE', 'ACTIVE', 'ERROR', 'NOT_AVAILABLE']
+  description: The current status of the vehicle's service brake by observing the brake pressure.
+
+#
+# Air supply
+#
+AirSupply:
+  type: branch
+  description: Air supply signals
+
+AirSupply.Pressure:
+  datatype: float
+  type: sensor
+  unit: kPa
+  min: 0
+  max: 1250
+  description: The pneumatic pressure in the circuit or reservoir.
+
+AirSupply.Status:
+  datatype: string
+  type: sensor
+  allowed: ['INSUFFICIENT', 'SUFFICIENT', 'ERROR', 'NOT_AVAILABLE']
+  description: The current status of the pneumatic supply pressure of the reservoir of the braking system is insufficient or sufficient for a proper braking function.
+
+#
+# ABS
+#
+ABS:
+  type: branch
+  description: ABS signals
+
+ABS.Status:
+  datatype: string
+  type: sensor
+  allowed: ['PASSIVE', 'ACTIVE', 'ERROR', 'NOT_AVAILABLE']
+  description: The current status of the ABS.
+
+#
+# LoadingRamp Assistance
+#
+LoadingRampAssistance:
+  type: branch
+  description: LoadingRamp Assistance signals
+
+LoadingRampAssistance.Status:
+  datatype: string
+  type: sensor
+  allowed: ['NOT_ACTIVE', 'ACTIVE', 'ERROR', 'NOT_AVAILABLE']
+  description: The current status of the LoadingRamp Assistance.
+
+#
+# ROP
+#
+ROP:
+  type: branch
+  description: ROP signals
+
+ROP.Status:
+  datatype: string
+  type: sensor
+  allowed: ['DISABLE', 'ENABLE', 'ERROR', 'NOT_AVAILABLE']
+  description: The current status of the ROP.
+
+#
+# Electrical Supply
+#
+ElectricalSupply:
+  type: branch
+  description: Electrical Supply signals
+
+ElectricalSupply.Status:
+  datatype: string
+  type: sensor
+  allowed: ['OFF', 'ON', 'ERROR', 'NOT_AVAILABLE']
+  description: The current status of the Electrical Supply.
+
+#
+# Yaw Control
+#
+YawControl:
+  type: branch
+  description: Yaw Control signals
+
+YawControl.Status:
+  datatype: string
+  type: sensor
+  allowed: ['DISABLED', 'ENABLED', 'ERROR', 'NOT_AVAILABLE']
+  description: The current status of the Yaw Control.

@@ -1,0 +1,56 @@
+# Copyright (c) 2026 Contributors to COVESA
+#
+# This program and the accompanying materials are made available under the
+# terms of the Mozilla Public License 2.0 which is available at
+# https://www.mozilla.org/en-US/MPL/2.0/
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# Trailer specification attributes
+#
+
+VIN:
+  datatype: string
+  type: attribute
+  description: The trailer identification number as specified in ISO 3779.
+
+TotalRearHeight:
+  datatype: float
+  type: attribute
+  unit: m
+  min: 0
+  max: 5
+  description: The total height over ground of the vehicle at the rear of the vehicle.
+
+TotalFrontHeight:
+  datatype: float
+  type: attribute
+  unit: m
+  min: 0
+  max: 5
+  description: The total height over ground of the vehicle at the front of the vehicle.
+
+GroundHeight:
+  datatype: float
+  type: attribute
+  unit: m
+  min: 0
+  max: 5
+  description: The height over ground for the floor inside the vehicle at the front end of the floor.
+
+FrontHeight:
+  datatype: float
+  type: attribute
+  unit: m
+  min: 0
+  max: 5
+  description: The height from the bottom most point of the chassis to the top most point of the vehicle at the front of the vehicle.
+
+TotalLength:
+  datatype: float
+  type: attribute
+  unit: m
+  min: 0
+  max: 25
+  description: The total trailer length.
